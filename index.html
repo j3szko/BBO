@@ -1,76 +1,272 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBO | Straight From The Source</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Added smooth scrolling for the single-page experience */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
 <body>
-    <section class="section page-header">
-        <h1>All Products</h1>
-        <p>Build your routine with verified, authentic formulas.</p>
+
+    <div class="top-banner">
+        <div class="marquee">
+            <span>NO MINIMUM ORDER • AUTHENTICITY GUARANTEED • SHIPPED SECURELY TO YOUR DOOR • NO MINIMUM ORDER</span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">BBO.</a>
+            <ul class="nav-links">
+                <li><a href="#shop">Shop Products</a></li>
+                <li><a href="#bundles">Curated Bundles</a></li>
+                <li><a href="#journey">The Journey</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span>Cart (0)</span>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <span class="badge">No Minimum Order</span>
+            <h1>Authentic Skincare, Straight from the Source.</h1>
+            <p>Sourced directly from authorized US and Korean retailers. Unboxed at your doorstep in Nigeria. Zero fakes. Zero customs hassle.</p>
+            <div class="hero-buttons">
+                <a href="#shop" class="btn-primary">Shop All Products</a>
+                <a href="#bundles" class="btn-secondary" style="width: auto; margin-top: 0; margin-left: 10px;">Shop Bundles</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section bg-light">
+        <div class="section-header">
+            <h2>The Proof is in the Packaging</h2>
+            <p>Fake skincare damages the skin barrier. We guarantee uncompromised safety and original formulas.</p>
+        </div>
+        <div class="proof-grid">
+            <div class="proof-card">
+                <div class="proof-img" style="background-color: var(--us-accent);">
+                    </div>
+                <h3>Texture & Consistency Verification</h3>
+                <p>Counterfeits often have a watered-down or greasy consistency. Your products arrive exactly as the manufacturer formulated them.</p>
+            </div>
+            <div class="proof-card">
+                <div class="proof-img" style="background-color: var(--kr-accent);">
+                    </div>
+                <h3>Factory Seals & Batch Codes</h3>
+                <p>Every product arrives with intact original seals and verifiable batch codes directly from authorized US or Korean retailers.</p>
+            </div>
+        </div>
     </section>
 
-    <section class="section shop-layout">
-        <aside class="sidebar">
-            <div class="sidebar-block">
-                <h3>Target By Concern</h3>
-                <ul>
-                    <li><label><input type="checkbox"> Hyperpigmentation & Dark Spots</label></li>
-                    <li><label><input type="checkbox"> Acne & Breakouts</label></li>
-                    <li><label><input type="checkbox"> Damaged Skin Barrier</label></li>
-                    <li><label><input type="checkbox"> Uneven Tone & Dullness</label></li>
-                </ul>
-            </div>
-            
-            <div class="sidebar-block">
-                <h3>🇺🇸 US Brands</h3>
-                <ul>
-                    <li><label><input type="checkbox"> CeraVe</label></li>
-                    <li><label><input type="checkbox"> Good Molecules</label></li>
-                    <li><label><input type="checkbox"> Paula's Choice</label></li>
-                </ul>
-            </div>
-            <div class="sidebar-block">
-                <h3>🇰🇷 Korean Brands</h3>
-                <ul>
-                    <li><label><input type="checkbox"> COSRX</label></li>
-                    <li><label><input type="checkbox"> Beauty of Joseon</label></li>
-                    <li><label><input type="checkbox"> Anua</label></li>
-                </ul>
-            </div>
-        </aside>
-
-        <div class="product-grid">
-            <div class="product-card">
-                <div class="product-img korean-bg">🇰🇷 South Korea</div>
-                <div class="product-info">
-                    <h3>COSRX Advanced Snail 96 Mucin Essence</h3>
-                    <p class="concern-tag">Target: Damaged Barrier</p>
-                    <div class="pricing">
-                        <div class="price-naira">₦24,500</div>
-                        <div class="price-usd">$15 USD · Sourced from KR</div>
-                    </div>
-                    <button class="btn-secondary w-100">Secure My Pre-Order</button>
+    <section id="shop" class="section">
+        <div class="section-header">
+            <h2>High-Velocity Essentials</h2>
+            <p>Build your routine with verified, authentic formulas.</p>
+        </div>
+        
+        <div class="shop-layout">
+            <aside class="sidebar">
+                <div class="sidebar-block">
+                    <h3>Target By Concern</h3>
+                    <ul>
+                        <li><label><input type="checkbox"> Hyperpigmentation</label></li>
+                        <li><label><input type="checkbox"> Acne & Breakouts</label></li>
+                        <li><label><input type="checkbox"> Damaged Barrier</label></li>
+                        <li><label><input type="checkbox"> Uneven Tone</label></li>
+                    </ul>
                 </div>
-            </div>
+                <div class="sidebar-block">
+                    <h3>Brands</h3>
+                    <ul>
+                        <li><label><input type="checkbox"> CeraVe (US)</label></li>
+                        <li><label><input type="checkbox"> Good Molecules (US)</label></li>
+                        <li><label><input type="checkbox"> COSRX (KR)</label></li>
+                        <li><label><input type="checkbox"> Beauty of Joseon (KR)</label></li>
+                    </ul>
+                </div>
+            </aside>
 
-            <div class="product-card">
-                <div class="product-img us-bg">🇺🇸 United States</div>
-                <div class="product-info">
-                    <h3>Good Molecules Discoloration Serum</h3>
-                    <p class="concern-tag">Target: Hyperpigmentation</p>
-                    <div class="pricing">
-                        <div class="price-naira">₦21,500</div>
-                        <div class="price-usd">$12 USD · Sourced from US</div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-img korean-bg">🇰🇷 South Korea</div>
+                    <div class="product-info">
+                        <h3>COSRX Advanced Snail 96 Mucin Essence</h3>
+                        <p class="concern-tag">Target: Damaged Barrier</p>
+                        <div class="pricing">
+                            <div class="price-naira">₦24,500</div>
+                            <div class="price-usd">$15 USD · Sourced from KR</div>
+                        </div>
+                        <button class="btn-secondary w-100">Secure My Pre-Order</button>
                     </div>
-                    <button class="btn-secondary w-100">Add to US Shipment</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img us-bg">🇺🇸 United States</div>
+                    <div class="product-info">
+                        <h3>Good Molecules Discoloration Serum</h3>
+                        <p class="concern-tag">Target: Hyperpigmentation</p>
+                        <div class="pricing">
+                            <div class="price-naira">₦21,500</div>
+                            <div class="price-usd">$12 USD · Sourced from US</div>
+                        </div>
+                        <button class="btn-secondary w-100">Add to US Shipment</button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-img us-bg">🇺🇸 United States</div>
+                    <div class="product-info">
+                        <h3>CeraVe Renewing SA Cleanser</h3>
+                        <p class="concern-tag">Target: Acne & Texture</p>
+                        <div class="pricing">
+                            <div class="price-naira">₦32,500</div>
+                            <div class="price-usd">$19 USD · Sourced from US</div>
+                        </div>
+                        <button class="btn-secondary w-100">Add to US Shipment</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-img korean-bg">🇰🇷 South Korea</div>
+                    <div class="product-info">
+                        <h3>Beauty of Joseon Relief Sun (SPF 50+)</h3>
+                        <p class="concern-tag">Target: Sun Protection</p>
+                        <div class="pricing">
+                            <div class="price-naira">₦26,000</div>
+                            <div class="price-usd">$16 USD · Sourced from KR</div>
+                        </div>
+                        <button class="btn-secondary w-100">Secure My Pre-Order</button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <section id="bundles" class="section bg-light">
+        <div class="section-header">
+            <h2>Targeted Skin Systems</h2>
+            <p>Complete routines engineered for the most common Nigerian skin concerns.</p>
+        </div>
+        
+        <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="bundle-card">
+                <div class="bundle-img combo-bg">Face Kit</div>
+                <div class="bundle-info">
+                    <h3>The Fade Protocol</h3>
+                    <p class="bundle-desc">4-step routine for hyperpigmentation, sun damage, and dark spots.</p>
+                    <div class="pricing">
+                        <div class="price-naira">₦98,000</div>
+                        <div class="price-usd">$60 USD · Sourced from US/KR</div>
+                    </div>
+                    <button class="btn-primary w-100">Buy The System</button>
+                </div>
+            </div>
+
+            <div class="bundle-card">
+                <div class="bundle-img combo-bg">Body Kit</div>
+                <div class="bundle-info">
+                    <h3>The Smooth Texture System</h3>
+                    <p class="bundle-desc">Salicylic acid body routine to eliminate "strawberry legs" and bumps.</p>
+                    <div class="pricing">
+                        <div class="price-naira">₦82,000</div>
+                        <div class="price-usd">$50 USD · Sourced from US</div>
+                    </div>
+                    <button class="btn-primary w-100">Buy The System</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="journey" class="section">
+        <div class="timeline-wrapper">
+            <h2 class="timeline-header">THE "WORTH THE WAIT" JOURNEY</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-grey);">The wait is the proof. Authenticity cannot be rushed.</p>
+            
+            <div class="timeline-box">
+                <div class="timeline-item">
+                    <div class="timeline-icon">✓</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 0</span>
+                        <h3>You place your order</h3>
+                        <p>No minimum quantity. One product is perfectly fine. You pay securely in Naira, and we get to work immediately.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">🏪</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 1-3</span>
+                        <h3>We order from the US or Korea</h3>
+                        <p>Your product is ordered directly from an authorized US or Korean retailer — sealed, original, verified.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">✈️</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 4-18</span>
+                        <h3>It travels to Nigeria</h3>
+                        <p>Your package is in transit. Real distance. Real products. You'll get a tracking number so you can watch it arrive.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">🏠</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 18-21</span>
+                        <h3>Delivered to your doorstep</h3>
+                        <p>The real thing, at your door. Worth every day of the wait — and you'll know the difference the moment you use it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section bg-light">
+        <div class="section-header">
+            <h2>Authenticity & Logistics FAQ</h2>
+            <p>Transparency is our policy.</p>
+        </div>
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary>How do I know this isn't fake?</summary>
+                <p>We completely bypass local middlemen and open markets. Every item is purchased directly from authorized retailers in the US (like Sephora, Ulta) or South Korea (like Olive Young) after you place your order.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Why does it take 3 weeks?</summary>
+                <p>Because it is literally flying from Seoul or New York to Lagos. The wait is your proof of authenticity. We don't hold aging local stock; we source fresh batches upon your request.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Are there hidden customs fees?</summary>
+                <p>Absolutely not. The Naira price you see on our website is the final landed cost. It covers the product, international air freight, customs clearing, and local logistics.</p>
+            </details>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <div class="footer-brand">
+                <h2>BBO.</h2>
+                <p>Authenticity cannot be rushed. Straight from the source to your door.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BBO Skincare. All rights reserved. Processed securely in NGN.</p>
+        </div>
+    </footer>
 
     <div class="mobile-sticky-bar">
         <div>
-            <span style="font-size: 0.8rem; color: var(--text-grey);">Total:</span>
-            <div class="price">₦21,500</div>
+            <span style="font-size: 0.8rem; color: var(--text-grey);">Your Order:</span>
+            <div class="price">₦0</div>
         </div>
-        <button class="btn-primary">Secure Pre-Order</button>
+        <button class="btn-primary">View Cart</button>
     </div>
 
 </body>
