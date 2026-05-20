@@ -46,6 +46,9 @@
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
+        /* Payment Acceptance Sub-Header */
+        .payment-notice-bar { background-color: #EFECE7; border-bottom: 1px solid var(--border-color); text-align: center; padding: 0.6rem 5%; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+
         /* Hero */
         .hero { text-align: center; padding: 6rem 5%; display: flex; flex-direction: column; align-items: center; max-width: 800px; margin: 0 auto; }
         .badge { background-color: var(--text-dark); color: var(--card-bg); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; font-weight: 600; margin-bottom: 1.5rem; }
@@ -100,9 +103,13 @@
         .product-info h3, .bundle-info h3 { font-size: 1.1rem; font-weight: 600; line-height: 1.3; margin-bottom: 0.5rem; }
         .bundle-desc { font-size: 0.9rem; color: var(--text-grey); margin-top: 0.5rem; margin-bottom: 1rem; }
         
+        /* Advanced Dual Pricing Structure */
         .pricing { margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 1rem; margin-bottom: 1rem; }
-        .price-naira { font-size: 1.4rem; font-weight: 700; }
+        .naira-group { display: flex; align-items: baseline; gap: 8px; }
+        .price-naira { font-size: 1.4rem; font-weight: 700; color: var(--text-dark); }
+        .price-naira-scratched { font-size: 1.05rem; text-decoration: line-through; color: var(--text-grey); font-weight: 400; }
         .price-usd { font-size: 0.8rem; color: var(--text-grey); margin-top: 0.2rem; }
+        .price-usd-scratched { text-decoration: line-through; margin-right: 4px; }
 
         /* Timeline */
         .timeline-wrapper { max-width: 800px; margin: 0 auto; }
@@ -160,7 +167,7 @@
 
     <div class="top-banner">
         <div class="marquee">
-            <span>NO CUSTOMS OR HANDLING FEES • NO MINIMUM ORDER • 100% AUTHENTICITY GUARANTEED • SHIPPED SECURELY TO YOUR DOOR</span>
+            <span>NO CUSTOMS OR HANDLING FEES • NAIRA & DOLLAR CARDS ACCEPTED SEAMLESSLY • 100% AUTHENTICITY GUARANTEED • SHIPPED SECURELY TO YOUR DOOR</span>
         </div>
     </div>
 
@@ -178,6 +185,11 @@
             </div>
         </div>
     </nav>
+
+    <div class="payment-notice-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-top: -1px;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+        Naira Card and Dollar Card Accepted
+    </div>
 
     <header id="home" class="hero">
         <div class="hero-content">
@@ -262,10 +274,13 @@
                         </div>
                         <div>
                             <div class="pricing">
-                                <div class="price-naira">₦24,500</div>
-                                <div class="price-usd">$15 USD · Sourced from KR</div>
+                                <div class="naira-group">
+                                    <span class="price-naira-scratched">₦36,000</span>
+                                    <span class="price-naira">₦24,500</span>
+                                </div>
+                                <div class="price-usd"><span class="price-usd-scratched">$22 USD</span> · $15 USD · Sourced from KR</div>
                             </div>
-                            <button class="btn-secondary w-100">Secure My Pre-Order</button>
+                            <button class="btn-secondary w-100">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -279,10 +294,13 @@
                         </div>
                         <div>
                             <div class="pricing">
-                                <div class="price-naira">₦21,500</div>
-                                <div class="price-usd">$12 USD · Sourced from US</div>
+                                <div class="naira-group">
+                                    <span class="price-naira-scratched">₦32,000</span>
+                                    <span class="price-naira">₦21,500</span>
+                                </div>
+                                <div class="price-usd"><span class="price-usd-scratched">$18 USD</span> · $12 USD · Sourced from US</div>
                             </div>
-                            <button class="btn-secondary w-100">Add to US Shipment</button>
+                            <button class="btn-secondary w-100">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -296,10 +314,13 @@
                         </div>
                         <div>
                             <div class="pricing">
-                                <div class="price-naira">₦32,500</div>
-                                <div class="price-usd">$19 USD · Sourced from US</div>
+                                <div class="naira-group">
+                                    <span class="price-naira-scratched">₦48,000</span>
+                                    <span class="price-naira">₦32,500</span>
+                                </div>
+                                <div class="price-usd"><span class="price-usd-scratched">$28 USD</span> · $19 USD · Sourced from US</div>
                             </div>
-                            <button class="btn-secondary w-100">Add to US Shipment</button>
+                            <button class="btn-secondary w-100">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -313,10 +334,13 @@
                         </div>
                         <div>
                             <div class="pricing">
-                                <div class="price-naira">₦26,000</div>
-                                <div class="price-usd">$16 USD · Sourced from KR</div>
+                                <div class="naira-group">
+                                    <span class="price-naira-scratched">₦39,000</span>
+                                    <span class="price-naira">₦26,000</span>
+                                </div>
+                                <div class="price-usd"><span class="price-usd-scratched">$24 USD</span> · $16 USD · Sourced from KR</div>
                             </div>
-                            <button class="btn-secondary w-100">Secure My Pre-Order</button>
+                            <button class="btn-secondary w-100">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -340,10 +364,13 @@
                     </div>
                     <div>
                         <div class="pricing">
-                            <div class="price-naira">₦98,000</div>
-                            <div class="price-usd">$60 USD · Sourced from US/KR</div>
+                            <div class="naira-group">
+                                <span class="price-naira-scratched">₦145,000</span>
+                                <span class="price-naira">₦98,000</span>
+                            </div>
+                            <div class="price-usd"><span class="price-usd-scratched">$90 USD</span> · $60 USD · Sourced from US/KR</div>
                         </div>
-                        <button class="btn-primary w-100">Buy The System</button>
+                        <button class="btn-primary w-100">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -357,10 +384,13 @@
                     </div>
                     <div>
                         <div class="pricing">
-                            <div class="price-naira">₦82,000</div>
-                            <div class="price-usd">$50 USD · Sourced from US</div>
+                            <div class="naira-group">
+                                <span class="price-naira-scratched">₦120,000</span>
+                                <span class="price-naira">₦82,000</span>
+                            </div>
+                            <div class="price-usd"><span class="price-usd-scratched">$75 USD</span> · $50 USD · Sourced from US</div>
                         </div>
-                        <button class="btn-primary w-100">Buy The System</button>
+                        <button class="btn-primary w-100">Add to Cart</button>
                     </div>
                 </div>
             </div>
