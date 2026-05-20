@@ -93,13 +93,7 @@
         .product-card:hover, .bundle-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
         /* Image Display Handling */
-        img { 
-            width: 100%; 
-            display: block; 
-            object-fit: cover; 
-            background-color: #EFECE7;
-        }
-
+        img { width: 100%; display: block; object-fit: cover; background-color: #EFECE7; }
         .product-img, .bundle-img, .proof-img-tag { height: 280px; }
         .proof-img-tag { height: 220px; border-radius: 8px; margin-bottom: 1.5rem; }
         .timeline-img { width: 100%; max-width: 320px; height: 200px; border-radius: 8px; margin-top: 1.2rem; border: 1px solid var(--border-color); }
@@ -167,6 +161,47 @@
             .mobile-sticky-bar { display: flex; justify-content: space-between; align-items: center; }
             .mobile-sticky-bar .price { font-weight: 700; font-size: 1.2rem; }
             .mobile-sticky-bar .btn-primary { padding: 0.8rem 1.5rem; }
+        }
+
+        /* --- Pop-up Specific Styling --- */
+        .email-popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(44, 42, 41, 0.6); backdrop-filter: blur(4px);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .email-popup-overlay.active { opacity: 1; pointer-events: auto; }
+        .email-popup-card {
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;
+            width: 90%; max-width: 480px; padding: 3rem 2.5rem; position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transform: translateY(20px); transition: transform 0.4s ease;
+        }
+        .email-popup-overlay.active .email-popup-card { transform: translateY(0); }
+        .email-popup-close {
+            position: absolute; top: 1rem; right: 1.2rem; background: none; border: none;
+            font-size: 2rem; color: var(--text-grey); cursor: pointer; line-height: 1; transition: color 0.2s ease;
+        }
+        .email-popup-close:hover { color: var(--text-dark); }
+        .email-popup-content { text-align: center; }
+        .email-popup-badge {
+            display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--action-color); margin-bottom: 0.75rem;
+        }
+        .email-popup-content h2 { font-size: 1.8rem; font-weight: 600; line-height: 1.2; color: var(--text-dark); margin-bottom: 1rem; letter-spacing: -0.5px; }
+        .email-popup-content p { font-size: 0.95rem; color: var(--text-grey); line-height: 1.5; margin-bottom: 2rem; }
+        .email-popup-form { display: flex; flex-direction: column; gap: 0.75rem; }
+        .email-popup-input {
+            width: 100%; padding: 1rem 1.2rem; border: 1px solid var(--border-color); border-radius: 30px;
+            font-family: inherit; font-size: 1rem; background-color: var(--bg-color); color: var(--text-dark);
+            text-align: center; transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .email-popup-input:focus { outline: none; border-color: var(--action-color); background-color: var(--card-bg); }
+        .style-popup-btn { border-radius: 30px !important; font-size: 0.9rem !important; padding: 1rem !important; }
+        .email-popup-footer { font-size: 0.75rem !important; color: var(--text-grey); margin-top: 1.2rem; margin-bottom: 0 !important; }
+        
+        @media (max-width: 480px) {
+            .email-popup-card { padding: 2.5rem 1.5rem; }
+            .email-popup-content h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -511,12 +546,84 @@
         <button class="btn-primary">View Cart</button>
     </div>
 
+    <div id="emailPopupOverlay" class="email-popup-overlay">
+        <div class="email-popup-card">
+            <button class="email-popup-close" onclick="closeEmailPopup()">&times;</button>
+            <div class="email-popup-content">
+                <span class="email-popup-badge">The Sourcing Circle</span>
+                <h2>Unlock 10% Off Your First Authentic Haul</h2>
+                <p>Skip the local middlemen. Join our circle to claim your discount code and get priority access to fresh skincare batches directly from authorized US & Korean retailers.</p>
+                
+                <form class="email-popup-form" onsubmit="handleEmailSubmit(event)">
+                    <input type="email" placeholder="Enter your email address" class="email-popup-input" required>
+                    <button type="submit" class="btn-primary w-100 style-popup-btn">Claim My 10% Discount</button>
+                </form>
+                
+                <p class="email-popup-footer">We respect your inbox. Only authentic updates, zero spam.</p>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Drawer Filter Logic
         function toggleFilter() {
             const drawer = document.getElementById('filterDrawer');
             const overlay = document.getElementById('filterOverlay');
             drawer.classList.toggle('open');
             overlay.classList.toggle('show');
+        }
+
+        // Pop-up Logic with Experience Safeguards
+        document.addEventListener("DOMContentLoaded", () => {
+            if (localStorage.getItem("bbo_popup_subscribed") === "true" || 
+                localStorage.getItem("bbo_popup_closed") === "true") {
+                return; 
+            }
+
+            // Trigger Option A: Display automatically after an 8-second delay
+            setTimeout(showEmailPopup, 8000);
+
+            // Trigger Option B: Desktop Exit Intent (Mouse moves out of top window area)
+            document.addEventListener("mouseleave", (e) => {
+                if (e.clientY < 20) {
+                    showEmailPopup();
+                }
+            });
+        });
+
+        function showEmailPopup() {
+            if (localStorage.getItem("bbo_popup_subscribed") !== "true" && 
+                localStorage.getItem("bbo_popup_closed") !== "true") {
+                document.getElementById("emailPopupOverlay").classList.add("active");
+            }
+        }
+
+        function closeEmailPopup() {
+            document.getElementById("emailPopupOverlay").classList.remove("active");
+            // Remember refusal for 7 days so we don't spam their sessions
+            localStorage.setItem("bbo_popup_closed", "true");
+        }
+
+        function handleEmailSubmit(event) {
+            event.preventDefault();
+            const emailInput = event.target.querySelector('.email-popup-input').value;
+            
+            console.log("Captured Email for Sourcing Circle:", emailInput);
+            
+            // Display a clean inline success confirmation
+            const contentContainer = document.querySelector('.email-popup-content');
+            contentContainer.innerHTML = `
+                <div style="padding: 1.5rem 0;">
+                    <span style="font-size: 2.5rem;">🎉</span>
+                    <h2 style="margin-top: 1rem; margin-bottom: 0.5rem;">You're in the Circle!</h2>
+                    <p style="margin-bottom: 0;">Check your inbox shortly. Your 10% discount code is flying your way alongside our next batch deployment manifest.</p>
+                </div>
+            `;
+            
+            localStorage.setItem("bbo_popup_subscribed", "true");
+            setTimeout(() => {
+                document.getElementById("emailPopupOverlay").classList.remove("active");
+            }, 4500);
         }
     </script>
 
