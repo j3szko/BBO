@@ -72,7 +72,7 @@
         .product-card, .bundle-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .product-card:hover, .bundle-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-        /* Custom Styles for Real Premium Stock Images */
+        /* Premium Stock Image Rules */
         .product-img, .bundle-img, .proof-img-tag { width: 100%; height: 280px; object-fit: cover; display: block; background-color: var(--border-color); }
         .proof-img-tag { height: 220px; border-radius: 8px; margin-bottom: 1.5rem; }
         .timeline-img { width: 100%; max-width: 320px; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1.2rem; display: block; border: 1px solid var(--border-color); }
@@ -102,18 +102,19 @@
         .proof-card h3 { margin-bottom: 1rem; font-size: 1.3rem; }
 
         /* FAQ Accordion */
-        .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 1rem; padding: 1.5rem; cursor: pointer; }
-        .faq-item summary { font-weight: 600; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        .faq-item summary::after { content: '+'; font-size: 1.5rem; color: var(--action-color); }
+        .faq-container { max-width: 800px; margin: 0 auto; padding-top: 1rem; }
+        .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 1rem; padding: 1.5rem; cursor: pointer; display: block; text-align: left; }
+        .faq-item summary { font-weight: 600; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center; outline: none; }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: '+'; font-size: 1.5rem; color: var(--action-color); font-weight: 400; }
         .faq-item[open] summary::after { content: '-'; }
-        .faq-item p { margin-top: 1rem; color: var(--text-grey); font-size: 0.95rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-item p { margin-top: 1rem; color: var(--text-grey); font-size: 0.95rem; border-top: 1px solid var(--border-color); padding-top: 1rem; line-height: 1.6; }
 
         /* Product Request Form Styling */
         .request-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; max-width: 800px; margin: 0 auto; text-align: left; }
         .request-form { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; }
+        .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; }
         .form-input:focus { outline: none; border-color: var(--action-color); }
 
         /* Footer */
@@ -298,4 +299,126 @@
             </div>
 
             <div class="bundle-card">
-                <img src="
+                <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80" alt="Premium Body Care Cosmetics" class="bundle-img">
+                <div class="bundle-info">
+                    <h3>The Smooth Texture System</h3>
+                    <p class="bundle-desc">Salicylic acid body routine to eliminate "strawberry legs" and bumps.</p>
+                    <div class="pricing">
+                        <div class="price-naira">₦82,000</div>
+                        <div class="price-usd">$50 USD · Sourced from US</div>
+                    </div>
+                    <button class="btn-primary w-100">Buy The System</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="journey" class="section">
+        <div class="timeline-wrapper">
+            <h2 class="timeline-header">THE "WORTH THE WAIT" JOURNEY</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-grey);">The wait is the proof. Authenticity cannot be rushed.</p>
+            
+            <div class="timeline-box">
+                <div class="timeline-item">
+                    <div class="timeline-icon">✓</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 0</span>
+                        <h3>You place your order</h3>
+                        <p>No minimum quantity. One product is perfectly fine. You pay securely in Naira, and we get to work immediately.</p>
+                        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&q=80" alt="Placing order online" class="timeline-img">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">🏪</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 1-3</span>
+                        <h3>We order from the US or Korea</h3>
+                        <p>Your product is ordered directly from an authorized US or Korean retailer — sealed, original, verified.</p>
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" alt="Sourcing authentic beauty brands from high-end shelf" class="timeline-img">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">✈️</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 4-18</span>
+                        <h3>It travels to Nigeria</h3>
+                        <p>Your package is in transit. Real distance. Real products. You'll get a tracking number so you can watch it arrive.</p>
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Shipping parcel logistics boxes" class="timeline-img">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">🏠</div>
+                    <div class="timeline-content">
+                        <span class="day-badge">DAY 18-21</span>
+                        <h3>Delivered to your doorstep</h3>
+                        <p>The real thing, at your door. Worth every day of the wait — and you'll know the difference the moment you use it.</p>
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80" alt="Opening beautiful delivered gift packaging" class="timeline-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section bg-light">
+        <div class="section-header">
+            <h2>Authenticity & Logistics FAQ</h2>
+            <p>Transparency is our policy.</p>
+        </div>
+        <div class="faq-container">
+            <details class="faq-item">
+                <summary>How do I know this isn't fake?</summary>
+                <p>We completely bypass local middlemen and open markets. Every item is purchased directly from authorized retailers in the US (like Sephora, Ulta) or South Korea (like Olive Young) after you place your order.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Why does it take 3 weeks?</summary>
+                <p>Because it is literally flying from Seoul or New York to Lagos. The wait is your proof of authenticity. We don't hold aging local stock; we source fresh batches upon your request.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Why do the prices change in Naira?</summary>
+                <p>The Naira amount updates according to the current dollar rate. This adjustment lets us buy fresh products straight from global markets seamlessly. The final price you see is comprehensive—there are absolutely no unexpected custom or handling fees added later.</p>
+            </details>
+            <details class="faq-item">
+                <summary>Are there hidden customs fees?</summary>
+                <p>Absolutely not. The Naira price you see on our website is the final landed cost. It covers the product, international air freight, customs clearing, and local logistics. There are completely zero hidden customs or handling fees.</p>
+            </details>
+        </div>
+    </section>
+
+    <section id="request-product" class="section">
+        <div class="request-card">
+            <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-dark);">Can't find your holy grail?</h2>
+            <p style="color: var(--text-grey);">If there's a specific US or Korean skincare formula you need that isn't featured here yet, let us know below. We'll source it directly from authorized global retailers for you with zero hidden fees.</p>
+            
+            <form class="request-form" onsubmit="event.preventDefault(); alert('Custom request received! We will contact you via WhatsApp/Email shortly.');">
+                <div class="form-row">
+                    <input type="text" placeholder="Product Name (e.g., Heartleaf 77% Toner)" class="form-input" required>
+                    <input type="text" placeholder="Brand Name (e.g., Anua)" class="form-input" required>
+                </div>
+                <input type="text" placeholder="Your WhatsApp Number or Email (so we can send your quote)" class="form-input" required>
+                <button type="submit" class="btn-primary" style="align-self: flex-start; border-radius: 8px;">Submit Custom Request</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <div class="footer-brand">
+                <h2>BBO.</h2>
+                <p>Authenticity cannot be rushed. Straight from the source to your door.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BBO Skincare. All rights reserved. Processed securely in NGN.</p>
+        </div>
+    </footer>
+
+    <div class="mobile-sticky-bar">
+        <div>
+            <span style="font-size: 0.8rem; color: var(--text-grey);">Your Order:</span>
+            <div class="price">₦0</div>
+        </div>
+        <button class="btn-primary">View Cart</button>
+    </div>
+
+</body>
+</html>
