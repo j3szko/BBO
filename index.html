@@ -15,9 +15,6 @@
             --text-grey: #666666;
             --action-color: #B85C38;  
             --action-hover: #9A4C2E;
-            --kr-accent: #9FB4A1;     
-            --us-accent: #6B8293;     
-            --combo-accent: #D3C5B7;  
             --border-color: #E2DED8;
             --timeline-line: #D1CBC1;
         }
@@ -42,7 +39,7 @@
 
         .navbar { padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background-color: rgba(248, 246, 243, 0.95); backdrop-filter: blur(8px); z-index: 100; }
         .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: -1px; }
+        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: -1.5px; }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
@@ -62,6 +59,22 @@
         .btn-secondary { background-color: transparent; border: 1px solid var(--text-dark); color: var(--text-dark); width: 100%; margin-top: 1rem; }
         .btn-secondary:hover { background-color: var(--text-dark); color: #fff; }
 
+        /* Pop-Up Modal Styles */
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .popup-overlay.show { opacity: 1; visibility: visible; }
+        .popup-content { background: var(--card-bg); width: 90%; max-width: 450px; border-radius: 12px; padding: 3rem 2.5rem; position: relative; text-align: center; transform: translateY(20px); transition: transform 0.4s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        .popup-overlay.show .popup-content { transform: translateY(0); }
+        .popup-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 2rem; color: var(--text-grey); cursor: pointer; line-height: 1; transition: color 0.2s ease; }
+        .popup-close:hover { color: var(--text-dark); }
+        .popup-header h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -1px; color: var(--text-dark); }
+        .popup-header p { color: var(--text-grey); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.5; }
+        .popup-dismiss { background: none; border: none; color: var(--text-grey); text-decoration: underline; font-size: 0.8rem; margin-top: 1.5rem; cursor: pointer; transition: color 0.2s ease; }
+        .popup-dismiss:hover { color: var(--text-dark); }
+
+        /* Inputs */
+        .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; }
+        .form-input:focus { outline: none; border-color: var(--action-color); }
+
         /* Filter Controls & Toggle Button */
         .shop-controls { display: flex; justify-content: flex-start; margin-bottom: 2rem; }
         .btn-filter { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -72,8 +85,6 @@
         .filter-drawer.open { left: 0; }
         .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
         .drawer-header h3 { font-size: 1.3rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-close-drawer { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-grey); line-height: 1; }
-        .btn-close-drawer:hover { color: var(--text-dark); }
         
         .sidebar-block { margin-bottom: 2.5rem; }
         .sidebar-block h4 { font-size: 0.95rem; text-transform: uppercase; margin-bottom: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-dark); letter-spacing: 0.5px; }
@@ -92,11 +103,10 @@
         .product-card, .bundle-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover, .bundle-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-        /* Image Display Handling */
-        img { width: 100%; display: block; object-fit: cover; background-color: #EFECE7; }
-        .product-img, .bundle-img, .proof-img-tag { height: 280px; }
+        /* Enhanced Image Rules */
+        .product-img, .bundle-img, .proof-img-tag { width: 100%; height: 280px; object-fit: cover; display: block; background-color: var(--border-color); }
         .proof-img-tag { height: 220px; border-radius: 8px; margin-bottom: 1.5rem; }
-        .timeline-img { width: 100%; max-width: 320px; height: 200px; border-radius: 8px; margin-top: 1.2rem; border: 1px solid var(--border-color); }
+        .timeline-img { width: 100%; max-width: 320px; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1.2rem; display: block; border: 1px solid var(--border-color); }
 
         .product-info, .bundle-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         .card-details-wrapper { margin-bottom: 1rem; }
@@ -140,8 +150,6 @@
         .request-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem; max-width: 800px; margin: 0 auto; text-align: left; }
         .request-form { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; }
-        .form-input:focus { outline: none; border-color: var(--action-color); }
 
         /* Footer */
         .footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: 3rem; text-align: center; }
@@ -162,50 +170,24 @@
             .mobile-sticky-bar .price { font-weight: 700; font-size: 1.2rem; }
             .mobile-sticky-bar .btn-primary { padding: 0.8rem 1.5rem; }
         }
-
-        /* --- Pop-up Specific Styling --- */
-        .email-popup-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(44, 42, 41, 0.6); backdrop-filter: blur(4px);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-        }
-        .email-popup-overlay.active { opacity: 1; pointer-events: auto; }
-        .email-popup-card {
-            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;
-            width: 90%; max-width: 480px; padding: 3rem 2.5rem; position: relative;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transform: translateY(20px); transition: transform 0.4s ease;
-        }
-        .email-popup-overlay.active .email-popup-card { transform: translateY(0); }
-        .email-popup-close {
-            position: absolute; top: 1rem; right: 1.2rem; background: none; border: none;
-            font-size: 2rem; color: var(--text-grey); cursor: pointer; line-height: 1; transition: color 0.2s ease;
-        }
-        .email-popup-close:hover { color: var(--text-dark); }
-        .email-popup-content { text-align: center; }
-        .email-popup-badge {
-            display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
-            text-transform: uppercase; color: var(--action-color); margin-bottom: 0.75rem;
-        }
-        .email-popup-content h2 { font-size: 1.8rem; font-weight: 600; line-height: 1.2; color: var(--text-dark); margin-bottom: 1rem; letter-spacing: -0.5px; }
-        .email-popup-content p { font-size: 0.95rem; color: var(--text-grey); line-height: 1.5; margin-bottom: 2rem; }
-        .email-popup-form { display: flex; flex-direction: column; gap: 0.75rem; }
-        .email-popup-input {
-            width: 100%; padding: 1rem 1.2rem; border: 1px solid var(--border-color); border-radius: 30px;
-            font-family: inherit; font-size: 1rem; background-color: var(--bg-color); color: var(--text-dark);
-            text-align: center; transition: border-color 0.3s ease, background-color 0.3s ease;
-        }
-        .email-popup-input:focus { outline: none; border-color: var(--action-color); background-color: var(--card-bg); }
-        .style-popup-btn { border-radius: 30px !important; font-size: 0.9rem !important; padding: 1rem !important; }
-        .email-popup-footer { font-size: 0.75rem !important; color: var(--text-grey); margin-top: 1.2rem; margin-bottom: 0 !important; }
-        
-        @media (max-width: 480px) {
-            .email-popup-card { padding: 2.5rem 1.5rem; }
-            .email-popup-content h2 { font-size: 1.5rem; }
-        }
     </style>
 </head>
 <body>
+
+    <div id="discountPopup" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            <div class="popup-header">
+                <h2>UNLOCK 10% OFF</h2>
+                <p>Get 10% off your first order. Sourced directly from US and KR authorized retailers, securely shipped to your door.</p>
+            </div>
+            <form class="popup-form" onsubmit="event.preventDefault(); submitPopup();">
+                <input type="email" placeholder="Enter your email address" class="form-input" required>
+                <button type="submit" class="btn-primary w-100" style="margin-top: 1rem; border-radius: 8px;">Claim My Discount</button>
+            </form>
+            <button class="popup-dismiss" onclick="closePopup()">No thanks, I prefer paying full price</button>
+        </div>
+    </div>
 
     <div class="top-banner">
         <div class="marquee">
@@ -252,12 +234,12 @@
         </div>
         <div class="proof-grid">
             <div class="proof-card">
-                <img src="https://images.unsplash.com/photo-1601049676099-e7ed07d825b0?auto=format&fit=crop&w=600&q=80" alt="Texture & Consistency Verification" class="proof-img-tag">
+                <img src="https://images.unsplash.com/photo-1556228720-1c2ae6ba6ce6?auto=format&fit=crop&w=600&q=80" alt="Skincare Serum Texture" class="proof-img-tag">
                 <h3>Texture & Consistency Verification</h3>
                 <p>Counterfeits often have a watered-down or greasy consistency. Your products arrive exactly as the manufacturer formulated them.</p>
             </div>
             <div class="proof-card">
-                <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80" alt="Factory Seals & Batch Codes" class="proof-img-tag">
+                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" alt="Authentic Skincare Packaging" class="proof-img-tag">
                 <h3>Factory Seals & Batch Codes</h3>
                 <p>Every product arrives with intact original seals and verifiable batch codes directly from authorized US or Korean retailers.</p>
             </div>
@@ -267,7 +249,7 @@
     <div id="filterDrawer" class="filter-drawer">
         <div class="drawer-header">
             <h3>Filter Products</h3>
-            <button class="btn-close-drawer" onclick="toggleFilter()">&times;</button>
+            <button class="popup-close" style="position: static;" onclick="toggleFilter()">&times;</button>
         </div>
         
         <div class="sidebar-block">
@@ -308,7 +290,7 @@
         <div class="shop-layout">
             <div class="product-grid">
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80" alt="COSRX Advanced Snail 96 Mucin Essence" class="product-img">
+                    <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80" alt="COSRX Snail Mucin" class="product-img">
                     <div class="product-info">
                         <div class="card-details-wrapper">
                             <h3>COSRX Advanced Snail 96 Mucin Essence</h3>
@@ -328,7 +310,7 @@
                 </div>
 
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Good Molecules Discoloration Serum" class="product-img">
+                    <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80" alt="Discoloration Serum" class="product-img">
                     <div class="product-info">
                         <div class="card-details-wrapper">
                             <h3>Good Molecules Discoloration Serum</h3>
@@ -348,7 +330,7 @@
                 </div>
 
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80" alt="CeraVe Renewing SA Cleanser" class="product-img">
+                    <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80" alt="Facial Cleanser" class="product-img">
                     <div class="product-info">
                         <div class="card-details-wrapper">
                             <h3>CeraVe Renewing SA Cleanser</h3>
@@ -368,7 +350,7 @@
                 </div>
                 
                 <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80" alt="Beauty of Joseon Relief Sun (SPF 50+)" class="product-img">
+                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80" alt="Sunscreen Cream" class="product-img">
                     <div class="product-info">
                         <div class="card-details-wrapper">
                             <h3>Beauty of Joseon Relief Sun (SPF 50+)</h3>
@@ -398,7 +380,7 @@
         
         <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
             <div class="bundle-card">
-                <img src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80" alt="The Fade Protocol Bundle" class="bundle-img">
+                <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Complete Face Kit Set" class="bundle-img">
                 <div class="bundle-info">
                     <div class="card-details-wrapper">
                         <h3>The Fade Protocol</h3>
@@ -418,7 +400,7 @@
             </div>
 
             <div class="bundle-card">
-                <img src="https://images.unsplash.com/photo-1614859324967-bdf461fcf769?auto=format&fit=crop&w=600&q=80" alt="The Smooth Texture System Bundle" class="bundle-img">
+                <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80" alt="Premium Body Care Cosmetics" class="bundle-img">
                 <div class="bundle-info">
                     <div class="card-details-wrapper">
                         <h3>The Smooth Texture System</h3>
@@ -451,7 +433,7 @@
                         <span class="day-badge">DAY 0</span>
                         <h3>You place your order</h3>
                         <p>No minimum quantity. One product is perfectly fine. You pay securely in Naira, and we get to work immediately.</p>
-                        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&q=80" alt="Order Placement Stage" class="timeline-img">
+                        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&q=80" alt="Placing order online" class="timeline-img">
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -460,7 +442,7 @@
                         <span class="day-badge">DAY 1-3</span>
                         <h3>We order from the US or Korea</h3>
                         <p>Your product is ordered directly from an authorized US or Korean retailer — sealed, original, verified.</p>
-                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80" alt="Global Procurement Stage" class="timeline-img">
+                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" alt="Sourcing authentic beauty brands" class="timeline-img">
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -469,7 +451,7 @@
                         <span class="day-badge">DAY 4-18</span>
                         <h3>It travels to Nigeria</h3>
                         <p>Your package is in transit. Real distance. Real products. You'll get a tracking number so you can watch it arrive.</p>
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="International Transit Stage" class="timeline-img">
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Shipping logistics layout" class="timeline-img">
                     </div>
                 </div>
                 <div class="timeline-item">
@@ -478,7 +460,7 @@
                         <span class="day-badge">DAY 18-21</span>
                         <h3>Delivered to your doorstep</h3>
                         <p>The real thing, at your door. Worth every day of the wait — and you'll know the difference the moment you use it.</p>
-                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&w=600&q=80" alt="Final Doorstep Delivery Stage" class="timeline-img">
+                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80" alt="Opening beautiful packaging" class="timeline-img">
                     </div>
                 </div>
             </div>
@@ -546,24 +528,6 @@
         <button class="btn-primary">View Cart</button>
     </div>
 
-    <div id="emailPopupOverlay" class="email-popup-overlay">
-        <div class="email-popup-card">
-            <button class="email-popup-close" onclick="closeEmailPopup()">&times;</button>
-            <div class="email-popup-content">
-                <span class="email-popup-badge">The Sourcing Circle</span>
-                <h2>Unlock 10% Off Your First Authentic Haul</h2>
-                <p>Skip the local middlemen. Join our circle to claim your discount code and get priority access to fresh skincare batches directly from authorized US & Korean retailers.</p>
-                
-                <form class="email-popup-form" onsubmit="handleEmailSubmit(event)">
-                    <input type="email" placeholder="Enter your email address" class="email-popup-input" required>
-                    <button type="submit" class="btn-primary w-100 style-popup-btn">Claim My 10% Discount</button>
-                </form>
-                
-                <p class="email-popup-footer">We respect your inbox. Only authentic updates, zero spam.</p>
-            </div>
-        </div>
-    </div>
-
     <script>
         // Drawer Filter Logic
         function toggleFilter() {
@@ -573,57 +537,26 @@
             overlay.classList.toggle('show');
         }
 
-        // Pop-up Logic with Experience Safeguards
-        document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem("bbo_popup_subscribed") === "true" || 
-                localStorage.getItem("bbo_popup_closed") === "true") {
-                return; 
-            }
-
-            // Trigger Option A: Display automatically after an 8-second delay
-            setTimeout(showEmailPopup, 8000);
-
-            // Trigger Option B: Desktop Exit Intent (Mouse moves out of top window area)
-            document.addEventListener("mouseleave", (e) => {
-                if (e.clientY < 20) {
-                    showEmailPopup();
+        // Pop-Up Logic with 5-Second Delay & Session Storage Memory
+        window.onload = function() {
+            setTimeout(function() {
+                // Check if they've already seen it this session to prevent spamming them
+                if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
+                    document.getElementById('discountPopup').classList.add('show');
+                    // Save to session storage so it doesn't pop up again if they refresh
+                    sessionStorage.setItem('bboDiscountPopupSeen', 'true');
                 }
-            });
-        });
-
-        function showEmailPopup() {
-            if (localStorage.getItem("bbo_popup_subscribed") !== "true" && 
-                localStorage.getItem("bbo_popup_closed") !== "true") {
-                document.getElementById("emailPopupOverlay").classList.add("active");
-            }
+            }, 5000); // 5000 milliseconds = 5 seconds
         }
 
-        function closeEmailPopup() {
-            document.getElementById("emailPopupOverlay").classList.remove("active");
-            // Remember refusal for 7 days so we don't spam their sessions
-            localStorage.setItem("bbo_popup_closed", "true");
+        function closePopup() {
+            document.getElementById('discountPopup').classList.remove('show');
         }
 
-        function handleEmailSubmit(event) {
-            event.preventDefault();
-            const emailInput = event.target.querySelector('.email-popup-input').value;
-            
-            console.log("Captured Email for Sourcing Circle:", emailInput);
-            
-            // Display a clean inline success confirmation
-            const contentContainer = document.querySelector('.email-popup-content');
-            contentContainer.innerHTML = `
-                <div style="padding: 1.5rem 0;">
-                    <span style="font-size: 2.5rem;">🎉</span>
-                    <h2 style="margin-top: 1rem; margin-bottom: 0.5rem;">You're in the Circle!</h2>
-                    <p style="margin-bottom: 0;">Check your inbox shortly. Your 10% discount code is flying your way alongside our next batch deployment manifest.</p>
-                </div>
-            `;
-            
-            localStorage.setItem("bbo_popup_subscribed", "true");
-            setTimeout(() => {
-                document.getElementById("emailPopupOverlay").classList.remove("active");
-            }, 4500);
+        function submitPopup() {
+            // Replace this alert with your actual email submission logic later
+            alert('Awesome! Check your email for your 10% off code.');
+            closePopup();
         }
     </script>
 
