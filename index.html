@@ -156,8 +156,30 @@
         .footer-brand h2 { font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -1px; }
         .footer-bottom { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; }
 
-        /* Sticky Mobile Action Bar */
-        .mobile-sticky-bar { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border-color); padding: 1rem 5%; box-shadow: 0 -5px 15px rgba(0,0,0,0.05); z-index: 1000; }
+        /* Sticky Mobile Action Bar (Starts hidden out of view) */
+        .mobile-sticky-bar { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: var(--card-bg); 
+            border-top: 1px solid var(--border-color); 
+            padding: 1rem 5%; 
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05); 
+            z-index: 1000; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        /* Active visibility styling triggered via Javascript classes */
+        .mobile-sticky-bar.visible { transform: translateY(0); }
+        .mobile-sticky-bar.collapsed { transform: translateY(100%) !important; }
+
+        .sticky-left-wrapper { display: flex; align-items: center; gap: 12px; }
+        .btn-close-sticky { background: #EFECE7; border: none; font-size: 1.1rem; font-weight: 700; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-grey); }
+        .btn-close-sticky:hover { color: var(--text-dark); background: var(--border-color); }
 
         @media (max-width: 900px) {
             .proof-grid { grid-template-columns: 1fr; }
@@ -166,7 +188,6 @@
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
-            .mobile-sticky-bar { display: flex; justify-content: space-between; align-items: center; }
             .mobile-sticky-bar .price { font-weight: 700; font-size: 1.2rem; }
             .mobile-sticky-bar .btn-primary { padding: 0.8rem 1.5rem; }
         }
@@ -205,7 +226,7 @@
                 <li><a href="#faq">FAQ</a></li>
             </ul>
             <div class="nav-icons">
-                <span>Cart (0)</span>
+                <span id="nav-cart-counter">Cart (0)</span>
             </div>
         </div>
     </nav>
@@ -304,7 +325,7 @@
                                 </div>
                                 <div class="price-usd"><span class="price-usd-scratched">$22 USD</span> · $15 USD · Sourced from KR</div>
                             </div>
-                            <button class="btn-secondary w-100">Add to Cart</button>
+                            <button class="btn-secondary w-100" onclick="addItemToCart('COSRX Advanced Snail 96 Mucin Essence', 24500)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -324,7 +345,7 @@
                                 </div>
                                 <div class="price-usd"><span class="price-usd-scratched">$18 USD</span> · $12 USD · Sourced from US</div>
                             </div>
-                            <button class="btn-secondary w-100">Add to Cart</button>
+                            <button class="btn-secondary w-100" onclick="addItemToCart('Good Molecules Discoloration Serum', 21500)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -344,7 +365,7 @@
                                 </div>
                                 <div class="price-usd"><span class="price-usd-scratched">$28 USD</span> · $19 USD · Sourced from US</div>
                             </div>
-                            <button class="btn-secondary w-100">Add to Cart</button>
+                            <button class="btn-secondary w-100" onclick="addItemToCart('CeraVe Renewing SA Cleanser', 32500)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -364,7 +385,7 @@
                                 </div>
                                 <div class="price-usd"><span class="price-usd-scratched">$24 USD</span> · $16 USD · Sourced from KR</div>
                             </div>
-                            <button class="btn-secondary w-100">Add to Cart</button>
+                            <button class="btn-secondary w-100" onclick="addItemToCart('Beauty of Joseon Relief Sun (SPF 50+)', 26000)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -394,7 +415,7 @@
                             </div>
                             <div class="price-usd"><span class="price-usd-scratched">$90 USD</span> · $60 USD · Sourced from US/KR</div>
                         </div>
-                        <button class="btn-primary w-100">Add to Cart</button>
+                        <button class="btn-primary w-100" onclick="addItemToCart('The Fade Protocol Bundle', 98000)">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -414,7 +435,7 @@
                             </div>
                             <div class="price-usd"><span class="price-usd-scratched">$75 USD</span> · $50 USD · Sourced from US</div>
                         </div>
-                        <button class="btn-primary w-100">Add to Cart</button>
+                        <button class="btn-primary w-100" onclick="addItemToCart('The Smooth Texture System Bundle', 82000)">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -520,16 +541,48 @@
         </div>
     </footer>
 
-    <div class="mobile-sticky-bar">
-        <div>
-            <span style="font-size: 0.8rem; color: var(--text-grey);">Your Order:</span>
-            <div class="price">₦0</div>
+    <div id="mobileStickyCart" class="mobile-sticky-bar">
+        <div class="sticky-left-wrapper">
+            <button class="btn-close-sticky" onclick="dismissStickyBar(event)" title="Hide Cart Bar">&times;</button>
+            <div>
+                <span style="font-size: 0.8rem; color: var(--text-grey);">Your Order:</span>
+                <div id="mobile-cart-price" class="price">₦0</div>
+            </div>
         </div>
-        <button class="btn-primary">View Cart</button>
+        <button class="btn-primary" onclick="alert('Proceeding to secure checkout...');">View Cart</button>
     </div>
 
     <script>
-        // Drawer Filter Logic
+        // Global Cart State Variables
+        let cartTotalAmount = 0;
+        let cartItemsCount = 0;
+
+        // Core Cart Logic Functions
+        function addItemToCart(itemName, priceNaira) {
+            cartTotalAmount += priceNaira;
+            cartItemsCount += 1;
+
+            // 1. Update UI Counters
+            document.getElementById('nav-cart-counter').innerText = `Cart (${cartItemsCount})`;
+            document.getElementById('mobile-cart-price').innerText = `₦${cartTotalAmount.toLocaleString()}`;
+
+            // 2. Control Mobile Sticky Drawer Visibility
+            const stickyCart = document.getElementById('mobileStickyCart');
+            stickyCart.classList.remove('collapsed'); // Remove any manual collapse override
+            stickyCart.classList.add('visible');     // Trigger slide-up into viewport
+            
+            // Subtle indicator notice
+            console.log(`Added ${itemName} to cart. Current Total: ₦${cartTotalAmount}`);
+        }
+
+        // Manual dismiss/collapse function for the bottom bar
+        function dismissStickyBar(event) {
+            event.stopPropagation(); // Stop click bubbling
+            const stickyCart = document.getElementById('mobileStickyCart');
+            stickyCart.classList.add('collapsed');
+        }
+
+        // Drawer Filter Panel Logic
         function toggleFilter() {
             const drawer = document.getElementById('filterDrawer');
             const overlay = document.getElementById('filterOverlay');
@@ -540,13 +593,11 @@
         // Pop-Up Logic with 5-Second Delay & Session Storage Memory
         window.onload = function() {
             setTimeout(function() {
-                // Check if they've already seen it this session to prevent spamming them
                 if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
                     document.getElementById('discountPopup').classList.add('show');
-                    // Save to session storage so it doesn't pop up again if they refresh
                     sessionStorage.setItem('bboDiscountPopupSeen', 'true');
                 }
-            }, 5000); // 5000 milliseconds = 5 seconds
+            }, 5000);
         }
 
         function closePopup() {
@@ -554,7 +605,6 @@
         }
 
         function submitPopup() {
-            // Replace this alert with your actual email submission logic later
             alert('Awesome! Check your email for your 10% off code.');
             closePopup();
         }
