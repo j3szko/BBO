@@ -43,6 +43,10 @@
         .nav-links { display: flex; gap: 2rem; list-style: none; }
         .nav-links a { font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
+        /* Interactive Clickable Navbar Cart Counter */
+        #nav-cart-counter { cursor: pointer; font-weight: 600; transition: color 0.2s ease; padding: 0.5rem 1rem; border-radius: 20px; background-color: #EFECE7; }
+        #nav-cart-counter:hover { color: var(--action-color); background-color: var(--border-color); }
+
         /* Payment Acceptance Sub-Header */
         .payment-notice-bar { background-color: #EFECE7; border-bottom: 1px solid var(--border-color); text-align: center; padding: 0.6rem 5%; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 
@@ -80,7 +84,7 @@
         .btn-filter { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-filter:hover { background: #EFECE7; border-color: var(--text-dark); }
 
-        /* Slide-out Sidebar Drawer */
+        /* Slide-out Sidebar Drawers (Filter & Cart) */
         .filter-drawer { position: fixed; top: 0; left: -320px; width: 320px; height: 100%; background: var(--card-bg); box-shadow: 5px 0 25px rgba(0,0,0,0.08); z-index: 1000; transition: left 0.3s ease-in-out; padding: 2rem; overflow-y: auto; }
         .filter-drawer.open { left: 0; }
         .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
@@ -93,9 +97,27 @@
         .sidebar-block input { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--action-color); cursor: pointer; }
         .sidebar-block label { cursor: pointer; display: inline-flex; align-items: center; width: 100%; }
 
-        /* Overlay Background */
+        /* New Right Slide-Out Cart Drawer Layout */
+        .cart-drawer { position: fixed; top: 0; right: -380px; width: 380px; height: 100%; background: var(--card-bg); box-shadow: -5px 0 25px rgba(0,0,0,0.08); z-index: 1500; transition: right 0.3s ease-in-out; padding: 2rem; display: flex; flex-direction: column; }
+        .cart-drawer.open { right: 0; }
+        .cart-drawer-items { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 1.5rem; padding-right: 5px; }
+        
+        /* Interactive Cart Items Layout */
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); }
+        .cart-item-info h4 { font-size: 0.95rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; margin-bottom: 0.2rem; }
+        .cart-item-info p { font-size: 0.85rem; color: var(--text-grey); }
+        .cart-item-controls { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.6rem; }
+        
+        .btn-qty { width: 26px; height: 26px; background-color: var(--bg-color); border: 1px solid var(--border-color); font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.2s; }
+        .btn-qty:hover { background-color: var(--border-color); }
+        .qty-label { font-size: 0.9rem; font-weight: 600; min-width: 20px; text-align: center; }
+        .cart-drawer-footer { border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
+        .cart-grand-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.25rem; margin-bottom: 1.2rem; color: var(--text-dark); }
+
+        /* Overlay Background System */
         .filter-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(2px); z-index: 999; display: none; }
         .filter-overlay.show { display: block; }
+        #cartOverlay { z-index: 1400; }
 
         /* Product Layout Grids */
         .shop-layout { width: 100%; }
@@ -156,7 +178,7 @@
         .footer-brand h2 { font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -1px; }
         .footer-bottom { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; }
 
-        /* Sticky Mobile Action Bar (Starts hidden out of view) */
+        /* Sticky Mobile Action Bar */
         .mobile-sticky-bar { 
             position: fixed; 
             bottom: 0; 
@@ -173,7 +195,6 @@
             transform: translateY(100%);
             transition: transform 0.3s ease-in-out;
         }
-        /* Active visibility styling triggered via Javascript classes */
         .mobile-sticky-bar.visible { transform: translateY(0); }
         .mobile-sticky-bar.collapsed { transform: translateY(100%) !important; }
 
@@ -190,6 +211,10 @@
             .nav-links { display: none; }
             .mobile-sticky-bar .price { font-weight: 700; font-size: 1.2rem; }
             .mobile-sticky-bar .btn-primary { padding: 0.8rem 1.5rem; }
+        }
+
+        @media (max-width: 420px) {
+            .cart-drawer { width: 100%; right: -100%; }
         }
     </style>
 </head>
@@ -226,7 +251,7 @@
                 <li><a href="#faq">FAQ</a></li>
             </ul>
             <div class="nav-icons">
-                <span id="nav-cart-counter">Cart (0)</span>
+                <span id="nav-cart-counter" onclick="toggleCartDrawer()">Cart (0)</span>
             </div>
         </div>
     </nav>
@@ -294,6 +319,25 @@
         </div>
     </div>
     <div id="filterOverlay" class="filter-overlay" onclick="toggleFilter()"></div>
+
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="drawer-header" style="margin-bottom: 1.5rem;">
+            <h3>Your Cart Items</h3>
+            <button class="popup-close" style="position: static;" onclick="toggleCartDrawer()">&times;</button>
+        </div>
+        
+        <div id="cart-drawer-items" class="cart-drawer-items">
+            </div>
+        
+        <div class="cart-drawer-footer">
+            <div class="cart-grand-total">
+                <span>Grand Total:</span>
+                <span id="cart-drawer-total">₦0</span>
+            </div>
+            <button class="btn-primary w-100" style="border-radius: 8px; padding: 1.1rem;" onclick="proceedToCheckout()">Proceed To Checkout</button>
+        </div>
+    </div>
+    <div id="cartOverlay" class="filter-overlay" onclick="toggleCartDrawer()"></div>
 
     <section id="shop" class="section">
         <div class="section-header">
@@ -545,44 +589,137 @@
         <div class="sticky-left-wrapper">
             <button class="btn-close-sticky" onclick="dismissStickyBar(event)" title="Hide Cart Bar">&times;</button>
             <div>
-                <span style="font-size: 0.8rem; color: var(--text-grey);">Your Order:</span>
+                <span style="font-size: 0.8rem; color: var(--text-grey);">Your Order Total:</span>
                 <div id="mobile-cart-price" class="price">₦0</div>
             </div>
         </div>
-        <button class="btn-primary" onclick="alert('Proceeding to secure checkout...');">View Cart</button>
+        <button class="btn-primary" onclick="toggleCartDrawer()">View Cart</button>
     </div>
 
     <script>
-        // Global Cart State Variables
-        let cartTotalAmount = 0;
-        let cartItemsCount = 0;
+        // Array Data-Structure to Track Cart State Objectively
+        let cartState = [];
 
-        // Core Cart Logic Functions
+        // Add Items to Cart Logic
         function addItemToCart(itemName, priceNaira) {
-            cartTotalAmount += priceNaira;
-            cartItemsCount += 1;
-
-            // 1. Update UI Counters
-            document.getElementById('nav-cart-counter').innerText = `Cart (${cartItemsCount})`;
-            document.getElementById('mobile-cart-price').innerText = `₦${cartTotalAmount.toLocaleString()}`;
-
-            // 2. Control Mobile Sticky Drawer Visibility
-            const stickyCart = document.getElementById('mobileStickyCart');
-            stickyCart.classList.remove('collapsed'); // Remove any manual collapse override
-            stickyCart.classList.add('visible');     // Trigger slide-up into viewport
+            // Check if item already exists in customer's state
+            const existingItem = cartState.find(item => item.name === itemName);
             
-            // Subtle indicator notice
-            console.log(`Added ${itemName} to cart. Current Total: ₦${cartTotalAmount}`);
-        }
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cartState.push({
+                    name: itemName,
+                    price: priceNaira,
+                    quantity: 1
+                });
+            }
 
-        // Manual dismiss/collapse function for the bottom bar
-        function dismissStickyBar(event) {
-            event.stopPropagation(); // Stop click bubbling
+            // Sync structural changes with the interfaces
+            renderCartUI();
+
+            // Auto-reveal the bottom sticky action bar on mobile viewports
             const stickyCart = document.getElementById('mobileStickyCart');
-            stickyCart.classList.add('collapsed');
+            stickyCart.classList.remove('collapsed'); 
+            stickyCart.classList.add('visible');     
         }
 
-        // Drawer Filter Panel Logic
+        // Handle inner quantity adjustment increments (+/-)
+        function changeItemQuantity(itemName, delta) {
+            const targetedItem = cartState.find(item => item.name === itemName);
+            
+            if (targetedItem) {
+                targetedItem.quantity += delta;
+                
+                // Drop completely if count drops below 1
+                if (targetedItem.quantity <= 0) {
+                    cartState = cartState.filter(item => item.name !== itemName);
+                }
+            }
+            renderCartUI();
+        }
+
+        // Toggle Right Cart Drawer Panel State
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        // Central UI Synchronization Processor
+        function renderCartUI() {
+            // 1. Compute aggregations
+            const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
+            const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
+
+            // 2. Update Header Count Node
+            document.getElementById('nav-cart-counter').innerText = `Cart (${grossCount})`;
+
+            // 3. Update Sticky Bar Value Nodes
+            document.getElementById('mobile-cart-price').innerText = `₦${grossValue.toLocaleString()}`;
+            
+            // Auto hide sticky bar entirely on mobile if items fall back to 0
+            const stickyCart = document.getElementById('mobileStickyCart');
+            if (grossCount === 0) {
+                stickyCart.classList.remove('visible');
+            }
+
+            // 4. Render Cart Drawer Stream List Content
+            const streamContainer = document.getElementById('cart-drawer-items');
+            streamContainer.innerHTML = ''; // Fresh sweep
+
+            if (cartState.length === 0) {
+                streamContainer.innerHTML = `
+                    <div style="text-align: center; color: var(--text-grey); margin-top: 4rem;">
+                        <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">Your cart is completely empty</p>
+                        <p style="font-size: 0.85rem;">Browse products to build your routine.</p>
+                    </div>`;
+                document.getElementById('cart-drawer-total').innerText = '₦0';
+                return;
+            }
+
+            cartState.forEach(item => {
+                const node = document.createElement('div');
+                node.className = 'cart-item';
+                node.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>₦${item.price.toLocaleString()} each</p>
+                        <div class="cart-item-controls">
+                            <button class="btn-qty" onclick="changeItemQuantity('${item.name}', -1)">-</button>
+                            <span class="qty-label">${item.quantity}</span>
+                            <button class="btn-qty" onclick="changeItemQuantity('${item.name}', 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--text-dark); white-space: nowrap;">
+                        ₦${(item.price * item.quantity).toLocaleString()}
+                    </div>
+                `;
+                streamContainer.appendChild(node);
+            });
+
+            // Update drawer running absolute grand total
+            document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
+        }
+
+        // Proceed to Checkout Hook
+        function proceedToCheckout() {
+            if (cartState.length === 0) {
+                alert('Your shopping cart is currently empty.');
+                return;
+            }
+            alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
+            // This acts as your clean bridge entry point to pass your cartState to a checkout/payment page
+        }
+
+        // Manual collapse dismiss function for bottom sticky element
+        function dismissStickyBar(event) {
+            event.stopPropagation(); 
+            document.getElementById('mobileStickyCart').add('collapsed');
+        }
+
+        // Drawer Left Filter Panel Logic
         function toggleFilter() {
             const drawer = document.getElementById('filterDrawer');
             const overlay = document.getElementById('filterOverlay');
@@ -590,7 +727,7 @@
             overlay.classList.toggle('show');
         }
 
-        // Pop-Up Logic with 5-Second Delay & Session Storage Memory
+        // Pop-Up Display Logic Delay Context Configuration
         window.onload = function() {
             setTimeout(function() {
                 if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
