@@ -17,6 +17,7 @@
             --action-hover: #9A4C2E;
             --border-color: #E2DED8;
             --timeline-line: #D1CBC1;
+            --success-green: #3E6B5C;
         }
 
         html { scroll-behavior: smooth; }
@@ -202,9 +203,49 @@
         .btn-close-sticky { background: #EFECE7; border: none; font-size: 1.1rem; font-weight: 700; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-grey); }
         .btn-close-sticky:hover { color: var(--text-dark); background: var(--border-color); }
 
+        /* ==========================================================================
+           SCOPED CHECKOUT STYLES 
+           ========================================================================== */
+        .checkout-wrapper { max-width: 1200px; margin: 2rem auto; padding: 0 5%; display: grid; grid-template-columns: 7fr 5fr; gap: 3rem; }
+        .checkout-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; }
+        .checkout-section .section-title { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; text-align: left; }
+        .checkout-section .section-title span { background: var(--text-dark); color: var(--card-bg); width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+        
+        .checkout-form-group { margin-bottom: 1.2rem; }
+        .checkout-form-group label { display: block; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.4rem; color: var(--text-dark); letter-spacing: 0.5px; text-align: left; }
+        .checkout-select { width: 100%; padding: 0.9rem; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border-color 0.3s; }
+        .checkout-select:focus { outline: none; border-color: var(--action-color); }
+
+        .payment-option { border: 1px solid var(--border-color); border-radius: 6px; padding: 1.2rem; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: background 0.2s; text-align: left; }
+        .payment-option:hover { background-color: var(--bg-color); }
+        .payment-option.active { border-color: var(--action-color); background-color: rgba(184, 92, 56, 0.03); }
+        .payment-option input[type="radio"] { margin-top: 4px; accent-color: var(--action-color); width: 18px; height: 18px; }
+        .payment-text h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+        .payment-text p { font-size: 0.85rem; color: var(--text-grey); }
+
+        .summary-sidebar { position: sticky; top: 6rem; height: fit-content; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 2rem; }
+        .summary-title { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; text-align: left; }
+        
+        .summary-items { max-height: 240px; overflow-y: auto; margin-bottom: 1.5rem; padding-right: 5px; }
+        .checkout-item-row { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+        .checkout-item-info { text-align: left; }
+        .checkout-item-info h4 { font-weight: 600; font-size: 0.9rem; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .checkout-item-info span { font-size: 0.8rem; color: var(--text-grey); }
+        
+        .totals-block { margin-top: 1.5rem; border-top: 2px dashed var(--border-color); padding-top: 1.5rem; }
+        .total-row { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem; color: var(--text-grey); }
+        .total-row.grand-total { font-size: 1.3rem; font-weight: 700; color: var(--text-dark); margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border-color); }
+        .total-row.grand-total span:last-child { color: var(--action-color); }
+        
+        .badge-trust { display: inline-flex; align-items: center; gap: 6px; background-color: rgba(62, 107, 92, 0.1); color: var(--success-green); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1rem; width: 100%; justify-content: center; }
+        .btn-submit { background-color: var(--action-color); color: #fff; width: 100%; padding: 1.2rem; font-weight: 600; border-radius: 30px; cursor: pointer; transition: background 0.3s; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.5px; border: none; margin-top: 1.5rem; }
+        .btn-submit:hover { background-color: var(--action-hover); }
+
         @media (max-width: 900px) {
             .proof-grid { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
+            .checkout-wrapper { grid-template-columns: 1fr; gap: 2rem; }
+            .summary-sidebar { position: static; }
         }
 
         @media (max-width: 768px) {
@@ -243,8 +284,8 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">BBO.</a>
-            <ul class="nav-links">
+            <a href="#" class="logo" onclick="navigateToStorefront(event)">BBO.</a>
+            <ul class="nav-links" id="storefront-nav-links">
                 <li><a href="#shop">Shop Products</a></li>
                 <li><a href="#bundles">Curated Bundles</a></li>
                 <li><a href="#journey">The Journey</a></li>
@@ -252,6 +293,7 @@
             </ul>
             <div class="nav-icons">
                 <span id="nav-cart-counter" onclick="toggleCartDrawer()">Cart (0)</span>
+                <a href="#" id="back-to-shop-link" class="btn-close-sticky" style="display:none; width:auto; height:auto; background:none; font-size:0.9rem; font-weight:600; color:var(--text-grey);" onclick="navigateToStorefront(event)">← Back to Storefront</a>
             </div>
         </div>
     </nav>
@@ -261,317 +303,415 @@
         Naira payment and Dollar Payment accepted!!!
     </div>
 
-    <header id="home" class="hero">
-        <div class="hero-content">
-            <span class="badge">No Minimum Order · Zero Customs Fees</span>
-            <h1>Authentic Skincare, Straight from the Source.</h1>
-            <p>Sourced directly from authorized US and Korean retailers. Unboxed at your doorstep in Nigeria. Zero fakes, with absolutely no custom or handling fees.</p>
-            <div class="hero-buttons">
-                <a href="#shop" class="btn-primary">Shop All Products</a>
-                <a href="#bundles" class="btn-secondary" style="width: auto; margin-top: 0; margin-left: 10px;">Shop Bundles</a>
+
+    <div id="storefrontView">
+        <header id="home" class="hero">
+            <div class="hero-content">
+                <span class="badge">No Minimum Order · Zero Customs Fees</span>
+                <h1>Authentic Skincare, Straight from the Source.</h1>
+                <p>Sourced directly from authorized US and Korean retailers. Unboxed at your doorstep in Nigeria. Zero fakes, with absolutely no custom or handling fees.</p>
+                <div class="hero-buttons">
+                    <a href="#shop" class="btn-primary">Shop All Products</a>
+                    <a href="#bundles" class="btn-secondary" style="width: auto; margin-top: 0; margin-left: 10px;">Shop Bundles</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="section bg-light">
+            <div class="section-header">
+                <h2>The Proof is in the Packaging</h2>
+                <p>Fake skincare damages the skin barrier. We guarantee uncompromised safety and original formulas.</p>
+            </div>
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <img src="https://images.unsplash.com/photo-1556228720-1c2ae6ba6ce6?auto=format&fit=crop&w=600&q=80" alt="Skincare Serum Texture" class="proof-img-tag">
+                    <h3>Texture & Consistency Verification</h3>
+                    <p>Counterfeits often have a watered-down or greasy consistency. Your products arrive exactly as the manufacturer formulated them.</p>
+                </div>
+                <div class="proof-card">
+                    <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" alt="Authentic Skincare Packaging" class="proof-img-tag">
+                    <h3>Factory Seals & Batch Codes</h3>
+                    <p>Every product arrives with intact original seals and verifiable batch codes directly from authorized US or Korean retailers.</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="filterDrawer" class="filter-drawer">
+            <div class="drawer-header">
+                <h3>Filter Products</h3>
+                <button class="popup-close" style="position: static;" onclick="toggleFilter()">&times;</button>
+            </div>
+            <div class="sidebar-block">
+                <h4>Target By Concern</h4>
+                <ul>
+                    <li><label><input type="checkbox"> Hyperpigmentation</label></li>
+                    <li><label><input type="checkbox"> Acne & Breakouts</label></li>
+                    <li><label><input type="checkbox"> Damaged Barrier</label></li>
+                    <li><label><input type="checkbox"> Uneven Tone</label></li>
+                </ul>
+            </div>
+            <div class="sidebar-block">
+                <h4>Brands</h4>
+                <ul>
+                    <li><label><input type="checkbox"> CeraVe (US)</label></li>
+                    <li><label><input type="checkbox"> Good Molecules (US)</label></li>
+                    <li><label><input type="checkbox"> COSRX (KR)</label></li>
+                    <li><label><input type="checkbox"> Beauty of Joseon (KR)</label></li>
+                </ul>
             </div>
         </div>
-    </header>
+        <div id="filterOverlay" class="filter-overlay" onclick="toggleFilter()"></div>
 
-    <section class="section bg-light">
-        <div class="section-header">
-            <h2>The Proof is in the Packaging</h2>
-            <p>Fake skincare damages the skin barrier. We guarantee uncompromised safety and original formulas.</p>
-        </div>
-        <div class="proof-grid">
-            <div class="proof-card">
-                <img src="https://images.unsplash.com/photo-1556228720-1c2ae6ba6ce6?auto=format&fit=crop&w=600&q=80" alt="Skincare Serum Texture" class="proof-img-tag">
-                <h3>Texture & Consistency Verification</h3>
-                <p>Counterfeits often have a watered-down or greasy consistency. Your products arrive exactly as the manufacturer formulated them.</p>
+        <section id="shop" class="section">
+            <div class="section-header">
+                <h2>GLOBAL BEAUTY, NIGERIA DELIVERED</h2>
+                <p>Build your routine with verified, authentic formulas.</p>
             </div>
-            <div class="proof-card">
-                <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80" alt="Authentic Skincare Packaging" class="proof-img-tag">
-                <h3>Factory Seals & Batch Codes</h3>
-                <p>Every product arrives with intact original seals and verifiable batch codes directly from authorized US or Korean retailers.</p>
+
+            <div class="shop-controls">
+                <button class="btn-filter" onclick="toggleFilter()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                    Filter
+                </button>
             </div>
-        </div>
-    </section>
+            
+            <div class="shop-layout">
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80" alt="COSRX Snail Mucin" class="product-img">
+                        <div class="product-info">
+                            <div class="card-details-wrapper">
+                                <h3>COSRX Advanced Snail 96 Mucin Essence</h3>
+                                <p class="concern-tag">Target: Damaged Barrier</p>
+                            </div>
+                            <div>
+                                <div class="pricing">
+                                    <div class="naira-group">
+                                        <span class="price-naira-scratched">₦36,000</span>
+                                        <span class="price-naira">₦24,500</span>
+                                    </div>
+                                    <div class="price-usd"><span class="price-usd-scratched">$22 USD</span> · $15 USD · Sourced from KR</div>
+                                </div>
+                                <button class="btn-secondary w-100" onclick="addItemToCart('COSRX Advanced Snail 96 Mucin Essence', 24500)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
 
-    <div id="filterDrawer" class="filter-drawer">
-        <div class="drawer-header">
-            <h3>Filter Products</h3>
-            <button class="popup-close" style="position: static;" onclick="toggleFilter()">&times;</button>
-        </div>
-        
-        <div class="sidebar-block">
-            <h4>Target By Concern</h4>
-            <ul>
-                <li><label><input type="checkbox"> Hyperpigmentation</label></li>
-                <li><label><input type="checkbox"> Acne & Breakouts</label></li>
-                <li><label><input type="checkbox"> Damaged Barrier</label></li>
-                <li><label><input type="checkbox"> Uneven Tone</label></li>
-            </ul>
-        </div>
-        
-        <div class="sidebar-block">
-            <h4>Brands</h4>
-            <ul>
-                <li><label><input type="checkbox"> CeraVe (US)</label></li>
-                <li><label><input type="checkbox"> Good Molecules (US)</label></li>
-                <li><label><input type="checkbox"> COSRX (KR)</label></li>
-                <li><label><input type="checkbox"> Beauty of Joseon (KR)</label></li>
-            </ul>
-        </div>
-    </div>
-    <div id="filterOverlay" class="filter-overlay" onclick="toggleFilter()"></div>
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80" alt="Discoloration Serum" class="product-img">
+                        <div class="product-info">
+                            <div class="card-details-wrapper">
+                                <h3>Good Molecules Discoloration Serum</h3>
+                                <p class="concern-tag">Target: Hyperpigmentation</p>
+                            </div>
+                            <div>
+                                <div class="pricing">
+                                    <div class="naira-group">
+                                        <span class="price-naira-scratched">₦32,000</span>
+                                        <span class="price-naira">₦21,500</span>
+                                    </div>
+                                    <div class="price-usd"><span class="price-usd-scratched">$18 USD</span> · $12 USD · Sourced from US</div>
+                                </div>
+                                <button class="btn-secondary w-100" onclick="addItemToCart('Good Molecules Discoloration Serum', 21500)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
 
-    <div id="cartDrawer" class="cart-drawer">
-        <div class="drawer-header" style="margin-bottom: 1.5rem;">
-            <h3>Your Cart Items</h3>
-            <button class="popup-close" style="position: static;" onclick="toggleCartDrawer()">&times;</button>
-        </div>
-        
-        <div id="cart-drawer-items" class="cart-drawer-items">
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80" alt="Facial Cleanser" class="product-img">
+                        <div class="product-info">
+                            <div class="card-details-wrapper">
+                                <h3>CeraVe Renewing SA Cleanser</h3>
+                                <p class="concern-tag">Target: Acne & Texture</p>
+                            </div>
+                            <div>
+                                <div class="pricing">
+                                    <div class="naira-group">
+                                        <span class="price-naira-scratched">₦48,000</span>
+                                        <span class="price-naira">₦32,500</span>
+                                    </div>
+                                    <div class="price-usd"><span class="price-usd-scratched">$28 USD</span> · $19 USD · Sourced from US</div>
+                                </div>
+                                <button class="btn-secondary w-100" onclick="addItemToCart('CeraVe Renewing SA Cleanser', 32500)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80" alt="Sunscreen Cream" class="product-img">
+                        <div class="product-info">
+                            <div class="card-details-wrapper">
+                                <h3>Beauty of Joseon Relief Sun (SPF 50+)</h3>
+                                <p class="concern-tag">Target: Sun Protection</p>
+                            </div>
+                            <div>
+                                <div class="pricing">
+                                    <div class="naira-group">
+                                        <span class="price-naira-scratched">₦39,000</span>
+                                        <span class="price-naira">₦26,000</span>
+                                    </div>
+                                    <div class="price-usd"><span class="price-usd-scratched">$24 USD</span> · $16 USD · Sourced from KR</div>
+                                </div>
+                                <button class="btn-secondary w-100" onclick="addItemToCart('Beauty of Joseon Relief Sun (SPF 50+)', 26000)">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        
-        <div class="cart-drawer-footer">
-            <div class="cart-grand-total">
-                <span>Grand Total:</span>
-                <span id="cart-drawer-total">₦0</span>
+        </section>
+
+        <section id="bundles" class="section bg-light">
+            <div class="section-header">
+                <h2>Targeted Skin Systems</h2>
+                <p>Complete routines engineered for the most common Nigerian skin concerns.</p>
             </div>
-            <button class="btn-primary w-100" style="border-radius: 8px; padding: 1.1rem;" onclick="proceedToCheckout()">Proceed To Checkout</button>
-        </div>
-    </div>
-    <div id="cartOverlay" class="filter-overlay" onclick="toggleCartDrawer()"></div>
-
-    <section id="shop" class="section">
-        <div class="section-header">
-            <h2>GLOBAL BEAUTY, NIGERIA DELIVERED</h2>
-            <p>Build your routine with verified, authentic formulas.</p>
-        </div>
-
-        <div class="shop-controls">
-            <button class="btn-filter" onclick="toggleFilter()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                Filter
-            </button>
-        </div>
-        
-        <div class="shop-layout">
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80" alt="COSRX Snail Mucin" class="product-img">
-                    <div class="product-info">
+            
+            <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+                <div class="bundle-card">
+                    <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Complete Face Kit Set" class="bundle-img">
+                    <div class="bundle-info">
                         <div class="card-details-wrapper">
-                            <h3>COSRX Advanced Snail 96 Mucin Essence</h3>
-                            <p class="concern-tag">Target: Damaged Barrier</p>
+                            <h3>The Fade Protocol</h3>
+                            <p class="bundle-desc">4-step routine for hyperpigmentation, sun damage, and dark spots.</p>
                         </div>
                         <div>
                             <div class="pricing">
                                 <div class="naira-group">
-                                    <span class="price-naira-scratched">₦36,000</span>
-                                    <span class="price-naira">₦24,500</span>
+                                    <span class="price-naira-scratched">₦145,000</span>
+                                    <span class="price-naira">₦98,000</span>
                                 </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$22 USD</span> · $15 USD · Sourced from KR</div>
+                                <div class="price-usd"><span class="price-usd-scratched">$90 USD</span> · $60 USD · Sourced from US/KR</div>
                             </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('COSRX Advanced Snail 96 Mucin Essence', 24500)">Add to Cart</button>
+                            <button class="btn-primary w-100" onclick="addItemToCart('The Fade Protocol Bundle', 98000)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80" alt="Discoloration Serum" class="product-img">
-                    <div class="product-info">
+                <div class="bundle-card">
+                    <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80" alt="Premium Body Care Cosmetics" class="bundle-img">
+                    <div class="bundle-info">
                         <div class="card-details-wrapper">
-                            <h3>Good Molecules Discoloration Serum</h3>
-                            <p class="concern-tag">Target: Hyperpigmentation</p>
+                            <h3>The Smooth Texture System</h3>
+                            <p class="bundle-desc">Salicylic acid body routine to eliminate "strawberry legs" and rough textures.</p>
                         </div>
                         <div>
                             <div class="pricing">
                                 <div class="naira-group">
-                                    <span class="price-naira-scratched">₦32,000</span>
-                                    <span class="price-naira">₦21,500</span>
+                                    <span class="price-naira-scratched">₦120,000</span>
+                                    <span class="price-naira">₦82,000</span>
                                 </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$18 USD</span> · $12 USD · Sourced from US</div>
+                                <div class="price-usd"><span class="price-usd-scratched">$75 USD</span> · $50 USD · Sourced from US</div>
                             </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('Good Molecules Discoloration Serum', 21500)">Add to Cart</button>
+                            <button class="btn-primary w-100" onclick="addItemToCart('The Smooth Texture System Bundle', 82000)">Add to Cart</button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80" alt="Facial Cleanser" class="product-img">
-                    <div class="product-info">
-                        <div class="card-details-wrapper">
-                            <h3>CeraVe Renewing SA Cleanser</h3>
-                            <p class="concern-tag">Target: Acne & Texture</p>
-                        </div>
-                        <div>
-                            <div class="pricing">
-                                <div class="naira-group">
-                                    <span class="price-naira-scratched">₦48,000</span>
-                                    <span class="price-naira">₦32,500</span>
-                                </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$28 USD</span> · $19 USD · Sourced from US</div>
-                            </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('CeraVe Renewing SA Cleanser', 32500)">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
+        <section id="journey" class="section">
+            <div class="timeline-wrapper">
+                <h2 class="timeline-header">THE "WORTH THE WAIT" JOURNEY</h2>
+                <p style="text-align: center; margin-bottom: 2rem; color: var(--text-grey);">The wait is the proof. Authenticity cannot be rushed.</p>
                 
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80" alt="Sunscreen Cream" class="product-img">
-                    <div class="product-info">
-                        <div class="card-details-wrapper">
-                            <h3>Beauty of Joseon Relief Sun (SPF 50+)</h3>
-                            <p class="concern-tag">Target: Sun Protection</p>
+                <div class="timeline-box">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">✓</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">DAY 0</span>
+                            <h3>You place your order</h3>
+                            <p>No minimum quantity. One product is perfectly fine. You pay securely in Naira, and we get to work immediately.</p>
+                            <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&q=80" alt="Placing order online" class="timeline-img">
                         </div>
-                        <div>
-                            <div class="pricing">
-                                <div class="naira-group">
-                                    <span class="price-naira-scratched">₦39,000</span>
-                                    <span class="price-naira">₦26,000</span>
-                                </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$24 USD</span> · $16 USD · Sourced from KR</div>
-                            </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('Beauty of Joseon Relief Sun (SPF 50+)', 26000)">Add to Cart</button>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🏪</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">DAY 1-3</span>
+                            <h3>We order from the US or Korea</h3>
+                            <p>Your product is ordered directly from an authorized US or Korean retailer — sealed, original, verified.</p>
+                            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" alt="Sourcing authentic beauty brands" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">✈️</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">DAY 4-18</span>
+                            <h3>It travels to Nigeria</h3>
+                            <p>Your package is in transit. Real distance. Real products. You'll get a tracking number so you can watch it arrive.</p>
+                            <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Shipping logistics layout" class="timeline-img">
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🏠</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">DAY 18-21</span>
+                            <h3>Delivered to your doorstep</h3>
+                            <p>The real thing, at your door. Worth every day of the wait — and you'll know the difference the moment you use it.</p>
+                            <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80" alt="Opening beautiful packaging" class="timeline-img">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="bundles" class="section bg-light">
-        <div class="section-header">
-            <h2>Targeted Skin Systems</h2>
-            <p>Complete routines engineered for the most common Nigerian skin concerns.</p>
-        </div>
-        
-        <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="bundle-card">
-                <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Complete Face Kit Set" class="bundle-img">
-                <div class="bundle-info">
-                    <div class="card-details-wrapper">
-                        <h3>The Fade Protocol</h3>
-                        <p class="bundle-desc">4-step routine for hyperpigmentation, sun damage, and dark spots.</p>
-                    </div>
-                    <div>
-                        <div class="pricing">
-                            <div class="naira-group">
-                                <span class="price-naira-scratched">₦145,000</span>
-                                <span class="price-naira">₦98,000</span>
-                            </div>
-                            <div class="price-usd"><span class="price-usd-scratched">$90 USD</span> · $60 USD · Sourced from US/KR</div>
-                        </div>
-                        <button class="btn-primary w-100" onclick="addItemToCart('The Fade Protocol Bundle', 98000)">Add to Cart</button>
-                    </div>
-                </div>
+        <section id="faq" class="section bg-light">
+            <div class="section-header">
+                <h2>Authenticity & Logistics FAQ</h2>
+                <p>Transparency is our policy.</p>
             </div>
-
-            <div class="bundle-card">
-                <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80" alt="Premium Body Care Cosmetics" class="bundle-img">
-                <div class="bundle-info">
-                    <div class="card-details-wrapper">
-                        <h3>The Smooth Texture System</h3>
-                        <p class="bundle-desc">Salicylic acid body routine to eliminate "strawberry legs" and rough textures.</p>
-                    </div>
-                    <div>
-                        <div class="pricing">
-                            <div class="naira-group">
-                                <span class="price-naira-scratched">₦120,000</span>
-                                <span class="price-naira">₦82,000</span>
-                            </div>
-                            <div class="price-usd"><span class="price-usd-scratched">$75 USD</span> · $50 USD · Sourced from US</div>
-                        </div>
-                        <button class="btn-primary w-100" onclick="addItemToCart('The Smooth Texture System Bundle', 82000)">Add to Cart</button>
-                    </div>
-                </div>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>How do I know this isn't fake?</summary>
+                    <p>We completely bypass local middlemen and open markets. Every item is purchased directly from authorized retailers in the US (like Sephora, Ulta) or South Korea (like Olive Young) after you place your order.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Why does it take 3 weeks?</summary>
+                    <p>Because it is literally flying from Seoul or New York to Lagos. The wait is your proof of authenticity. We don't hold aging local stock; we source fresh batches upon your request.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Why do the prices change in Naira?</summary>
+                    <p>The Naira amount updates according to the current dollar rate. This adjustment lets us buy fresh products straight from global markets seamlessly. The final price you see is comprehensive—there are absolutely no unexpected custom or handling fees added later.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Are there hidden customs fees?</summary>
+                    <p>Absolutely not. The Naira price you see on our website is the final landed cost. It covers the product, international air freight, customs clearing, and local logistics. There are completely zero hidden customs or handling fees.</p>
+                </details>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="journey" class="section">
-        <div class="timeline-wrapper">
-            <h2 class="timeline-header">THE "WORTH THE WAIT" JOURNEY</h2>
-            <p style="text-align: center; margin-bottom: 2rem; color: var(--text-grey);">The wait is the proof. Authenticity cannot be rushed.</p>
+        <section id="request-product" class="section">
+            <div class="request-card">
+                <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-dark);">Can't find your holy grail?</h2>
+                <p style="color: var(--text-grey);">If there's a specific US or Korean skincare formula you need that isn't featured here yet, let us know below. We'll source it directly from authorized global retailers for you with zero hidden fees.</p>
+                
+                <form class="request-form" onsubmit="event.preventDefault(); alert('Custom request received! We will contact you via WhatsApp/Email shortly.');">
+                    <div class="form-row">
+                        <input type="text" placeholder="Product Name (e.g., Heartleaf 77% Toner)" class="form-input" required>
+                        <input type="text" placeholder="Brand Name (e.g., Anua)" class="form-input" required>
+                    </div>
+                    <input type="text" placeholder="Your WhatsApp Number or Email (so we can send your quote)" class="form-input" required>
+                    <button type="submit" class="btn-primary" style="align-self: flex-start; border-radius: 8px;">Submit Custom Request</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+
+    <div id="checkoutView" style="display: none;">
+        <div class="checkout-wrapper">
             
-            <div class="timeline-box">
-                <div class="timeline-item">
-                    <div class="timeline-icon">✓</div>
-                    <div class="timeline-content">
-                        <span class="day-badge">DAY 0</span>
-                        <h3>You place your order</h3>
-                        <p>No minimum quantity. One product is perfectly fine. You pay securely in Naira, and we get to work immediately.</p>
-                        <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&w=600&q=80" alt="Placing order online" class="timeline-img">
+            <main>
+                <form id="checkoutForm" onsubmit="handleOrderSubmission(event)">
+                    
+                    <div class="checkout-section">
+                        <div class="section-title"><span>1</span> Contact Information</div>
+                        <div class="form-row">
+                            <div class="checkout-form-group">
+                                <label for="checkout-email">Email Address</label>
+                                <input type="email" id="checkout-email" class="form-input" placeholder="name@domain.com" required>
+                            </div>
+                            <div class="checkout-form-group">
+                                <label for="checkout-phone">Phone Number</label>
+                                <input type="tel" id="checkout-phone" class="form-input" placeholder="e.g., +234 803 000 0000" required>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon">🏪</div>
-                    <div class="timeline-content">
-                        <span class="day-badge">DAY 1-3</span>
-                        <h3>We order from the US or Korea</h3>
-                        <p>Your product is ordered directly from an authorized US or Korean retailer — sealed, original, verified.</p>
-                        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80" alt="Sourcing authentic beauty brands" class="timeline-img">
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon">✈️</div>
-                    <div class="timeline-content">
-                        <span class="day-badge">DAY 4-18</span>
-                        <h3>It travels to Nigeria</h3>
-                        <p>Your package is in transit. Real distance. Real products. You'll get a tracking number so you can watch it arrive.</p>
-                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" alt="Shipping logistics layout" class="timeline-img">
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon">🏠</div>
-                    <div class="timeline-content">
-                        <span class="day-badge">DAY 18-21</span>
-                        <h3>Delivered to your doorstep</h3>
-                        <p>The real thing, at your door. Worth every day of the wait — and you'll know the difference the moment you use it.</p>
-                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80" alt="Opening beautiful packaging" class="timeline-img">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="faq" class="section bg-light">
-        <div class="section-header">
-            <h2>Authenticity & Logistics FAQ</h2>
-            <p>Transparency is our policy.</p>
-        </div>
-        <div class="faq-container">
-            <details class="faq-item">
-                <summary>How do I know this isn't fake?</summary>
-                <p>We completely bypass local middlemen and open markets. Every item is purchased directly from authorized retailers in the US (like Sephora, Ulta) or South Korea (like Olive Young) after you place your order.</p>
-            </details>
-            <details class="faq-item">
-                <summary>Why does it take 3 weeks?</summary>
-                <p>Because it is literally flying from Seoul or New York to Lagos. The wait is your proof of authenticity. We don't hold aging local stock; we source fresh batches upon your request.</p>
-            </details>
-            <details class="faq-item">
-                <summary>Why do the prices change in Naira?</summary>
-                <p>The Naira amount updates according to the current dollar rate. This adjustment lets us buy fresh products straight from global markets seamlessly. The final price you see is comprehensive—there are absolutely no unexpected custom or handling fees added later.</p>
-            </details>
-            <details class="faq-item">
-                <summary>Are there hidden customs fees?</summary>
-                <p>Absolutely not. The Naira price you see on our website is the final landed cost. It covers the product, international air freight, customs clearing, and local logistics. There are completely zero hidden customs or handling fees.</p>
-            </details>
-        </div>
-    </section>
+                    <div class="checkout-section">
+                        <div class="section-title"><span>2</span> Shipping Destination</div>
+                        <div class="form-row">
+                            <div class="checkout-form-group">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" class="form-input" required>
+                            </div>
+                            <div class="checkout-form-group">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" class="form-input" required>
+                            </div>
+                        </div>
+                        <div class="checkout-form-group" style="margin-top: 1.2rem;">
+                            <label for="shipping-address">Delivery Street Address</label>
+                            <input type="text" id="shipping-address" class="form-input" placeholder="House number and street name" required>
+                        </div>
+                        <div class="form-row" style="margin-top: 1.2rem;">
+                            <div class="checkout-form-group">
+                                <label for="shipping-city">City</label>
+                                <input type="text" id="shipping-city" class="form-input" required>
+                            </div>
+                            <div class="checkout-form-group">
+                                <label for="shipping-state">State / Region</label>
+                                <select id="shipping-state" class="checkout-select" required>
+                                    <option value="" disabled selected>Select location</option>
+                                    <option value="Abuja">Abuja (FCT)</option>
+                                    <option value="Lagos">Lagos State</option>
+                                    <option value="Rivers">Rivers State</option>
+                                    <option value="Delta">Delta State</option>
+                                    <option value="Ogun">Ogun State</option>
+                                    <option value="Kano">Kano State</option>
+                                    <option value="Other">Other State</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
-    <section id="request-product" class="section">
-        <div class="request-card">
-            <h2 style="font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-dark);">Can't find your holy grail?</h2>
-            <p style="color: var(--text-grey);">If there's a specific US or Korean skincare formula you need that isn't featured here yet, let us know below. We'll source it directly from authorized global retailers for you with zero hidden fees.</p>
-            
-            <form class="request-form" onsubmit="event.preventDefault(); alert('Custom request received! We will contact you via WhatsApp/Email shortly.');">
-                <div class="form-row">
-                    <input type="text" placeholder="Product Name (e.g., Heartleaf 77% Toner)" class="form-input" required>
-                    <input type="text" placeholder="Brand Name (e.g., Anua)" class="form-input" required>
+                    <div class="checkout-section">
+                        <div class="section-title"><span>3</span> Secure Payment Settlement</div>
+                        
+                        <div class="payment-option active" onclick="selectPaymentMethod('naira')">
+                            <input type="radio" id="pay-naira" name="payment_method" value="naira" checked>
+                            <div class="payment-text">
+                                <h4>Pay with Naira (₦)</h4>
+                                <p>Settle balance securely via Local Debit Card, USSD or Direct Bank Web Transfer channels.</p>
+                            </div>
+                        </div>
+
+                        <div class="payment-option" onclick="selectPaymentMethod('usd')">
+                            <input type="radio" id="pay-usd" name="payment_method" value="usd">
+                            <div class="payment-text">
+                                <h4>Pay with US Dollars ($)</h4>
+                                <p>Settle balance instantly via Foreign Cards, Domiciliary Cards, or international gateways.</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </main>
+
+            <aside class="summary-sidebar">
+                <h3 class="summary-title">Order Summary</h3>
+                
+                <div id="summaryItemsContainer" class="summary-items"></div>
+
+                <div class="totals-block">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="summary-subtotal">₦0</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Shipping & Handling</span>
+                        <span style="color: var(--success-green); font-weight: 600;">FREE</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Customs & Clearance Duties</span>
+                        <span style="color: var(--success-green); font-weight: 600;">₦0 / $0</span>
+                    </div>
+                    
+                    <div class="total-row grand-total">
+                        <span>Total Due:</span>
+                        <span id="summary-grand-total">₦0</span>
+                    </div>
+
+                    <div class="badge-trust">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Direct Authorized Retailer Guarantee
+                    </div>
+
+                    <button type="submit" form="checkoutForm" class="btn-submit">Complete Purchase</button>
                 </div>
-                <input type="text" placeholder="Your WhatsApp Number or Email (so we can send your quote)" class="form-input" required>
-                <button type="submit" class="btn-primary" style="align-self: flex-start; border-radius: 8px;">Submit Custom Request</button>
-            </form>
+            </aside>
         </div>
-    </section>
+    </div>
+
 
     <footer class="footer">
         <div class="footer-content" style="max-width: 800px; margin: 0 auto; text-align: center;">
@@ -585,6 +725,22 @@
         </div>
     </footer>
 
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="drawer-header" style="margin-bottom: 1.5rem;">
+            <h3>Your Cart Items</h3>
+            <button class="popup-close" style="position: static;" onclick="toggleCartDrawer()">&times;</button>
+        </div>
+        <div id="cart-drawer-items" class="cart-drawer-items"></div>
+        <div class="cart-drawer-footer">
+            <div class="cart-grand-total">
+                <span>Grand Total:</span>
+                <span id="cart-drawer-total">₦0</span>
+            </div>
+            <button class="btn-primary w-100" style="border-radius: 8px; padding: 1.1rem;" onclick="proceedToCheckout()">Proceed To Checkout</button>
+        </div>
+    </div>
+    <div id="cartOverlay" class="filter-overlay" onclick="toggleCartDrawer()"></div>
+
     <div id="mobileStickyCart" class="mobile-sticky-bar">
         <div class="sticky-left-wrapper">
             <button class="btn-close-sticky" onclick="dismissStickyBar(event)" title="Hide Cart Bar">&times;</button>
@@ -596,13 +752,15 @@
         <button class="btn-primary" onclick="toggleCartDrawer()">View Cart</button>
     </div>
 
+
     <script>
-        // Array Data-Structure to Track Cart State Objectively
+        // Global Single-Source Engine States
         let cartState = [];
+        let selectedCurrencyMode = 'naira'; 
+        const NAIRA_PER_DOLLAR = 1633; // Fixed computational fallback exchange reference
 
         // Add Items to Cart Logic
         function addItemToCart(itemName, priceNaira) {
-            // Check if item already exists in customer's state
             const existingItem = cartState.find(item => item.name === itemName);
             
             if (existingItem) {
@@ -615,7 +773,6 @@
                 });
             }
 
-            // Sync structural changes with the interfaces
             renderCartUI();
 
             // Auto-reveal the bottom sticky action bar on mobile viewports
@@ -630,13 +787,14 @@
             
             if (targetedItem) {
                 targetedItem.quantity += delta;
-                
-                // Drop completely if count drops below 1
                 if (targetedItem.quantity <= 0) {
                     cartState = cartState.filter(item => item.name !== itemName);
                 }
             }
             renderCartUI();
+            if (document.getElementById('checkoutView').style.display === 'block') {
+                renderCheckoutSummary();
+            }
         }
 
         // Toggle Right Cart Drawer Panel State
@@ -649,25 +807,19 @@
 
         // Central UI Synchronization Processor
         function renderCartUI() {
-            // 1. Compute aggregations
             const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
             const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
 
-            // 2. Update Header Count Node
             document.getElementById('nav-cart-counter').innerText = `Cart (${grossCount})`;
-
-            // 3. Update Sticky Bar Value Nodes
             document.getElementById('mobile-cart-price').innerText = `₦${grossValue.toLocaleString()}`;
             
-            // Auto hide sticky bar entirely on mobile if items fall back to 0
             const stickyCart = document.getElementById('mobileStickyCart');
             if (grossCount === 0) {
                 stickyCart.classList.remove('visible');
             }
 
-            // 4. Render Cart Drawer Stream List Content
             const streamContainer = document.getElementById('cart-drawer-items');
-            streamContainer.innerHTML = ''; // Fresh sweep
+            streamContainer.innerHTML = ''; 
 
             if (cartState.length === 0) {
                 streamContainer.innerHTML = `
@@ -699,24 +851,122 @@
                 streamContainer.appendChild(node);
             });
 
-            // Update drawer running absolute grand total
             document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
         }
 
-        // Proceed to Checkout Hook
+        // Single Page View Routing Hooks
         function proceedToCheckout() {
             if (cartState.length === 0) {
                 alert('Your shopping cart is currently empty.');
                 return;
             }
-            alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
-            // This acts as your clean bridge entry point to pass your cartState to a checkout/payment page
+            // Close dynamic overlay drawer drawers
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            drawer.classList.remove('open');
+            overlay.classList.remove('show');
+
+            // Toggle SPA Visibility View States
+            document.getElementById('storefrontView').style.display = 'none';
+            document.getElementById('checkoutView').style.display = 'block';
+            
+            // Adjust Navigation Bar Interfaces 
+            document.getElementById('storefront-nav-links').style.display = 'none';
+            document.getElementById('nav-cart-counter').style.display = 'none';
+            document.getElementById('back-to-shop-link').style.display = 'inline-block';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderCheckoutSummary();
+        }
+
+        function navigateToStorefront(event) {
+            event.preventDefault();
+            document.getElementById('storefrontView').style.display = 'block';
+            document.getElementById('checkoutView').style.display = 'none';
+            
+            document.getElementById('storefront-nav-links').style.display = 'flex';
+            document.getElementById('nav-cart-counter').style.display = 'inline-block';
+            document.getElementById('back-to-shop-link').style.display = 'none';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Checkout Computational Render Sub-Engine
+        function selectPaymentMethod(mode) {
+            selectedCurrencyMode = mode;
+            document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
+            
+            if(mode === 'naira') {
+                document.getElementById('pay-naira').checked = true;
+                document.getElementById('pay-naira').parentElement.classList.add('active');
+            } else {
+                document.getElementById('pay-usd').checked = true;
+                document.getElementById('pay-usd').parentElement.classList.add('active');
+            }
+            renderCheckoutSummary();
+        }
+
+        function renderCheckoutSummary() {
+            const container = document.getElementById('summaryItemsContainer');
+            const subtotalLabel = document.getElementById('summary-subtotal');
+            const grandTotalLabel = document.getElementById('summary-grand-total');
+
+            container.innerHTML = '';
+            let rawNairaSum = 0;
+
+            if (cartState.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-grey); font-size:0.9rem; padding:1rem 0;">Your cart is empty.</p>`;
+                subtotalLabel.textContent = '₦0';
+                grandTotalLabel.textContent = '₦0';
+                return;
+            }
+
+            cartState.forEach(product => {
+                rawNairaSum += product.price * product.quantity;
+                const element = document.createElement('div');
+                element.className = 'checkout-item-row';
+                
+                let itemPriceString = selectedCurrencyMode === 'naira' 
+                    ? `₦${(product.price * product.quantity).toLocaleString()}`
+                    : `$${Math.round((product.price * product.quantity) / NAIRA_PER_DOLLAR).toLocaleString()} USD`;
+
+                element.innerHTML = `
+                    <div class="checkout-item-info">
+                        <h4>${product.name}</h4>
+                        <span>Qty: ${product.quantity}</span>
+                    </div>
+                    <div style="font-weight: 600;">${itemPriceString}</div>
+                `;
+                container.appendChild(element);
+            });
+
+            if(selectedCurrencyMode === 'naira') {
+                subtotalLabel.textContent = `₦${rawNairaSum.toLocaleString()}`;
+                grandTotalLabel.textContent = `₦${rawNairaSum.toLocaleString()}`;
+            } else {
+                const dollarSum = Math.round(rawNairaSum / NAIRA_PER_DOLLAR);
+                subtotalLabel.textContent = `$${dollarSum.toLocaleString()} USD`;
+                grandTotalLabel.textContent = `$${dollarSum.toLocaleString()} USD`;
+            }
+        }
+
+        function handleOrderSubmission(event) {
+            event.preventDefault();
+            const chosenState = document.getElementById('shipping-state').value;
+            
+            alert(`Thank you for choosing BBO!\n\nYour purchase order validation pipeline has completed. Redirecting down to processing gateways configured for your ${chosenState} destination protocols...`);
+            
+            // Clean application runtime contexts
+            cartState = [];
+            renderCartUI();
+            document.getElementById('checkoutForm').reset();
+            navigateToStorefront(event);
         }
 
         // Manual collapse dismiss function for bottom sticky element
         function dismissStickyBar(event) {
             event.stopPropagation(); 
-            document.getElementById('mobileStickyCart').add('collapsed');
+            document.getElementById('mobileStickyCart').classList.add('collapsed');
         }
 
         // Drawer Left Filter Panel Logic
@@ -746,6 +996,5 @@
             closePopup();
         }
     </script>
-
 </body>
 </html>
