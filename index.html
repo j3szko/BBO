@@ -602,7 +602,16 @@
                 }
             }
             renderCartUI();
-                function renderCartUI() {
+        }
+
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('show');
+        }
+
+        function renderCartUI() {
             const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
             const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
 
@@ -665,7 +674,7 @@
                 crossSellNode.innerHTML = `
                     <div class="cart-cross-sell-title">✨ Complete Your Routine</div>
                     <div class="cross-sell-item">
-                        <img src="${crossSellProduct.img}" alt="${crossSellProduct.name}" class="cross-sell-img">
+                        <img src="${crossSellProduct.img}" alt="${crossSellProduct.name.replace(/"/g, '&quot;')}" class="cross-sell-img">
                         <div class="cross-sell-details">
                             <h4>${crossSellProduct.name}</h4>
                             <p>₦${crossSellProduct.price.toLocaleString()}</p>
@@ -680,51 +689,6 @@
                     addItemToCart(crossSellProduct.name, crossSellProduct.price);
                 };
 
-                streamContainer.appendChild(crossSellNode);
-            }
-
-            document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
-        }
-
-            cartState.forEach(item => {
-                const node = document.createElement('div');
-                node.className = 'cart-item';
-                node.innerHTML = `
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <p>₦${item.price.toLocaleString()} each</p>
-                        <div class="cart-item-controls">
-                            <button class="btn-qty" onclick="changeItemQuantity('${item.name}', -1)">-</button>
-                            <span class="qty-label">${item.quantity}</span>
-                            <button class="btn-qty" onclick="changeItemQuantity('${item.name}', 1)">+</button>
-                        </div>
-                    </div>
-                    <div style="font-weight: 700; color: var(--text-dark); white-space: nowrap;">
-                        ₦${(item.price * item.quantity).toLocaleString()}
-                    </div>
-                `;
-                streamContainer.appendChild(node);
-            });
-
-            // SMART CROSS-SELLING INJECTION
-            const crossSellProduct = catalogItems.find(catalogItem => 
-                catalogItem.type === 'product' && !cartState.some(cartItem => cartItem.name === catalogItem.name)
-            );
-
-            if (crossSellProduct) {
-                const crossSellNode = document.createElement('div');
-                crossSellNode.className = 'cart-cross-sell';
-                crossSellNode.innerHTML = `
-                    <div class="cart-cross-sell-title">✨ Complete Your Routine</div>
-                    <div class="cross-sell-item">
-                        <img src="${crossSellProduct.img}" alt="${crossSellProduct.name}" class="cross-sell-img">
-                        <div class="cross-sell-details">
-                            <h4>${crossSellProduct.name}</h4>
-                            <p>₦${crossSellProduct.price.toLocaleString()}</p>
-                        </div>
-                        <button class="btn-add-sm" onclick="addItemToCart('${crossSellProduct.name}', ${crossSellProduct.price})">Add</button>
-                    </div>
-                `;
                 streamContainer.appendChild(crossSellNode);
             }
 
@@ -915,9 +879,10 @@
                 const actionButtonText = item.type === 'bundle' ? 'Add System to Cart' : 'Add to Cart';
                 const actionButtonClass = item.type === 'bundle' ? 'btn-primary w-100' : 'btn-secondary w-100';
 
+                // Fixed: No more inline onclicks that break with apostrophes!
                 nodeCard.innerHTML = `
                     <div class="source-badge">${item.flag} Sourced: ${item.source}</div>
-                    <img src="${item.img}" alt="${item.name}" class="${item.type === 'bundle' ? 'bundle-img' : 'product-img'}">
+                    <img src="${item.img}" alt="${item.name.replace(/"/g, '&quot;')}" class="${item.type === 'bundle' ? 'bundle-img' : 'product-img'}">
                     <div class="${item.type === 'bundle' ? 'bundle-info' : 'product-info'}">
                         <div class="card-details-wrapper">
                             <span class="skin-profile-tag">Best for: ${item.skinType}</span>
@@ -935,10 +900,14 @@
                                     <span class="price-usd-scratched">$${item.usdScratched}</span> · $${item.usdPrice} · Direct from ${item.source}
                                 </div>
                             </div>
-                            <button class="${actionButtonClass}" onclick="addItemToCart('${item.name}', ${item.price})">${actionButtonText}</button>
+                            <button class="${actionButtonClass} add-to-cart-btn">${actionButtonText}</button>
                         </div>
                     </div>
                 `;
+                
+                // Safely attach the click event via JS to avoid quotation mark errors
+                nodeCard.querySelector('.add-to-cart-btn').onclick = () => addItemToCart(item.name, item.price);
+
                 targetContainer.appendChild(nodeCard);
             });
 
