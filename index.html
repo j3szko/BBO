@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBO | Straight From The Source</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- The Clinical Earth Palette --- */
@@ -34,7 +34,7 @@
 
         /* Nav & Marquee */
         .top-banner { background-color: var(--action-color); color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
-        .marquee span { display: inline-block; font-size: 1rem; font-weight: 600; letter-spacing: 2px; animation: marquee 20s linear infinite; }
+        .marquee span { display: inline-block; font-family: 'Barlow Condensed', sans-serif; color: #FFD700; font-size: 1rem; font-weight: 600; letter-spacing: 2px; animation: marquee 20s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .navbar { padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background-color: rgba(248, 246, 243, 0.95); backdrop-filter: blur(8px); z-index: 100; }
@@ -125,16 +125,47 @@
         /* Product Layout Grids */
         .shop-layout { width: 100%; min-height: 400px; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; width: 100%; }
-        .product-card, .bundle-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; }
+        
+        /* Enhanced Image Rules & Trust Badges */
+        .product-card, .bundle-card { position: relative; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover, .bundle-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .source-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
-        /* Enhanced Image Rules */
         .product-img, .bundle-img, .proof-img-tag { width: 100%; height: 280px; object-fit: cover; display: block; background-color: var(--border-color); }
         .proof-img-tag { height: 220px; border-radius: 8px; margin-bottom: 1.5rem; }
         .timeline-img { width: 100%; max-width: 320px; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1.2rem; display: block; border: 1px solid var(--border-color); }
 
         .product-info, .bundle-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         .card-details-wrapper { margin-bottom: 1rem; }
+        .skin-profile-tag {
+            font-size: 0.7rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            display: inline-block;
+            background: #EFECE7;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
         .concern-tag { font-size: 0.75rem; color: var(--action-color); font-weight: 700; margin-top: 0.5rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px;}
         .product-info h3, .bundle-info h3 { font-size: 1.1rem; font-weight: 600; line-height: 1.3; margin-bottom: 0.5rem; }
         .bundle-desc { font-size: 0.9rem; color: var(--text-grey); margin-top: 0.5rem; margin-bottom: 1rem; }
@@ -157,6 +188,8 @@
         .brand-circle-item:hover .brand-circle-element { transform: scale(1.08); border-color: var(--action-color); box-shadow: 0 8px 20px rgba(184, 92, 56, 0.15); color: var(--action-color); }
         .brand-circle-label { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); text-align: center; transition: color 0.2s; }
         .brand-circle-item:hover .brand-circle-label { color: var(--action-color); }
+        .btn-outline { display: inline-block; padding: 0.8rem 1.5rem; font-weight: 600; border-radius: 30px; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; background: transparent; border: 2px solid var(--text-dark); color: var(--text-dark); margin-top: 1.5rem; transition: all 0.3s ease; text-decoration: none; }
+        .btn-outline:hover { background: var(--text-dark); color: #fff; }
 
         /* Timeline */
         .timeline-wrapper { max-width: 800px; margin: 0 auto; }
@@ -499,83 +532,51 @@
         // Central Array Data Object for Products and Bundles
         const catalogItems = [
             {
-                id: "p1",
-                type: "product",
+                id: "p1", type: "product",
                 name: "COSRX Advanced Snail 96 Mucin Essence",
-                concern: "Damaged Barrier",
-                brand: "COSRX (KR)",
-                price: 24500,
-                scratchedPrice: 36000,
-                usdPrice: 15,
-                usdScratched: 22,
-                source: "KR",
+                concern: "Damaged Barrier", skinType: "All Skin Types",
+                brand: "COSRX (KR)", price: 24500, scratchedPrice: 36000,
+                usdPrice: 15, usdScratched: 22, source: "KR", flag: "🇰🇷",
                 img: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "p2",
-                type: "product",
+                id: "p2", type: "product",
                 name: "Good Molecules Discoloration Serum",
-                concern: "Hyperpigmentation",
-                brand: "Good Molecules (US)",
-                price: 21500,
-                scratchedPrice: 32000,
-                usdPrice: 12,
-                usdScratched: 18,
-                source: "US",
+                concern: "Hyperpigmentation", skinType: "Combo / Oily",
+                brand: "Good Molecules (US)", price: 21500, scratchedPrice: 32000,
+                usdPrice: 12, usdScratched: 18, source: "US", flag: "🇺🇸",
                 img: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "p3",
-                type: "product",
+                id: "p3", type: "product",
                 name: "CeraVe Renewing SA Cleanser",
-                concern: "Acne & Breakouts",
-                brand: "CeraVe (US)",
-                price: 32500,
-                scratchedPrice: 48000,
-                usdPrice: 19,
-                usdScratched: 28,
-                source: "US",
+                concern: "Acne & Breakouts", skinType: "Acne-Prone / Textured",
+                brand: "CeraVe (US)", price: 32500, scratchedPrice: 48000,
+                usdPrice: 19, usdScratched: 28, source: "US", flag: "🇺🇸",
                 img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "p4",
-                type: "product",
+                id: "p4", type: "product",
                 name: "Beauty of Joseon Relief Sun (SPF 50+)",
-                concern: "Sun Protection",
-                brand: "Beauty of Joseon (KR)",
-                price: 26000,
-                scratchedPrice: 39000,
-                usdPrice: 16,
-                usdScratched: 24,
-                source: "KR",
+                concern: "Sun Protection", skinType: "Sensitive / Dry",
+                brand: "Beauty of Joseon (KR)", price: 26000, scratchedPrice: 39000,
+                usdPrice: 16, usdScratched: 24, source: "KR", flag: "🇰🇷",
                 img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "b1",
-                type: "bundle",
+                id: "b1", type: "bundle",
                 name: "The Fade Protocol",
-                concern: "Hyperpigmentation",
-                brand: "Good Molecules (US)", // Associated with core catalog brands for filtering mechanics
-                desc: "4-step routine for hyperpigmentation, sun damage, and dark spots.",
-                price: 98000,
-                scratchedPrice: 145000,
-                usdPrice: 60,
-                usdScratched: 90,
-                source: "US/KR",
+                concern: "Hyperpigmentation", skinType: "Hyperpigmented Skin",
+                brand: "Good Molecules (US)", desc: "4-step routine for hyperpigmentation, sun damage, and dark spots.",
+                price: 98000, scratchedPrice: 145000, usdPrice: 60, usdScratched: 90, source: "US/KR", flag: "🌐",
                 img: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "b2",
-                type: "bundle",
+                id: "b2", type: "bundle",
                 name: "The Smooth Texture System",
-                concern: "Acne & Breakouts",
-                brand: "CeraVe (US)",
-                desc: "Salicylic acid body routine to eliminate \"strawberry legs\" and rough textures.",
-                price: 82000,
-                scratchedPrice: 120000,
-                usdPrice: 50,
-                usdScratched: 75,
-                source: "US",
+                concern: "Acne & Breakouts", skinType: "Rough Body Texture",
+                brand: "CeraVe (US)", desc: "Salicylic acid body routine to eliminate strawberry legs and rough textures.",
+                price: 82000, scratchedPrice: 120000, usdPrice: 50, usdScratched: 75, source: "US", flag: "🇺🇸",
                 img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80"
             }
         ];
@@ -680,6 +681,7 @@
                 return;
             }
             alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
+            // This acts as your clean bridge entry point to pass your cartState to a checkout/payment page
         }
 
         function dismissStickyBar(event) {
@@ -765,11 +767,11 @@
             targetContainer.innerHTML = '';
 
             if (itemsList.length === 0) {
-                // Render the Custom Creative "No Exact Match" Display Context Block
+                // Custom Creative "No Exact Match" Display Context Block with Request Hook
                 targetContainer.innerHTML = `
                     <div class="no-match-box">
                         <h3>Sorry!</h3>
-                        <p>We can't find an exact match, but we think you'll like these...</p>
+                        <p>We can't find an exact match right now, but we source weekly...</p>
                         <div class="brand-circle-row">
                             <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('CeraVe (US)')">
                                 <div class="brand-circle-element">CeraVe</div>
@@ -788,6 +790,7 @@
                                 <span class="brand-circle-label">Beauty of Joseon</span>
                             </button>
                         </div>
+                        <a href="#request-product" class="btn-outline">Request Custom Sourcing</a>
                     </div>
                 `;
                 return;
@@ -805,9 +808,11 @@
                 const actionButtonClass = item.type === 'bundle' ? 'btn-primary w-100' : 'btn-secondary w-100';
 
                 nodeCard.innerHTML = `
+                    <div class="source-badge">${item.flag} Sourced: ${item.source}</div>
                     <img src="${item.img}" alt="${item.name}" class="${item.type === 'bundle' ? 'bundle-img' : 'product-img'}">
                     <div class="${item.type === 'bundle' ? 'bundle-info' : 'product-info'}">
                         <div class="card-details-wrapper">
+                            <span class="skin-profile-tag">Best for: ${item.skinType}</span>
                             <h3>${item.name}</h3>
                             ${detailBlock}
                         </div>
@@ -818,7 +823,7 @@
                                     <span class="price-naira">₦${item.price.toLocaleString()}</span>
                                 </div>
                                 <div class="price-usd">
-                                    <span class="price-usd-scratched">$${item.usdScratched} USD</span> · $${item.usdPrice} USD · Sourced from ${item.source}
+                                    <span class="price-usd-scratched">$${item.usdScratched}</span> · $${item.usdPrice} · Direct from ${item.source}
                                 </div>
                             </div>
                             <button class="${actionButtonClass}" onclick="addItemToCart('${item.name}', ${item.price})">${actionButtonText}</button>
