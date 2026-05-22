@@ -348,11 +348,13 @@
         <div class="sidebar-block">
             <h4>Target By Concern</h4>
             <ul>
-                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Hyperpigmentation" onchange="processCatalogFilters()"> Hyperpigmentation</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="General Cleansing" onchange="processCatalogFilters()"> General Cleansing</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Anti-Aging" onchange="processCatalogFilters()"> Anti-Aging</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Fragrance / Body Care" onchange="processCatalogFilters()"> Fragrance / Body Care</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Damaged Barrier / Dryness" onchange="processCatalogFilters()"> Damaged Barrier / Dryness</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Hydration" onchange="processCatalogFilters()"> Hydration</label></li>
                 <li><label><input type="checkbox" class="filter-concern-checkbox" value="Acne & Breakouts" onchange="processCatalogFilters()"> Acne & Breakouts</label></li>
-                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Damaged Barrier" onchange="processCatalogFilters()"> Damaged Barrier</label></li>
-                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Uneven Tone" onchange="processCatalogFilters()"> Uneven Tone</label></li>
-                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Sun Protection" onchange="processCatalogFilters()"> Sun Protection</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Makeup Removal" onchange="processCatalogFilters()"> Makeup Removal</label></li>
             </ul>
         </div>
         
@@ -360,9 +362,15 @@
             <h4>Brands</h4>
             <ul>
                 <li><label><input type="checkbox" class="filter-brand-checkbox" value="CeraVe (US)" onchange="processCatalogFilters()"> CeraVe (US)</label></li>
-                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Good Molecules (US)" onchange="processCatalogFilters()"> Good Molecules (US)</label></li>
-                <li><label><input type="checkbox" class="filter-brand-checkbox" value="COSRX (KR)" onchange="processCatalogFilters()"> COSRX (KR)</label></li>
-                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Beauty of Joseon (KR)" onchange="processCatalogFilters()"> Beauty of Joseon (KR)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Cetaphil (US)" onchange="processCatalogFilters()"> Cetaphil (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Dove (US)" onchange="processCatalogFilters()"> Dove (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="eos (US)" onchange="processCatalogFilters()"> eos (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Garnier (US)" onchange="processCatalogFilters()"> Garnier (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Neutrogena (US)" onchange="processCatalogFilters()"> Neutrogena (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Olay (US)" onchange="processCatalogFilters()"> Olay (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="PanOxyl (US)" onchange="processCatalogFilters()"> PanOxyl (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Sol de Janeiro (US)" onchange="processCatalogFilters()"> Sol de Janeiro (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="The Ordinary (US)" onchange="processCatalogFilters()"> The Ordinary (US)</label></li>
             </ul>
         </div>
     </div>
@@ -519,55 +527,87 @@
     </div>
 
     <script>
-        // Central Array Data Object for Products and Bundles
+        // Central Array Data Object for Products and Bundles extracted from CSV
         const catalogItems = [
             {
                 id: "p1", type: "product",
-                name: "COSRX Advanced Snail 96 Mucin Essence",
-                concern: "Damaged Barrier", skinType: "All Skin Types",
-                brand: "COSRX (KR)", price: 24500, scratchedPrice: 36000,
-                usdPrice: 15, usdScratched: 22, source: "KR", flag: "🇰🇷",
-                img: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p2", type: "product",
-                name: "Good Molecules Discoloration Serum",
-                concern: "Hyperpigmentation", skinType: "Combo / Oily",
-                brand: "Good Molecules (US)", price: 21500, scratchedPrice: 32000,
-                usdPrice: 12, usdScratched: 18, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p3", type: "product",
-                name: "CeraVe Renewing SA Cleanser",
-                concern: "Acne & Breakouts", skinType: "Acne-Prone / Textured",
-                brand: "CeraVe (US)", price: 32500, scratchedPrice: 48000,
-                usdPrice: 19, usdScratched: 28, source: "US", flag: "🇺🇸",
+                name: "Dove Beauty Bar Original, 3.75 oz (8 Bars)",
+                concern: "General Cleansing", skinType: "All Skin Types",
+                brand: "Dove (US)", price: 52145, scratchedPrice: 74102,
+                usdPrice: 38, usdScratched: 54, source: "US", flag: "🇺🇸",
                 img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "p4", type: "product",
-                name: "Beauty of Joseon Relief Sun (SPF 50+)",
-                concern: "Sun Protection", skinType: "Sensitive / Dry",
-                brand: "Beauty of Joseon (KR)", price: 26000, scratchedPrice: 39000,
-                usdPrice: 16, usdScratched: 24, source: "KR", flag: "🇰🇷",
+                id: "p2", type: "product",
+                name: "OLAY Regenerist Anti-Aging Firming Face Cream",
+                concern: "Anti-Aging", skinType: "Mature / Dry",
+                brand: "Olay (US)", price: 72729, scratchedPrice: 102919,
+                usdPrice: 53, usdScratched: 75, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p3", type: "product",
+                name: "eos Cashmere Body Mist - Vanilla Cashmere",
+                concern: "Fragrance / Body Care", skinType: "All Skin Types",
+                brand: "eos (US)", price: 52145, scratchedPrice: 74102,
+                usdPrice: 38, usdScratched: 54, source: "US", flag: "🇺🇸",
                 img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "b1", type: "bundle",
-                name: "The Fade Protocol",
-                concern: "Hyperpigmentation", skinType: "Hyperpigmented Skin",
-                brand: "Good Molecules (US)", desc: "4-step routine for hyperpigmentation, sun damage, and dark spots.",
-                price: 98000, scratchedPrice: 145000, usdPrice: 60, usdScratched: 90, source: "US/KR", flag: "🌐",
+                id: "p4", type: "product",
+                name: "CeraVe Moisturizing Cream, Face & Body",
+                concern: "Damaged Barrier / Dryness", skinType: "Normal to Dry Skin",
+                brand: "CeraVe (US)", price: 56262, scratchedPrice: 79591,
+                usdPrice: 41, usdScratched: 58, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p5", type: "product",
+                name: "Neutrogena Hydro Boost Water Gel",
+                concern: "Hydration", skinType: "Dry / Combination",
+                brand: "Neutrogena (US)", price: 61751, scratchedPrice: 86452,
+                usdPrice: 45, usdScratched: 63, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p6", type: "product",
+                name: "Cetaphil Moisturizing Cream, 20 oz",
+                concern: "Damaged Barrier / Dryness", skinType: "Dry to Very Dry",
+                brand: "Cetaphil (US)", price: 56262, scratchedPrice: 79591,
+                usdPrice: 41, usdScratched: 58, source: "US", flag: "🇺🇸",
                 img: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80"
             },
             {
-                id: "b2", type: "bundle",
-                name: "The Smooth Texture System",
-                concern: "Acne & Breakouts", skinType: "Rough Body Texture",
-                brand: "CeraVe (US)", desc: "Salicylic acid body routine to eliminate strawberry legs and rough textures.",
-                price: 82000, scratchedPrice: 120000, usdPrice: 50, usdScratched: 75, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80"
+                id: "p7", type: "product",
+                name: "PanOxyl Acne Treatment Bar, 10% Benzoyl Peroxide",
+                concern: "Acne & Breakouts", skinType: "Acne-Prone",
+                brand: "PanOxyl (US)", price: 48029, scratchedPrice: 67240,
+                usdPrice: 35, usdScratched: 49, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p8", type: "product",
+                name: "Garnier SkinActive Micellar Water Vitamin C",
+                concern: "Makeup Removal", skinType: "Dull / All Skin Types",
+                brand: "Garnier (US)", price: 50773, scratchedPrice: 71357,
+                usdPrice: 37, usdScratched: 52, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p9", type: "product",
+                name: "The Ordinary Salicylic Acid 2% Solution",
+                concern: "Acne & Breakouts", skinType: "Blemish-Prone",
+                brand: "The Ordinary (US)", price: 43912, scratchedPrice: 61751,
+                usdPrice: 32, usdScratched: 45, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p10", type: "product",
+                name: "Sol de Janeiro Brazilian Crush Cheirosa 62",
+                concern: "Fragrance / Body Care", skinType: "All Skin Types",
+                brand: "Sol de Janeiro (US)", price: 80963, scratchedPrice: 113897,
+                usdPrice: 59, usdScratched: 83, source: "US", flag: "🇺🇸",
+                img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
             }
         ];
 
@@ -576,7 +616,6 @@
 
         // Add Items to Cart Logic
         function addItemToCart(itemName, priceNaira) {
-            // Check if item already exists in customer's state
             const existingItem = cartState.find(item => item.name === itemName);
             
             if (existingItem) {
@@ -589,10 +628,8 @@
                 });
             }
 
-            // Sync structural changes with the interfaces
             renderCartUI();
 
-            // Auto-reveal the bottom sticky action bar on mobile viewports
             const stickyCart = document.getElementById('mobileStickyCart');
             stickyCart.classList.remove('collapsed'); 
             stickyCart.classList.add('visible');     
@@ -604,8 +641,6 @@
             
             if (targetedItem) {
                 targetedItem.quantity += delta;
-                
-                // Drop completely if count drops below 1
                 if (targetedItem.quantity <= 0) {
                     cartState = cartState.filter(item => item.name !== itemName);
                 }
@@ -623,25 +658,19 @@
 
         // Central UI Synchronization Processor (Now Includes Smart Cross-Selling)
         function renderCartUI() {
-            // 1. Compute aggregations
             const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
             const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
 
-            // 2. Update Header Count Node
             document.getElementById('nav-cart-counter').innerText = `Cart (${grossCount})`;
-
-            // 3. Update Sticky Bar Value Nodes
             document.getElementById('mobile-cart-price').innerText = `₦${grossValue.toLocaleString()}`;
             
-            // Auto hide sticky bar entirely on mobile if items fall back to 0
             const stickyCart = document.getElementById('mobileStickyCart');
             if (grossCount === 0) {
                 stickyCart.classList.remove('visible');
             }
 
-            // 4. Render Cart Drawer Stream List Content
             const streamContainer = document.getElementById('cart-drawer-items');
-            streamContainer.innerHTML = ''; // Fresh sweep
+            streamContainer.innerHTML = '';
 
             if (cartState.length === 0) {
                 streamContainer.innerHTML = `
@@ -653,7 +682,6 @@
                 return;
             }
 
-            // Render existing items in the cart
             cartState.forEach(item => {
                 const node = document.createElement('div');
                 node.className = 'cart-item';
@@ -675,12 +703,10 @@
             });
 
             // --- SMART CROSS-SELLING INJECTION ---
-            // Find a product in the catalog that the user DOES NOT currently have in their cart
             const crossSellProduct = catalogItems.find(catalogItem => 
                 catalogItem.type === 'product' && !cartState.some(cartItem => cartItem.name === catalogItem.name)
             );
 
-            // If a complementary product exists, append the sexy recommendation ribbon
             if (crossSellProduct) {
                 const crossSellNode = document.createElement('div');
                 crossSellNode.className = 'cart-cross-sell';
@@ -698,31 +724,42 @@
                 streamContainer.appendChild(crossSellNode);
             }
 
-            // Update drawer running absolute grand total
             document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
+        }
+
+        function proceedToCheckout() {
+            if (cartState.length === 0) {
+                alert('Your shopping cart is currently empty.');
+                return;
+            }
+            alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
+        }
+
+        function dismissStickyBar(event) {
+            event.stopPropagation(); 
+            document.getElementById('mobileStickyCart').classList.add('collapsed');
+        }
+
+        function toggleFilter() {
+            const drawer = document.getElementById('filterDrawer');
+            const overlay = document.getElementById('filterOverlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('show');
         }
 
         // Search & Filter System Engines
         function processCatalogFilters() {
             const searchStr = document.getElementById('catalogSearchField').value.toLowerCase().trim();
             
-            // Collect Checkbox States
             const selectedTypes = Array.from(document.querySelectorAll('.filter-type-checkbox:checked')).map(cb => cb.value);
             const selectedConcerns = Array.from(document.querySelectorAll('.filter-concern-checkbox:checked')).map(cb => cb.value);
             const selectedBrands = Array.from(document.querySelectorAll('.filter-brand-checkbox:checked')).map(cb => cb.value);
 
-            // Filter logic structure
             const filteredItems = catalogItems.filter(item => {
-                // Type Scope validation check
                 if (selectedTypes.length > 0 && !selectedTypes.includes(item.type)) return false;
-                
-                // Concern filter validation check
                 if (selectedConcerns.length > 0 && !selectedConcerns.includes(item.concern)) return false;
-                
-                // Brand filter validation check
                 if (selectedBrands.length > 0 && !selectedBrands.includes(item.brand)) return false;
 
-                // Live search query matching evaluation
                 if (searchStr !== "") {
                     const matchName = item.name.toLowerCase().includes(searchStr);
                     const matchBrand = item.brand.toLowerCase().includes(searchStr);
@@ -738,7 +775,6 @@
             renderGridUI(filteredItems);
         }
 
-        // Direct interface hookups for standard navbar navigation buttons 
         function quickTypeSelect(targetType) {
             const typeCheckboxes = document.querySelectorAll('.filter-type-checkbox');
             typeCheckboxes.forEach(cb => {
@@ -748,16 +784,13 @@
                     cb.checked = (cb.value === targetType);
                 }
             });
-            // Clear current text configurations for visibility mapping
             document.getElementById('catalogSearchField').value = '';
             processCatalogFilters();
         }
 
-        // Recommended item fallback automation (triggers if brand badges are clicked)
         function injectAlternativeBrandFilter(brandVal) {
             document.getElementById('catalogSearchField').value = '';
             
-            // Reset types to verify item discovery
             document.querySelectorAll('.filter-type-checkbox').forEach(cb => cb.checked = true);
             document.querySelectorAll('.filter-concern-checkbox').forEach(cb => cb.checked = false);
             
@@ -773,7 +806,6 @@
             targetContainer.innerHTML = '';
 
             if (itemsList.length === 0) {
-                // Custom Creative "No Exact Match" Display Context Block with Request Hook
                 targetContainer.innerHTML = `
                     <div class="no-match-box">
                         <h3>Sorry!</h3>
@@ -783,17 +815,17 @@
                                 <div class="brand-circle-element">CeraVe</div>
                                 <span class="brand-circle-label">CeraVe</span>
                             </button>
-                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('Good Molecules (US)')">
-                                <div class="brand-circle-element">Good<br>Molecules</div>
-                                <span class="brand-circle-label">Good Molecules</span>
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('Olay (US)')">
+                                <div class="brand-circle-element">Olay</div>
+                                <span class="brand-circle-label">Olay</span>
                             </button>
-                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('COSRX (KR)')">
-                                <div class="brand-circle-element">COSRX</div>
-                                <span class="brand-circle-label">COSRX</span>
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('Neutrogena (US)')">
+                                <div class="brand-circle-element">Neutrogena</div>
+                                <span class="brand-circle-label">Neutrogena</span>
                             </button>
-                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('Beauty of Joseon (KR)')">
-                                <div class="brand-circle-element">Joseon</div>
-                                <span class="brand-circle-label">Beauty of Joseon</span>
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('The Ordinary (US)')">
+                                <div class="brand-circle-element">The<br>Ordinary</div>
+                                <span class="brand-circle-label">The Ordinary</span>
                             </button>
                         </div>
                         <a href="#request-product" class="btn-outline">Request Custom Sourcing</a>
@@ -840,33 +872,7 @@
             });
         }
 
-        // Proceed to Checkout Hook
-        function proceedToCheckout() {
-            if (cartState.length === 0) {
-                alert('Your shopping cart is currently empty.');
-                return;
-            }
-            alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
-            // This acts as your clean bridge entry point to pass your cartState to a checkout/payment page
-        }
-
-        // Manual collapse dismiss function for bottom sticky element
-        function dismissStickyBar(event) {
-            event.stopPropagation(); 
-            document.getElementById('mobileStickyCart').classList.add('collapsed');
-        }
-
-        // Drawer Left Filter Panel Logic
-        function toggleFilter() {
-            const drawer = document.getElementById('filterDrawer');
-            const overlay = document.getElementById('filterOverlay');
-            drawer.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        // Pop-Up Display Logic Delay Context Configuration
         window.onload = function() {
-            // Initial compilation run to draw the base grid sequence elements
             processCatalogFilters();
 
             setTimeout(function() {
