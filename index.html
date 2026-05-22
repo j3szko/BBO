@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBO | Straight From The Source</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- The Clinical Earth Palette --- */
@@ -32,17 +32,9 @@
         .section-header h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-dark); }
         .section-header p { color: var(--text-grey); }
 
-        /* Nav & Marquee Updates */
+        /* Nav & Marquee */
         .top-banner { background-color: var(--action-color); color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
-        .marquee span { 
-            display: inline-block; 
-            font-family: 'Barlow Condensed', sans-serif; 
-            color: #FFD700; /* Gold Font Color */
-            font-size: 1.2rem; 
-            font-weight: 700; 
-            letter-spacing: 2px; 
-            animation: marquee 20s linear infinite; 
-        }
+        .marquee span { display: inline-block; font-size: 1rem; font-weight: 600; letter-spacing: 2px; animation: marquee 20s linear infinite; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .navbar { padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background-color: rgba(248, 246, 243, 0.95); backdrop-filter: blur(8px); z-index: 100; }
@@ -87,9 +79,12 @@
         .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; }
         .form-input:focus { outline: none; border-color: var(--action-color); }
 
-        /* Filter Controls & Toggle Button */
-        .shop-controls { display: flex; justify-content: flex-start; margin-bottom: 2rem; }
-        .btn-filter { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+        /* Filter Controls & Search Controls */
+        .shop-controls { display: flex; gap: 1rem; justify-content: flex-start; margin-bottom: 2rem; align-items: center; width: 100%; }
+        .search-container { flex-grow: 1; position: relative; max-width: 500px; }
+        .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-grey); pointer-events: none; }
+        .search-container .form-input { padding-left: 2.8rem; background-color: var(--card-bg); }
+        .btn-filter { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; height: 100%; min-height: 48px; }
         .btn-filter:hover { background: #EFECE7; border-color: var(--text-dark); }
 
         /* Slide-out Sidebar Drawers (Filter & Cart) */
@@ -128,7 +123,7 @@
         #cartOverlay { z-index: 1400; }
 
         /* Product Layout Grids */
-        .shop-layout { width: 100%; }
+        .shop-layout { width: 100%; min-height: 400px; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; width: 100%; }
         .product-card, .bundle-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; }
         .product-card:hover, .bundle-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
@@ -151,6 +146,17 @@
         .price-naira-scratched { font-size: 1.05rem; text-decoration: line-through; color: var(--text-grey); font-weight: 400; }
         .price-usd { font-size: 0.8rem; color: var(--text-grey); margin-top: 0.2rem; }
         .price-usd-scratched { text-decoration: line-through; margin-right: 4px; }
+
+        /* Creative Fallback UI Style (Inspired by Ulta Screen Capture) */
+        .no-match-box { text-align: center; width: 100%; padding: 4rem 1rem; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; grid-column: 1 / -1; }
+        .no-match-box h3 { font-size: 2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+        .no-match-box p { color: var(--text-grey); font-size: 1.05rem; margin-bottom: 3rem; }
+        .brand-circle-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; max-width: 900px; margin: 0 auto; }
+        .brand-circle-item { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; cursor: pointer; background: none; border: none; font-family: inherit; width: 110px; }
+        .brand-circle-element { width: 100px; height: 100px; border-radius: 50%; background-color: var(--bg-color); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; padding: 0.5rem; font-size: 0.75rem; font-weight: 700; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .brand-circle-item:hover .brand-circle-element { transform: scale(1.08); border-color: var(--action-color); box-shadow: 0 8px 20px rgba(184, 92, 56, 0.15); color: var(--action-color); }
+        .brand-circle-label { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); text-align: center; transition: color 0.2s; }
+        .brand-circle-item:hover .brand-circle-label { color: var(--action-color); }
 
         /* Timeline */
         .timeline-wrapper { max-width: 800px; margin: 0 auto; }
@@ -219,6 +225,8 @@
             .nav-links { display: none; }
             .mobile-sticky-bar .price { font-weight: 700; font-size: 1.2rem; }
             .mobile-sticky-bar .btn-primary { padding: 0.8rem 1.5rem; }
+            .shop-controls { flex-direction: column; align-items: stretch; }
+            .search-container { max-width: 100%; }
         }
 
         @media (max-width: 420px) {
@@ -253,8 +261,8 @@
         <div class="nav-container">
             <a href="#" class="logo">BBO.</a>
             <ul class="nav-links">
-                <li><a href="#shop">Shop Products</a></li>
-                <li><a href="#bundles">Curated Bundles</a></li>
+                <li><a href="#shop" onclick="quickTypeSelect('all')">Shop Products</a></li>
+                <li><a href="#shop" onclick="quickTypeSelect('bundle')">Curated Bundles</a></li>
                 <li><a href="#journey">The Journey</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
@@ -275,8 +283,8 @@
             <h1>Authentic Skincare, Straight from the Source.</h1>
             <p>Sourced directly from authorized US and Korean retailers. Unboxed at your doorstep in Nigeria. Zero fakes, with absolutely no custom or handling fees.</p>
             <div class="hero-buttons">
-                <a href="#shop" class="btn-primary">Shop All Products</a>
-                <a href="#bundles" class="btn-secondary" style="width: auto; margin-top: 0; margin-left: 10px;">Shop Bundles</a>
+                <a href="#shop" class="btn-primary" onclick="quickTypeSelect('product')">Shop All Products</a>
+                <a href="#shop" class="btn-secondary" style="width: auto; margin-top: 0; margin-left: 10px;" onclick="quickTypeSelect('bundle')">Shop Bundles</a>
             </div>
         </div>
     </header>
@@ -302,27 +310,36 @@
 
     <div id="filterDrawer" class="filter-drawer">
         <div class="drawer-header">
-            <h3>Filter Products</h3>
+            <h3>Filter Options</h3>
             <button class="popup-close" style="position: static;" onclick="toggleFilter()">&times;</button>
         </div>
         
         <div class="sidebar-block">
+            <h4>Catalog Scope</h4>
+            <ul>
+                <li><label><input type="checkbox" class="filter-type-checkbox" value="product" checked onchange="processCatalogFilters()"> Individual Products</label></li>
+                <li><label><input type="checkbox" class="filter-type-checkbox" value="bundle" checked onchange="processCatalogFilters()"> Curated Bundles</label></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-block">
             <h4>Target By Concern</h4>
             <ul>
-                <li><label><input type="checkbox"> Hyperpigmentation</label></li>
-                <li><label><input type="checkbox"> Acne & Breakouts</label></li>
-                <li><label><input type="checkbox"> Damaged Barrier</label></li>
-                <li><label><input type="checkbox"> Uneven Tone</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Hyperpigmentation" onchange="processCatalogFilters()"> Hyperpigmentation</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Acne & Breakouts" onchange="processCatalogFilters()"> Acne & Breakouts</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Damaged Barrier" onchange="processCatalogFilters()"> Damaged Barrier</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Uneven Tone" onchange="processCatalogFilters()"> Uneven Tone</label></li>
+                <li><label><input type="checkbox" class="filter-concern-checkbox" value="Sun Protection" onchange="processCatalogFilters()"> Sun Protection</label></li>
             </ul>
         </div>
         
         <div class="sidebar-block">
             <h4>Brands</h4>
             <ul>
-                <li><label><input type="checkbox"> CeraVe (US)</label></li>
-                <li><label><input type="checkbox"> Good Molecules (US)</label></li>
-                <li><label><input type="checkbox"> COSRX (KR)</label></li>
-                <li><label><input type="checkbox"> Beauty of Joseon (KR)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="CeraVe (US)" onchange="processCatalogFilters()"> CeraVe (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Good Molecules (US)" onchange="processCatalogFilters()"> Good Molecules (US)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="COSRX (KR)" onchange="processCatalogFilters()"> COSRX (KR)</label></li>
+                <li><label><input type="checkbox" class="filter-brand-checkbox" value="Beauty of Joseon (KR)" onchange="processCatalogFilters()"> Beauty of Joseon (KR)</label></li>
             </ul>
         </div>
     </div>
@@ -334,8 +351,7 @@
             <button class="popup-close" style="position: static;" onclick="toggleCartDrawer()">&times;</button>
         </div>
         
-        <div id="cart-drawer-items" class="cart-drawer-items">
-            </div>
+        <div id="cart-drawer-items" class="cart-drawer-items"></div>
         
         <div class="cart-drawer-footer">
             <div class="cart-grand-total">
@@ -356,141 +372,16 @@
         <div class="shop-controls">
             <button class="btn-filter" onclick="toggleFilter()">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-                Filter
+                Filter / Scope
             </button>
+            <div class="search-container">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="catalogSearchField" class="form-input" placeholder="Search products, brands, concerns..." oninput="processCatalogFilters()">
+            </div>
         </div>
         
         <div class="shop-layout">
-            <div class="product-grid">
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80" alt="COSRX Snail Mucin" class="product-img">
-                    <div class="product-info">
-                        <div class="card-details-wrapper">
-                            <h3>COSRX Advanced Snail 96 Mucin Essence</h3>
-                            <p class="concern-tag">Target: Damaged Barrier</p>
-                        </div>
-                        <div>
-                            <div class="pricing">
-                                <div class="naira-group">
-                                    <span class="price-naira-scratched">₦36,000</span>
-                                    <span class="price-naira">₦24,500</span>
-                                </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$22 USD</span> · $15 USD · Sourced from KR</div>
-                            </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('COSRX Advanced Snail 96 Mucin Essence', 24500)">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80" alt="Discoloration Serum" class="product-img">
-                    <div class="product-info">
-                        <div class="card-details-wrapper">
-                            <h3>Good Molecules Discoloration Serum</h3>
-                            <p class="concern-tag">Target: Hyperpigmentation</p>
-                        </div>
-                        <div>
-                            <div class="pricing">
-                                <div class="naira-group">
-                                    <span class="price-naira-scratched">₦32,000</span>
-                                    <span class="price-naira">₦21,500</span>
-                                </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$18 USD</span> · $12 USD · Sourced from US</div>
-                            </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('Good Molecules Discoloration Serum', 21500)">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80" alt="Facial Cleanser" class="product-img">
-                    <div class="product-info">
-                        <div class="card-details-wrapper">
-                            <h3>CeraVe Renewing SA Cleanser</h3>
-                            <p class="concern-tag">Target: Acne & Texture</p>
-                        </div>
-                        <div>
-                            <div class="pricing">
-                                <div class="naira-group">
-                                    <span class="price-naira-scratched">₦48,000</span>
-                                    <span class="price-naira">₦32,500</span>
-                                </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$28 USD</span> · $19 USD · Sourced from US</div>
-                            </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('CeraVe Renewing SA Cleanser', 32500)">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80" alt="Sunscreen Cream" class="product-img">
-                    <div class="product-info">
-                        <div class="card-details-wrapper">
-                            <h3>Beauty of Joseon Relief Sun (SPF 50+)</h3>
-                            <p class="concern-tag">Target: Sun Protection</p>
-                        </div>
-                        <div>
-                            <div class="pricing">
-                                <div class="naira-group">
-                                    <span class="price-naira-scratched">₦39,000</span>
-                                    <span class="price-naira">₦26,000</span>
-                                </div>
-                                <div class="price-usd"><span class="price-usd-scratched">$24 USD</span> · $16 USD · Sourced from KR</div>
-                            </div>
-                            <button class="btn-secondary w-100" onclick="addItemToCart('Beauty of Joseon Relief Sun (SPF 50+)', 26000)">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="bundles" class="section bg-light">
-        <div class="section-header">
-            <h2>Targeted Skin Systems</h2>
-            <p>Complete routines engineered for the most common Nigerian skin concerns.</p>
-        </div>
-        
-        <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="bundle-card">
-                <img src="https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80" alt="Complete Face Kit Set" class="bundle-img">
-                <div class="bundle-info">
-                    <div class="card-details-wrapper">
-                        <h3>The Fade Protocol</h3>
-                        <p class="bundle-desc">4-step routine for hyperpigmentation, sun damage, and dark spots.</p>
-                    </div>
-                    <div>
-                        <div class="pricing">
-                            <div class="naira-group">
-                                <span class="price-naira-scratched">₦145,000</span>
-                                <span class="price-naira">₦98,000</span>
-                            </div>
-                            <div class="price-usd"><span class="price-usd-scratched">$90 USD</span> · $60 USD · Sourced from US/KR</div>
-                        </div>
-                        <button class="btn-primary w-100" onclick="addItemToCart('The Fade Protocol Bundle', 98000)">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bundle-card">
-                <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80" alt="Premium Body Care Cosmetics" class="bundle-img">
-                <div class="bundle-info">
-                    <div class="card-details-wrapper">
-                        <h3>The Smooth Texture System</h3>
-                        <p class="bundle-desc">Salicylic acid body routine to eliminate "strawberry legs" and rough textures.</p>
-                    </div>
-                    <div>
-                        <div class="pricing">
-                            <div class="naira-group">
-                                <span class="price-naira-scratched">₦120,000</span>
-                                <span class="price-naira">₦82,000</span>
-                            </div>
-                            <div class="price-usd"><span class="price-usd-scratched">$75 USD</span> · $50 USD · Sourced from US</div>
-                        </div>
-                        <button class="btn-primary w-100" onclick="addItemToCart('The Smooth Texture System Bundle', 82000)">Add to Cart</button>
-                    </div>
-                </div>
-            </div>
+            <div id="masterProductGrid" class="product-grid"></div>
         </div>
     </section>
 
@@ -605,6 +496,90 @@
     </div>
 
     <script>
+        // Central Array Data Object for Products and Bundles
+        const catalogItems = [
+            {
+                id: "p1",
+                type: "product",
+                name: "COSRX Advanced Snail 96 Mucin Essence",
+                concern: "Damaged Barrier",
+                brand: "COSRX (KR)",
+                price: 24500,
+                scratchedPrice: 36000,
+                usdPrice: 15,
+                usdScratched: 22,
+                source: "KR",
+                img: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p2",
+                type: "product",
+                name: "Good Molecules Discoloration Serum",
+                concern: "Hyperpigmentation",
+                brand: "Good Molecules (US)",
+                price: 21500,
+                scratchedPrice: 32000,
+                usdPrice: 12,
+                usdScratched: 18,
+                source: "US",
+                img: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p3",
+                type: "product",
+                name: "CeraVe Renewing SA Cleanser",
+                concern: "Acne & Breakouts",
+                brand: "CeraVe (US)",
+                price: 32500,
+                scratchedPrice: 48000,
+                usdPrice: 19,
+                usdScratched: 28,
+                source: "US",
+                img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "p4",
+                type: "product",
+                name: "Beauty of Joseon Relief Sun (SPF 50+)",
+                concern: "Sun Protection",
+                brand: "Beauty of Joseon (KR)",
+                price: 26000,
+                scratchedPrice: 39000,
+                usdPrice: 16,
+                usdScratched: 24,
+                source: "KR",
+                img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "b1",
+                type: "bundle",
+                name: "The Fade Protocol",
+                concern: "Hyperpigmentation",
+                brand: "Good Molecules (US)", // Associated with core catalog brands for filtering mechanics
+                desc: "4-step routine for hyperpigmentation, sun damage, and dark spots.",
+                price: 98000,
+                scratchedPrice: 145000,
+                usdPrice: 60,
+                usdScratched: 90,
+                source: "US/KR",
+                img: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: "b2",
+                type: "bundle",
+                name: "The Smooth Texture System",
+                concern: "Acne & Breakouts",
+                brand: "CeraVe (US)",
+                desc: "Salicylic acid body routine to eliminate \"strawberry legs\" and rough textures.",
+                price: 82000,
+                scratchedPrice: 120000,
+                usdPrice: 50,
+                usdScratched: 75,
+                source: "US",
+                img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
         // Array Data-Structure to Track Cart State Objectively
         let cartState = [];
 
@@ -635,7 +610,6 @@
             
             if (targetedItem) {
                 targetedItem.quantity += delta;
-                
                 if (targetedItem.quantity <= 0) {
                     cartState = cartState.filter(item => item.name !== itemName);
                 }
@@ -665,7 +639,7 @@
             }
 
             const streamContainer = document.getElementById('cart-drawer-items');
-            streamContainer.innerHTML = ''; 
+            streamContainer.innerHTML = '';
 
             if (cartState.length === 0) {
                 streamContainer.innerHTML = `
@@ -700,7 +674,6 @@
             document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
         }
 
-        // Proceed to Checkout Hook
         function proceedToCheckout() {
             if (cartState.length === 0) {
                 alert('Your shopping cart is currently empty.');
@@ -709,13 +682,11 @@
             alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
         }
 
-        // Manual collapse dismiss function for bottom sticky element
         function dismissStickyBar(event) {
             event.stopPropagation(); 
             document.getElementById('mobileStickyCart').classList.add('collapsed');
         }
 
-        // Drawer Left Filter Panel Logic
         function toggleFilter() {
             const drawer = document.getElementById('filterDrawer');
             const overlay = document.getElementById('filterOverlay');
@@ -723,8 +694,146 @@
             overlay.classList.toggle('show');
         }
 
+        // Search & Filter System Engines
+        function processCatalogFilters() {
+            const searchStr = document.getElementById('catalogSearchField').value.toLowerCase().trim();
+            
+            // Collect Checkbox States
+            const selectedTypes = Array.from(document.querySelectorAll('.filter-type-checkbox:checked')).map(cb => cb.value);
+            const selectedConcerns = Array.from(document.querySelectorAll('.filter-concern-checkbox:checked')).map(cb => cb.value);
+            const selectedBrands = Array.from(document.querySelectorAll('.filter-brand-checkbox:checked')).map(cb => cb.value);
+
+            // Filter logic structure
+            const filteredItems = catalogItems.filter(item => {
+                // Type Scope validation check
+                if (selectedTypes.length > 0 && !selectedTypes.includes(item.type)) return false;
+                
+                // Concern filter validation check
+                if (selectedConcerns.length > 0 && !selectedConcerns.includes(item.concern)) return false;
+                
+                // Brand filter validation check
+                if (selectedBrands.length > 0 && !selectedBrands.includes(item.brand)) return false;
+
+                // Live search query matching evaluation
+                if (searchStr !== "") {
+                    const matchName = item.name.toLowerCase().includes(searchStr);
+                    const matchBrand = item.brand.toLowerCase().includes(searchStr);
+                    const matchConcern = item.concern.toLowerCase().includes(searchStr);
+                    const matchDesc = item.desc ? item.desc.toLowerCase().includes(searchStr) : false;
+                    
+                    if (!matchName && !matchBrand && !matchConcern && !matchDesc) return false;
+                }
+
+                return true;
+            });
+
+            renderGridUI(filteredItems);
+        }
+
+        // Direct interface hookups for standard navbar navigation buttons 
+        function quickTypeSelect(targetType) {
+            const typeCheckboxes = document.querySelectorAll('.filter-type-checkbox');
+            typeCheckboxes.forEach(cb => {
+                if (targetType === 'all') {
+                    cb.checked = true;
+                } else {
+                    cb.checked = (cb.value === targetType);
+                }
+            });
+            // Clear current text configurations for visibility mapping
+            document.getElementById('catalogSearchField').value = '';
+            processCatalogFilters();
+        }
+
+        // Recommended item fallback automation (triggers if brand badges are clicked)
+        function injectAlternativeBrandFilter(brandVal) {
+            document.getElementById('catalogSearchField').value = '';
+            
+            // Reset types to verify item discovery
+            document.querySelectorAll('.filter-type-checkbox').forEach(cb => cb.checked = true);
+            document.querySelectorAll('.filter-concern-checkbox').forEach(cb => cb.checked = false);
+            
+            document.querySelectorAll('.filter-brand-checkbox').forEach(cb => {
+                cb.checked = (cb.value === brandVal);
+            });
+            processCatalogFilters();
+        }
+
+        // Catalog UI Grid Painter Engine
+        function renderGridUI(itemsList) {
+            const targetContainer = document.getElementById('masterProductGrid');
+            targetContainer.innerHTML = '';
+
+            if (itemsList.length === 0) {
+                // Render the Custom Creative "No Exact Match" Display Context Block
+                targetContainer.innerHTML = `
+                    <div class="no-match-box">
+                        <h3>Sorry!</h3>
+                        <p>We can't find an exact match, but we think you'll like these...</p>
+                        <div class="brand-circle-row">
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('CeraVe (US)')">
+                                <div class="brand-circle-element">CeraVe</div>
+                                <span class="brand-circle-label">CeraVe</span>
+                            </button>
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('Good Molecules (US)')">
+                                <div class="brand-circle-element">Good<br>Molecules</div>
+                                <span class="brand-circle-label">Good Molecules</span>
+                            </button>
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('COSRX (KR)')">
+                                <div class="brand-circle-element">COSRX</div>
+                                <span class="brand-circle-label">COSRX</span>
+                            </button>
+                            <button class="brand-circle-item" onclick="injectAlternativeBrandFilter('Beauty of Joseon (KR)')">
+                                <div class="brand-circle-element">Joseon</div>
+                                <span class="brand-circle-label">Beauty of Joseon</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            itemsList.forEach(item => {
+                const nodeCard = document.createElement('div');
+                nodeCard.className = item.type === 'bundle' ? 'bundle-card' : 'product-card';
+                
+                const detailBlock = item.type === 'bundle' 
+                    ? `<p class="bundle-desc">${item.desc}</p>` 
+                    : `<p class="concern-tag">Target: ${item.concern}</p>`;
+
+                const actionButtonText = item.type === 'bundle' ? 'Add System to Cart' : 'Add to Cart';
+                const actionButtonClass = item.type === 'bundle' ? 'btn-primary w-100' : 'btn-secondary w-100';
+
+                nodeCard.innerHTML = `
+                    <img src="${item.img}" alt="${item.name}" class="${item.type === 'bundle' ? 'bundle-img' : 'product-img'}">
+                    <div class="${item.type === 'bundle' ? 'bundle-info' : 'product-info'}">
+                        <div class="card-details-wrapper">
+                            <h3>${item.name}</h3>
+                            ${detailBlock}
+                        </div>
+                        <div>
+                            <div class="pricing">
+                                <div class="naira-group">
+                                    <span class="price-naira-scratched">₦${item.scratchedPrice.toLocaleString()}</span>
+                                    <span class="price-naira">₦${item.price.toLocaleString()}</span>
+                                </div>
+                                <div class="price-usd">
+                                    <span class="price-usd-scratched">$${item.usdScratched} USD</span> · $${item.usdPrice} USD · Sourced from ${item.source}
+                                </div>
+                            </div>
+                            <button class="${actionButtonClass}" onclick="addItemToCart('${item.name}', ${item.price})">${actionButtonText}</button>
+                        </div>
+                    </div>
+                `;
+                targetContainer.appendChild(nodeCard);
+            });
+        }
+
         // Pop-Up Display Logic Delay Context Configuration
         window.onload = function() {
+            // Initial compilation run to draw the base grid sequence elements
+            processCatalogFilters();
+
             setTimeout(function() {
                 if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
                     document.getElementById('discountPopup').classList.add('show');
