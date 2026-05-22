@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBO | Straight From The Source</title>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- The Clinical Earth Palette --- */
@@ -34,7 +34,16 @@
 
         /* Nav & Marquee */
         .top-banner { background-color: var(--action-color); color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
-        .marquee span { display: inline-block; font-family: 'Barlow Condensed', sans-serif; color: #FFD700; font-size: 1rem; font-weight: 600; letter-spacing: 2px; animation: marquee 20s linear infinite; }
+       .marquee span { 
+            display: inline-block; 
+            font-family: 'Inter', sans-serif; 
+            color: #FFFFFF; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            letter-spacing: 1.5px; 
+            text-transform: uppercase;
+            animation: marquee 20s linear infinite; 
+        }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         .navbar { padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background-color: rgba(248, 246, 243, 0.95); backdrop-filter: blur(8px); z-index: 100; }
