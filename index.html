@@ -602,16 +602,7 @@
                 }
             }
             renderCartUI();
-        }
-
-        function toggleCartDrawer() {
-            const drawer = document.getElementById('cartDrawer');
-            const overlay = document.getElementById('cartOverlay');
-            drawer.classList.toggle('open');
-            overlay.classList.toggle('show');
-        }
-
-        function renderCartUI() {
+                function renderCartUI() {
             const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
             const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
 
@@ -635,6 +626,65 @@
                 document.getElementById('cart-drawer-total').innerText = '₦0';
                 return;
             }
+
+            cartState.forEach(item => {
+                const node = document.createElement('div');
+                node.className = 'cart-item';
+                
+                // Safely attaching the quantity buttons to prevent breaking on quotes
+                node.innerHTML = `
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <p>₦${item.price.toLocaleString()} each</p>
+                        <div class="cart-item-controls">
+                            <button class="btn-qty btn-minus">-</button>
+                            <span class="qty-label">${item.quantity}</span>
+                            <button class="btn-qty btn-plus">+</button>
+                        </div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--text-dark); white-space: nowrap;">
+                        ₦${(item.price * item.quantity).toLocaleString()}
+                    </div>
+                `;
+                
+                // Attach clicks safely
+                node.querySelector('.btn-minus').onclick = () => changeItemQuantity(item.name, -1);
+                node.querySelector('.btn-plus').onclick = () => changeItemQuantity(item.name, 1);
+                
+                streamContainer.appendChild(node);
+            });
+
+            // SMART CROSS-SELLING INJECTION (FIXED)
+            const crossSellProduct = catalogItems.find(catalogItem => 
+                catalogItem.type === 'product' && !cartState.some(cartItem => cartItem.name === catalogItem.name)
+            );
+
+            if (crossSellProduct) {
+                const crossSellNode = document.createElement('div');
+                crossSellNode.className = 'cart-cross-sell';
+                crossSellNode.innerHTML = `
+                    <div class="cart-cross-sell-title">✨ Complete Your Routine</div>
+                    <div class="cross-sell-item">
+                        <img src="${crossSellProduct.img}" alt="${crossSellProduct.name}" class="cross-sell-img">
+                        <div class="cross-sell-details">
+                            <h4>${crossSellProduct.name}</h4>
+                            <p>₦${crossSellProduct.price.toLocaleString()}</p>
+                        </div>
+                        <button class="btn-add-sm">Add</button>
+                    </div>
+                `;
+                
+                // Attach the "Add" button click safely via JS to avoid quotation mark errors
+                const addButton = crossSellNode.querySelector('.btn-add-sm');
+                addButton.onclick = function() {
+                    addItemToCart(crossSellProduct.name, crossSellProduct.price);
+                };
+
+                streamContainer.appendChild(crossSellNode);
+            }
+
+            document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
+        }
 
             cartState.forEach(item => {
                 const node = document.createElement('div');
