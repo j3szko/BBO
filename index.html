@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <script src="catalog.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBO | Straight From The Source</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
     <style>
         /* --- The Clinical Earth Palette --- */
         :root {
@@ -73,7 +74,7 @@
         .btn-secondary { background-color: transparent; border: 1px solid var(--text-dark); color: var(--text-dark); width: 100%; margin-top: 1rem; }
         .btn-secondary:hover { background-color: var(--text-dark); color: #fff; }
 
-        /* Pop-Up Modal Styles */
+        /* Pop-Up Modal Styles (Used for Discount & Checkout) */
         .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
         .popup-overlay.show { opacity: 1; visibility: visible; }
         .popup-content { background: var(--card-bg); width: 90%; max-width: 450px; border-radius: 12px; padding: 3rem 2.5rem; position: relative; text-align: center; transform: translateY(20px); transition: transform 0.4s ease; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
@@ -86,14 +87,14 @@
         .popup-dismiss:hover { color: var(--text-dark); }
 
         /* Inputs */
-        .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; }
+        .form-input { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; margin-bottom: 0.8rem;}
         .form-input:focus { outline: none; border-color: var(--action-color); }
 
         /* Filter Controls & Search Controls */
         .shop-controls { display: flex; gap: 1rem; justify-content: flex-start; margin-bottom: 2rem; align-items: center; width: 100%; }
         .search-container { flex-grow: 1; position: relative; max-width: 500px; }
         .search-icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-grey); pointer-events: none; }
-        .search-container .form-input { padding-left: 2.8rem; background-color: var(--card-bg); }
+        .search-container .form-input { padding-left: 2.8rem; background-color: var(--card-bg); margin-bottom: 0; }
         .btn-filter { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; height: 100%; min-height: 48px; }
         .btn-filter:hover { background: #EFECE7; border-color: var(--text-dark); }
 
@@ -278,6 +279,30 @@
                 <button type="submit" class="btn-primary w-100" style="margin-top: 1rem; border-radius: 8px;">Claim My Discount</button>
             </form>
             <button class="popup-dismiss" onclick="closePopup()">No thanks, I prefer paying full price</button>
+        </div>
+    </div>
+
+    <div id="checkoutModal" class="popup-overlay">
+        <div class="popup-content" style="max-width: 500px; text-align: left;">
+            <button class="popup-close" onclick="closeCheckout()">&times;</button>
+            <div class="popup-header">
+                <h2>Secure Checkout</h2>
+                <p>Enter your delivery details to complete your payment securely via Paystack.</p>
+            </div>
+            <form id="checkoutForm" class="request-form" onsubmit="event.preventDefault(); initiatePaystack();">
+                <input type="text" id="custName" placeholder="Full Name" class="form-input" required>
+                <input type="email" id="custEmail" placeholder="Email Address" class="form-input" required>
+                <input type="tel" id="custPhone" placeholder="Phone Number (e.g. 080...)" class="form-input" required>
+                <textarea id="custAddress" placeholder="Full Delivery Address (State, City, Street)" class="form-input" rows="3" required style="resize: none;"></textarea>
+                <button type="submit" class="btn-primary w-100" style="margin-top: 1rem; border-radius: 8px; font-size: 1rem;">
+                    Pay <span id="checkoutTotalBtn"></span>
+                </button>
+            </form>
+            <div style="text-align: center; margin-top: 15px;">
+                <svg width="60" height="20" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="0" y="20" font-family="Inter" font-size="14" fill="#666" font-weight="600">🔒 Secured by Paystack</text>
+                </svg>
+            </div>
         </div>
     </div>
 
@@ -547,15 +572,14 @@
         <button class="btn-primary" onclick="toggleCartDrawer()">View Cart</button>
     </div>
 
+    <script src="catalog.js"></script>
+
     <script>
- 
-        // Pagination and State Variables
         let cartState = [];
         let currentFilteredItems = [];
         let currentPage = 1;
-        const itemsPerPage = 6; // Set to 6 to demonstrate Load More button
+        const itemsPerPage = 8; // Shows 8 products per page
 
-        // Add Items to Cart Logic
         function addItemToCart(itemName, priceNaira) {
             const existingItem = cartState.find(item => item.name === itemName);
             if (existingItem) {
@@ -569,7 +593,6 @@
             stickyCart.classList.add('visible');     
         }
 
-        // Handle inner quantity adjustment increments (+/-)
         function changeItemQuantity(itemName, delta) {
             const targetedItem = cartState.find(item => item.name === itemName);
             if (targetedItem) {
@@ -581,7 +604,6 @@
             renderCartUI();
         }
 
-        // Toggle Right Cart Drawer Panel State
         function toggleCartDrawer() {
             const drawer = document.getElementById('cartDrawer');
             const overlay = document.getElementById('cartOverlay');
@@ -589,7 +611,6 @@
             overlay.classList.toggle('show');
         }
 
-        // Central UI Synchronization Processor (Now Includes Smart Cross-Selling)
         function renderCartUI() {
             const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
             const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
@@ -660,12 +681,61 @@
             document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
         }
 
+        // --- NEW: THE PAYSTACK SECURE CHECKOUT LOGIC ---
         function proceedToCheckout() {
             if (cartState.length === 0) {
                 alert('Your shopping cart is currently empty.');
                 return;
             }
-            alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
+            
+            // Calculate total and inject it into the Pay button
+            const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
+            document.getElementById('checkoutTotalBtn').innerText = `(₦${grossValue.toLocaleString()})`;
+            
+            // Hide the cart drawer, show the checkout modal
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+            document.getElementById('checkoutModal').classList.add('show');
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('show');
+        }
+
+        function initiatePaystack() {
+            const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
+            const email = document.getElementById('custEmail').value;
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+
+            // Paystack Inline Configuration
+            let handler = PaystackPop.setup({
+                key: 'pk_test_YOUR_PAYSTACK_PUBLIC_KEY_HERE', // <--- IMPORTANT: PUT YOUR ACTUAL KEY HERE
+                email: email,
+                amount: grossValue * 100, // Paystack calculates in kobo, so multiply by 100
+                currency: 'NGN',
+                ref: 'BBO_' + Math.floor((Math.random() * 1000000000) + 1), 
+                metadata: {
+                    custom_fields: [
+                        { display_name: "Customer Name", variable_name: "customer_name", value: name },
+                        { display_name: "Phone Number", variable_name: "phone_number", value: phone },
+                        { display_name: "Delivery Address", variable_name: "delivery_address", value: address }
+                    ],
+                    cart_items: cartState
+                },
+                callback: function(response) {
+                    // This runs if the payment is successful
+                    alert('Payment complete! Your Reference is: ' + response.reference + '\nWe will contact you regarding delivery shortly.');
+                    cartState = []; // Clear their cart
+                    renderCartUI(); // Reset UI
+                    closeCheckout(); // Close modal
+                },
+                onClose: function() {
+                    alert('Payment window closed. Your transaction was not completed.');
+                }
+            });
+            handler.openIframe();
         }
 
         function dismissStickyBar(event) {
@@ -694,7 +764,6 @@
                 if (selectedConcerns.length > 0 && !selectedConcerns.includes(item.concern)) return false;
                 if (selectedBrands.length > 0 && !selectedBrands.includes(item.brand)) return false;
 
-                // Fuzzy Match for Skin Profile 
                 if (selectedSkinTypes.length > 0) {
                     const itemSkin = item.skinType.toLowerCase();
                     const matchesSkin = selectedSkinTypes.some(selectedType => itemSkin.includes(selectedType));
@@ -714,7 +783,6 @@
                 return true;
             });
 
-            // Reset pagination on fresh filter
             currentPage = 1; 
             renderGridUI();
         }
@@ -750,7 +818,6 @@
             processCatalogFilters();
         }
 
-        // Catalog UI Grid Painter Engine (Now with Pagination)
         function renderGridUI() {
             const targetContainer = document.getElementById('masterProductGrid');
             targetContainer.innerHTML = '';
@@ -785,7 +852,6 @@
                 return;
             }
 
-            // Slice array based on Current Page
             const itemsToRender = currentFilteredItems.slice(0, currentPage * itemsPerPage);
 
             itemsToRender.forEach(item => {
@@ -826,7 +892,6 @@
                 targetContainer.appendChild(nodeCard);
             });
 
-            // Evaluate if we should show or hide the "Load More" Button
             if (currentPage * itemsPerPage < currentFilteredItems.length) {
                 document.getElementById('loadMoreWrapper').style.display = 'block';
             } else {
