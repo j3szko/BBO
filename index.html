@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <script src="catalog.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBO | Straight From The Source</title>
@@ -547,90 +548,7 @@
     </div>
 
     <script>
-        // Central Array Data Object for Products and Bundles extracted from CSV
-        const catalogItems = [
-            {
-                id: "p1", type: "product",
-                name: "Dove Beauty Bar Original, 3.75 oz (8 Bars)",
-                concern: "General Cleansing", skinType: "All Skin Types",
-                brand: "Dove (US)", price: 52145, scratchedPrice: 74102,
-                usdPrice: 38, usdScratched: 54, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p2", type: "product",
-                name: "OLAY Regenerist Anti-Aging Firming Face Cream",
-                concern: "Anti-Aging", skinType: "Mature / Dry",
-                brand: "Olay (US)", price: 72729, scratchedPrice: 102919,
-                usdPrice: 53, usdScratched: 75, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p3", type: "product",
-                name: "eos Cashmere Body Mist - Vanilla Cashmere",
-                concern: "Fragrance / Body Care", skinType: "All Skin Types",
-                brand: "eos (US)", price: 52145, scratchedPrice: 74102,
-                usdPrice: 38, usdScratched: 54, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p4", type: "product",
-                name: "CeraVe Moisturizing Cream, Face & Body",
-                concern: "Damaged Barrier / Dryness", skinType: "Normal to Dry Skin",
-                brand: "CeraVe (US)", price: 56262, scratchedPrice: 79591,
-                usdPrice: 41, usdScratched: 58, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p5", type: "product",
-                name: "Neutrogena Hydro Boost Water Gel",
-                concern: "Hydration", skinType: "Dry / Combination",
-                brand: "Neutrogena (US)", price: 61751, scratchedPrice: 86452,
-                usdPrice: 45, usdScratched: 63, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p6", type: "product",
-                name: "Cetaphil Moisturizing Cream, 20 oz",
-                concern: "Damaged Barrier / Dryness", skinType: "Dry to Very Dry",
-                brand: "Cetaphil (US)", price: 56262, scratchedPrice: 79591,
-                usdPrice: 41, usdScratched: 58, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1608248597481-496100c8c836?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p7", type: "product",
-                name: "PanOxyl Acne Treatment Bar, 10% Benzoyl Peroxide",
-                concern: "Acne & Breakouts", skinType: "Acne-Prone",
-                brand: "PanOxyl (US)", price: 48029, scratchedPrice: 67240,
-                usdPrice: 35, usdScratched: 49, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p8", type: "product",
-                name: "Garnier SkinActive Micellar Water Vitamin C",
-                concern: "Makeup Removal", skinType: "Dull / All Skin Types",
-                brand: "Garnier (US)", price: 50773, scratchedPrice: 71357,
-                usdPrice: 37, usdScratched: 52, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p9", type: "product",
-                name: "The Ordinary Salicylic Acid 2% Solution",
-                concern: "Acne & Breakouts", skinType: "Blemish-Prone",
-                brand: "The Ordinary (US)", price: 43912, scratchedPrice: 61751,
-                usdPrice: 32, usdScratched: 45, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=600&q=80"
-            },
-            {
-                id: "p10", type: "product",
-                name: "Sol de Janeiro Brazilian Crush Cheirosa 62",
-                concern: "Fragrance / Body Care", skinType: "All Skin Types",
-                brand: "Sol de Janeiro (US)", price: 80963, scratchedPrice: 113897,
-                usdPrice: 59, usdScratched: 83, source: "US", flag: "🇺🇸",
-                img: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
-            }
-        ];
-
+ 
         // Pagination and State Variables
         let cartState = [];
         let currentFilteredItems = [];
