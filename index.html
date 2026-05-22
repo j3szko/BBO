@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBO | Straight From The Source</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- The Clinical Earth Palette --- */
@@ -26,21 +26,21 @@
         .w-100 { width: 100%; }
 
         /* Typography & Layout */
-        .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
         .bg-light { background-color: #EFECE7; max-width: 100%; }
         .section-header { text-align: center; margin-bottom: 3rem; }
         .section-header h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-dark); }
         .section-header p { color: var(--text-grey); }
 
         /* Nav & Marquee Updates */
-        .top-banner { background-color: var(--action-color); color: #fff; padding: 12px 0; overflow: hidden; white-space: nowrap; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .top-banner { background-color: var(--action-color); color: #fff; padding: 10px 0; overflow: hidden; white-space: nowrap; }
         .marquee span { 
             display: inline-block; 
-            font-family: 'Space Grotesk', sans-serif; 
-            font-size: 0.9rem; 
+            font-family: 'Barlow Condensed', sans-serif; 
+            color: #FFD700; /* Gold Font Color */
+            font-size: 1.2rem; 
             font-weight: 700; 
-            letter-spacing: 2.5px; 
-            text-transform: uppercase; 
+            letter-spacing: 2px; 
             animation: marquee 20s linear infinite; 
         }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -58,90 +58,13 @@
         /* Payment Acceptance Sub-Header */
         .payment-notice-bar { background-color: #EFECE7; border-bottom: 1px solid var(--border-color); text-align: center; padding: 0.6rem 5%; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 
-        /* Enhanced Aesthetic Hero Section */
-        .hero { 
-            text-align: center; 
-            padding: 8rem 5% 7rem; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            max-width: 100%; 
-            margin: 0 auto; 
-            position: relative;
-            background-color: var(--bg-color);
-            /* Minimalist clinical micro-grid structure */
-            background-image: 
-                linear-gradient(var(--border-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-            background-size: 80px 80px;
-            background-position: center top;
-            overflow: hidden;
-        }
-        /* Soft mask vignette over the grid pattern */
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at 50% 50%, transparent 10%, var(--bg-color) 85%);
-            pointer-events: none;
-            z-index: 1;
-        }
+        /* Hero */
+        .hero { text-align: center; padding: 6rem 5%; display: flex; flex-direction: column; align-items: center; max-width: 800px; margin: 0 auto; }
+        .badge { background-color: var(--text-dark); color: var(--card-bg); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; font-weight: 600; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 1.5rem; font-weight: 600; letter-spacing: -1px; }
+        .hero p { color: var(--text-grey); font-size: 1.1rem; margin-bottom: 2.5rem; }
 
-        /* Dynamic fluid graphics elements floating in background */
-        .hero-graphic-blob-1, .hero-graphic-blob-2 {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .hero-graphic-blob-1 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(184, 92, 56, 0.09) 0%, rgba(248, 246, 243, 0) 70%);
-            top: -10%;
-            right: -5%;
-            filter: blur(20px);
-            animation: floatShape 14s ease-in-out infinite alternate;
-        }
-        .hero-graphic-blob-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(44, 42, 41, 0.05) 0%, rgba(248, 246, 243, 0) 70%);
-            bottom: -5%;
-            left: -8%;
-            filter: blur(30px);
-            animation: floatShape 18s ease-in-out infinite alternate-reverse;
-        }
-        @keyframes floatShape {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, -30px) scale(1.08); }
-        }
-
-        .hero-content { position: relative; z-index: 2; max-width: 850px; }
-        .hero h1 { font-size: 3.4rem; line-height: 1.15; margin-bottom: 1.5rem; font-weight: 600; letter-spacing: -1.5px; }
-        .hero p { color: var(--text-grey); font-size: 1.15rem; margin-bottom: 2.5rem; max-width: 650px; margin-left: auto; margin-right: auto; }
-
-        /* Dynamic Stock Brand Pill Showcase Layout */
-        .hero-brands { margin-top: 4.5rem; width: 100%; max-width: 850px; text-align: center; }
-        .hero-brands-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-grey); margin-bottom: 1.2rem; font-weight: 700; }
-        .brand-pill-container { display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap; }
-        .brand-pill { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-color); 
-            padding: 0.6rem 1.4rem; 
-            border-radius: 30px; 
-            font-family: 'Space Grotesk', sans-serif; 
-            font-size: 0.85rem; 
-            font-weight: 700; 
-            color: var(--text-dark); 
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .brand-pill:hover { border-color: var(--action-color); transform: translateY(-2px); color: var(--action-color); box-shadow: 0 6px 16px rgba(184, 92, 56, 0.08); }
-
-        /* Badge & Buttons */
-        .badge { background-color: var(--text-dark); color: var(--card-bg); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; font-weight: 600; margin-bottom: 1.5rem; display: inline-block; }
+        /* Buttons */
         .btn-primary, .btn-secondary { padding: 1rem 2rem; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; border: none; display: inline-block; text-align: center; }
         .btn-primary { background-color: var(--action-color); color: #fff; }
         .btn-primary:hover { background-color: var(--action-hover); }
@@ -259,7 +182,7 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
         /* Footer */
-        .footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: 3rem; text-align: center; position: relative; z-index: 1; }
+        .footer { border-top: 1px solid var(--border-color); padding: 4rem 5% 2rem; margin-top: 3rem; text-align: center; }
         .footer-brand h2 { font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -1px; }
         .footer-bottom { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; }
 
@@ -296,7 +219,6 @@
             .nav-links { display: none; }
             .mobile-sticky-bar .price { font-weight: 700; font-size: 1.2rem; }
             .mobile-sticky-bar .btn-primary { padding: 0.8rem 1.5rem; }
-            .hero h1 { font-size: 2.4rem; }
         }
 
         @media (max-width: 420px) {
@@ -348,9 +270,6 @@
     </div>
 
     <header id="home" class="hero">
-        <div class="hero-graphic-blob-1"></div>
-        <div class="hero-graphic-blob-2"></div>
-
         <div class="hero-content">
             <span class="badge">No Minimum Order · Zero Customs Fees</span>
             <h1>Authentic Skincare, Straight from the Source.</h1>
@@ -358,19 +277,6 @@
             <div class="hero-buttons">
                 <a href="#shop" class="btn-primary">Shop All Products</a>
                 <a href="#bundles" class="btn-secondary" style="width: auto; margin-top: 0; margin-left: 10px;">Shop Bundles</a>
-            </div>
-        </div>
-
-        <div class="hero-brands">
-            <div class="hero-brands-title">Sourced Directly From Authorized Retail Channels</div>
-            <div class="brand-pill-container">
-                <span class="brand-pill">COSRX</span>
-                <span class="brand-pill">BEAUTY OF JOSEON</span>
-                <span class="brand-pill">ANUA</span>
-                <span class="brand-pill">GOOD MOLECULES</span>
-                <span class="brand-pill">CERAVE</span>
-                <span class="brand-pill">LA ROCHE-POSAY</span>
-                <span class="brand-pill">ROUND LAB</span>
             </div>
         </div>
     </header>
@@ -723,6 +629,7 @@
             stickyCart.classList.add('visible');     
         }
 
+        // Handle inner quantity adjustment increments (+/-)
         function changeItemQuantity(itemName, delta) {
             const targetedItem = cartState.find(item => item.name === itemName);
             
@@ -736,6 +643,7 @@
             renderCartUI();
         }
 
+        // Toggle Right Cart Drawer Panel State
         function toggleCartDrawer() {
             const drawer = document.getElementById('cartDrawer');
             const overlay = document.getElementById('cartOverlay');
@@ -743,6 +651,7 @@
             overlay.classList.toggle('show');
         }
 
+        // Central UI Synchronization Processor
         function renderCartUI() {
             const grossCount = cartState.reduce((accum, item) => accum + item.quantity, 0);
             const grossValue = cartState.reduce((accum, item) => accum + (item.price * item.quantity), 0);
@@ -756,7 +665,7 @@
             }
 
             const streamContainer = document.getElementById('cart-drawer-items');
-            streamContainer.innerHTML = '';
+            streamContainer.innerHTML = ''; 
 
             if (cartState.length === 0) {
                 streamContainer.innerHTML = `
@@ -791,6 +700,7 @@
             document.getElementById('cart-drawer-total').innerText = `₦${grossValue.toLocaleString()}`;
         }
 
+        // Proceed to Checkout Hook
         function proceedToCheckout() {
             if (cartState.length === 0) {
                 alert('Your shopping cart is currently empty.');
@@ -799,11 +709,13 @@
             alert(`Proceeding to checkout with ${cartState.length} product entries total.`);
         }
 
+        // Manual collapse dismiss function for bottom sticky element
         function dismissStickyBar(event) {
             event.stopPropagation(); 
             document.getElementById('mobileStickyCart').classList.add('collapsed');
         }
 
+        // Drawer Left Filter Panel Logic
         function toggleFilter() {
             const drawer = document.getElementById('filterDrawer');
             const overlay = document.getElementById('filterOverlay');
@@ -811,6 +723,7 @@
             overlay.classList.toggle('show');
         }
 
+        // Pop-Up Display Logic Delay Context Configuration
         window.onload = function() {
             setTimeout(function() {
                 if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
