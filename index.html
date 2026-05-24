@@ -242,8 +242,6 @@
 
         .summary-panel-row { display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.9rem; color: var(--text-grey); font-weight: 500; }
         .summary-panel-row.grand-total-row { border-top: 1px solid var(--border-color); padding-top: 1.2rem; margin-top: 1.2rem; font-weight: 700; font-size: 1.35rem; color: var(--text-dark); }
-        
-        .trust-badges-footer { display: flex; justify-content: center; gap: 0.8rem; font-size: 0.75rem; color: var(--text-grey); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 1.8rem; text-align: center; border-top: 1px solid var(--border-color); padding-top: 1.2rem; }
 
         /* Responsive Mobile Sticky Floating Order Tray Monitor */
         .mobile-sticky-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border-color); padding: 1.2rem 5%; box-shadow: 0 -6px 20px rgba(0,0,0,0.06); z-index: 1000; display: flex; justify-content: space-between; align-items: center; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -494,19 +492,19 @@
                     <form id="bbo-secure-checkout-form" onsubmit="event.preventDefault(); initiateSecurePaystackTransaction();">
                         
                         <div class="checkout-form-section">
-                            <h3>1. Contact Registry</h3>
+                            <h3>1. Contact Details.</h3>
                             <div class="checkout-form-group">
                                 <label>Email Address (For transaction & shipping tracking updates)</label>
                                 <input type="email" id="checkoutEmailField" class="form-input" placeholder="buyer@domain.com" required>
                             </div>
                             <div class="checkout-form-group">
-                                <label>WhatsApp Number (Essential for local courier drop optimization)</label>
+                                <label>Phone number (For direct calls)</label>
                                 <input type="tel" id="checkoutWhatsappField" class="form-input" placeholder="e.g., +234 802 000 0000" required>
                             </div>
                         </div>
 
                         <div class="checkout-form-section">
-                            <h3>2. Freight Logistics Destination</h3>
+                            <h3>2. Address</h3>
                             <div class="checkout-form-group">
                                 <label>Receiver Full Name</label>
                                 <input type="text" id="checkoutNameField" class="form-input" placeholder="Enter recipient complete name" required>
@@ -517,13 +515,46 @@
                             </div>
                             <div class="form-row">
                                 <div class="checkout-form-group">
-                                    <label>State Geography</label>
+                                    <label>State</label>
                                     <select id="checkoutStateSelect" onchange="runDynamicShippingCalculations()">
+                                        <option value="abuja">Abuja (FCT)</option>
+                                        <option value="abia">Abia</option>
+                                        <option value="adamawa">Adamawa</option>
+                                        <option value="akwa_ibom">Akwa Ibom</option>
+                                        <option value="anambra">Anambra</option>
+                                        <option value="bauchi">Bauchi</option>
+                                        <option value="bayelsa">Bayelsa</option>
+                                        <option value="benue">Benue</option>
+                                        <option value="borno">Borno</option>
+                                        <option value="cross_river">Cross River</option>
+                                        <option value="delta">Delta</option>
+                                        <option value="ebonyi">Ebonyi</option>
+                                        <option value="edo">Edo</option>
+                                        <option value="ekiti">Ekiti</option>
+                                        <option value="enugu">Enugu</option>
+                                        <option value="gombe">Gombe</option>
+                                        <option value="imo">Imo</option>
+                                        <option value="jigawa">Jigawa</option>
+                                        <option value="kaduna">Kaduna</option>
+                                        <option value="kano">Kano</option>
+                                        <option value="katsina">Katsina</option>
+                                        <option value="kebbi">Kebbi</option>
+                                        <option value="kogi">Kogi</option>
+                                        <option value="kwara">Kwara</option>
                                         <option value="lagos_mainland">Lagos (Mainland)</option>
                                         <option value="lagos_island">Lagos (Island)</option>
-                                        <option value="abuja">Abuja (FCT Delivery Hub)</option>
-                                        <option value="rivers">Rivers State (Port Harcourt Terminal)</option>
-                                        <option value="interstate_other">Other Interstate Zones</option>
+                                        <option value="nasarawa">Nasarawa</option>
+                                        <option value="niger">Niger</option>
+                                        <option value="ogun">Ogun</option>
+                                        <option value="ondo">Ondo</option>
+                                        <option value="osun">Osun</option>
+                                        <option value="oyo">Oyo</option>
+                                        <option value="plateau">Plateau</option>
+                                        <option value="rivers">Rivers</option>
+                                        <option value="sokoto">Sokoto</option>
+                                        <option value="taraba">Taraba</option>
+                                        <option value="yobe">Yobe</option>
+                                        <option value="zamfara">Zamfara</option>
                                     </select>
                                 </div>
                                 <div class="checkout-form-group">
@@ -581,14 +612,8 @@
                     </div>
 
                     <button type="submit" form="bbo-secure-checkout-form" class="btn-primary w-100" style="border-radius: 30px; margin-top: 1.5rem; padding: 1.2rem; font-size: 0.9rem;">
-                        Authorize & Place Security Order
+                        place secure order
                     </button>
-                    
-                    <div class="trust-badges-footer">
-                        <span>🔒 256-Bit SSL Encryption</span>
-                        <span>•</span>
-                        <span>🛡️ Sourced Authentic</span>
-                    </div>
                 </aside>
             </div>
         </div>
@@ -693,37 +718,47 @@
         let currentPage = 1;
         const itemsPerPage = 8;
 
-        // Regional Shipping Rates Pricing Config Cost Maps Matrix
+        // Regional Shipping Rates Pricing Config Cost Maps Matrix (Comprehensive 36 States + Abuja mapped)
         const shippingRatesMatrix = {
             lagos_mainland: 2500,
             lagos_island: 3500,
             abuja: 4500,
             rivers: 5000,
-            interstate_other: 6500
+            abia: 6500, adamawa: 6500, akwa_ibom: 6500, anambra: 6500, bauchi: 6500, bayelsa: 6500, benue: 6500, borno: 6500,
+            cross_river: 6500, delta: 6500, ebonyi: 6500, edo: 6500, ekiti: 6500, enugu: 6500, gombe: 6500, imo: 6500,
+            jigawa: 6500, kaduna: 6500, kano: 6500, katsina: 6500, kebbi: 6500, kogi: 6500, kwara: 6500, nasarawa: 6500,
+            niger: 6500, ogun: 6500, ondo: 6500, osun: 6500, oyo: 6500, plateau: 6500, sokoto: 6500, taraba: 6500, yobe: 6500, zamfara: 6500
         };
+
+        const generalInterstateNoticeText = "PLEASE NOTE: If there is a change of address, there could be extra fee if applicable.";
 
         const shippingInstructionalTexts = {
             lagos_mainland: "ℹ️ Standard base hub logistics delivery rate applied for Lagos Mainland locations.",
             lagos_island: "💡 Island transit routing routing parameters applied safely (+₦1,000 regional adjustment fee).",
             abuja: "💡 Interstate Air Delivery Hub: Shipped securely via domestic sorting hub straight to Abuja (+₦2,000 regional adjustment fee).",
             rivers: "💡 Interstate Terminal Route: Dispatched securely via regional logistics terminal to Port Harcourt (+₦2,500 regional adjustment fee).",
-            interstate_other: "⚠️ Premium Outlying Interstate Zone: Final delivery fee configured manually based on standard long-range destination coverage metrics."
+            // All alternative state parameters reference the custom simplified structural string requested
+            abia: generalInterstateNoticeText, adamawa: generalInterstateNoticeText, akwa_ibom: generalInterstateNoticeText, anambra: generalInterstateNoticeText, 
+            bauchi: generalInterstateNoticeText, bayelsa: generalInterstateNoticeText, benue: generalInterstateNoticeText, borno: generalInterstateNoticeText, 
+            cross_river: generalInterstateNoticeText, delta: generalInterstateNoticeText, ebonyi: generalInterstateNoticeText, edo: generalInterstateNoticeText, 
+            ekiti: generalInterstateNoticeText, enugu: generalInterstateNoticeText, gombe: generalInterstateNoticeText, imo: generalInterstateNoticeText, 
+            jigawa: generalInterstateNoticeText, kaduna: generalInterstateNoticeText, kano: generalInterstateNoticeText, katsina: generalInterstateNoticeText, 
+            kebbi: generalInterstateNoticeText, kogi: generalInterstateNoticeText, kwara: generalInterstateNoticeText, nasarawa: generalInterstateNoticeText, 
+            niger: generalInterstateNoticeText, ogun: generalInterstateNoticeText, ondo: generalInterstateNoticeText, osun: generalInterstateNoticeText, 
+            oyo: generalInterstateNoticeText, plateau: generalInterstateNoticeText, sokoto: generalInterstateNoticeText, taraba: generalInterstateNoticeText, 
+            yobe: generalInterstateNoticeText, zamfara: generalInterstateNoticeText
         };
 
         // Advanced Multilayer Multi-Intersecting Attribute Search Filtering Calculations Routine Engine
         function processCatalogFilters() {
-            // Check state context safe check bounds against loaded dataset array arrays
             if (typeof catalogItems === 'undefined') {
                 console.error("External dataset catalog array catalogItems is missing.");
                 return;
             }
 
             const searchStringVal = document.getElementById('catalogSearchField').value.trim().toLowerCase();
-            
-            // Query state selections matrix arrays check tags
             const checkedBoxes = Array.from(document.querySelectorAll('.filter-checkbox-node:checked'));
             
-            // Map selected groups
             const groupFilters = {};
             checkedBoxes.forEach(box => {
                 const group = box.getAttribute('data-filter-group');
@@ -732,9 +767,7 @@
                 groupFilters[group].push(value);
             });
 
-            // Process matching calculation filters parameters arrays matrix checks
             currentFilteredItems = catalogItems.filter(item => {
-                // 1. Evaluate Fuzzy Layout String Matches from Search Field inputs
                 if (searchStringVal) {
                     const matchName = item.name.toLowerCase().includes(searchStringVal);
                     const matchBrand = item.brand.toLowerCase().includes(searchStringVal);
@@ -742,7 +775,6 @@
                     if (!matchName && !matchBrand && !matchConcern) return false;
                 }
 
-                // 2. Map Multi-group Array intersections safely
                 for (const groupKey in groupFilters) {
                     const activeAllowedVals = groupFilters[groupKey];
                     
@@ -750,7 +782,6 @@
                         if (!activeAllowedVals.includes(item.type.toLowerCase())) return false;
                     }
                     if (groupKey === 'skinType') {
-                        // Allow cross matching global compatibility variables arrays configurations
                         if (!activeAllowedVals.includes('all') && item.skinType.toLowerCase() !== 'all') {
                             if (!activeAllowedVals.includes(item.skinType.toLowerCase())) return false;
                         }
@@ -768,15 +799,26 @@
             renderGridUI();
         }
 
-        // Executioner function to rebuild pagination metrics parameters on changes safely
         function resetPaginationAndReconstructGrid() {
             currentPage = 1;
             processCatalogFilters();
         }
 
-        // Fuzzy Text Search triggers handler with built-in clean wrapper tracking hooks
         function triggerSearchQueryFilter() {
             resetPaginationAndReconstructGrid();
+        }
+
+        // Inline quick suggest programmatic selection helper engine updates
+        function injectQuickChipFilterValue(brandValueString) {
+            const targetedCheckbox = Array.from(document.querySelectorAll('.filter-checkbox-node')).find(box => {
+                return box.getAttribute('data-filter-group') === 'brand' && box.getAttribute('data-filter-val') === brandValueString.toLowerCase();
+            });
+
+            if (targetedCheckbox) {
+                targetedCheckbox.checked = true;
+                document.getElementById('catalogSearchField').value = '';
+                resetPaginationAndReconstructGrid();
+            }
         }
 
         function loadNextPageBatch() {
@@ -784,31 +826,13 @@
             renderGridUI();
         }
 
-        // Inline quick suggest programmatic selection helper engine updates
-        function injectQuickChipFilterValue(brandValueString) {
-            // Find matched checking target nodes
-            const targetedCheckbox = Array.from(document.querySelectorAll('.filter-checkbox-node')).find(box => {
-                return box.getAttribute('data-filter-group') === 'brand' && box.getAttribute('data-filter-val') === brandValueString.toLowerCase();
-            });
-
-            if (targetedCheckbox) {
-                targetedCheckbox.checked = true;
-                // Clear active text inputs parameters cleanly
-                document.getElementById('catalogSearchField').value = '';
-                resetPaginationAndReconstructGrid();
-            }
-        }
-
         // Grid Component Rendering Loop Engine
         function renderGridUI() {
             const targetContainer = document.getElementById('primary-catalog-products-container');
-            
-            // If page is 1, purge rows out completely, else accumulate lines seamlessly
             if (currentPage === 1) {
                 targetContainer.innerHTML = '';
             }
 
-            // Zero Matches layout branch parameters blocks handling logic routine
             if (currentFilteredItems.length === 0) {
                 document.getElementById('loadMoreWrapper').style.display = 'none';
                 
@@ -829,13 +853,10 @@
                 return;
             }
 
-            // Render paginated block bounds sliced context
             const totalItemsToOutputCount = currentPage * itemsPerPage;
             const targetSliceSet = currentFilteredItems.slice(0, totalItemsToOutputCount);
 
-            // Rebuild elements list context loop iteration sequence
             targetSliceSet.forEach((item, index) => {
-                // Prevent programmatic duplications rendering collisions over existing lines on updates
                 if (currentPage > 1 && index < (currentPage - 1) * itemsPerPage) {
                     return;
                 }
@@ -843,15 +864,10 @@
                 const nodeCard = document.createElement('div');
                 nodeCard.className = 'product-card';
 
-                // Determine Badge Strings Visibility Context
                 const sourceLabelMarkup = item.source ? `<div class="card-source-tag">${item.source}</div>` : '';
                 const flagLabelMarkup = item.flag ? `<div class="card-status-flag">${item.flag}</div>` : '';
-
-                // Handle Scratched Currency Matrix parameters gracefully
                 const scratchedNairaMarkup = item.scratchedPrice ? `<span class="price-naira-scratched">₦${item.scratchedPrice.toLocaleString()}</span>` : '';
                 const scratchedUsdMarkup = item.usdScratched ? `<span class="price-usd-scratched">$${item.usdScratched} USD</span>` : '';
-
-                // Dynamic Action labels adaptations
                 const actionButtonText = item.type === 'bundle' ? 'Secure System Pack' : 'Add To Cart';
                 const actionButtonClass = item.type === 'bundle' ? 'btn-primary' : 'btn-secondary';
 
@@ -882,13 +898,10 @@
                     </div>
                 `;
                 
-                // Safely attach click execution code context blocks dynamically to eliminate title string string quote crashes completely
                 nodeCard.querySelector('.add-to-cart-btn').onclick = () => addItemToCart(item.name, item.price);
-
                 targetContainer.appendChild(nodeCard);
             });
 
-            // Toggle Pagination Triggers Visibility Metrics based on index boundaries bounds
             if (totalItemsToOutputCount < currentFilteredItems.length) {
                 document.getElementById('loadMoreWrapper').style.display = 'flex';
             } else {
@@ -908,7 +921,6 @@
 
             renderUnifiedCartStateInterfaces();
 
-            // Auto pull up floating action mobile tracker notification panel if collapsed
             const barNode = document.getElementById('mobileStickyCart');
             barNode.classList.remove('collapsed');
             barNode.classList.add('visible');
@@ -925,15 +937,11 @@
             renderUnifiedCartStateInterfaces();
         }
 
-        // Programmatically run cross-selling recommendation engine checks inside cart drawer context
         function executeCartCrossSellingLogic(grossSubtotalValue) {
             const insertionPoint = document.getElementById('cart-cross-sell-injection-point');
             insertionPoint.innerHTML = '';
-
-            // If empty, skip processing additions
             if (cartState.length === 0) return;
 
-            // Extract an item from catalog that is an individual product and not currently inside user cart state array
             const alternativeCandidateItem = catalogItems.find(item => {
                 if (item.type !== 'product') return false;
                 const matchesCartStateCheck = cartState.some(cartItem => cartItem.name === item.name);
@@ -956,11 +964,9 @@
                     </div>
                 `;
 
-                // Safe native programmatic binding wrapper
                 crossSellBlockNode.querySelector('#execute-cross-add-trigger-btn').onclick = () => {
                     addItemToCart(alternativeCandidateItem.name, alternativeCandidateItem.price);
                 };
-
                 insertionPoint.appendChild(crossSellBlockNode);
             }
         }
@@ -970,20 +976,16 @@
             const globalGrossCountValue = cartState.reduce((sum, entry) => sum + entry.quantity, 0);
             const globalGrossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
 
-            // 1. Synchronize Top Header Cart Status Nodes Indicators
             document.getElementById('nav-cart-counter').innerText = `Cart (${globalGrossCountValue})`;
-
-            // 2. Synchronize Mobile Sticky Tracking Tray Values
             document.getElementById('mobile-cart-price').innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`;
+            
             if (globalGrossCountValue === 0) {
                 document.getElementById('mobileStickyCart').classList.remove('visible');
-                // Force exit out of checkouts screens context into catalogue index focus if arrays are cleared out
                 if (document.getElementById('checkout-view').style.display === 'block') {
                     navigateToMarketplace();
                 }
             }
 
-            // 3. Assemble Component Output Stream for Side Drawer Lines
             const drawerItemsContainer = document.getElementById('cart-drawer-items');
             drawerItemsContainer.innerHTML = '';
 
@@ -1016,16 +1018,13 @@
 
                     rowNode.querySelector('#qty-decrement-node-btn').onclick = () => changeItemQuantity(item.name, -1);
                     rowNode.querySelector('#qty-increment-node-btn').onclick = () => changeItemQuantity(item.name, 1);
-
                     drawerItemsContainer.appendChild(rowNode);
                 });
                 document.getElementById('cart-drawer-total').innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`;
             }
 
-            // Fire dependent cross selling validation checks 
             executeCartCrossSellingLogic(globalGrossSubtotalValue);
 
-            // 4. Synchronize Multi-View Screen Checkout Review Component Lists Rows
             const checkoutEmbeddedListContainer = document.getElementById('checkout-active-items-list');
             if (checkoutEmbeddedListContainer) {
                 checkoutEmbeddedListContainer.innerHTML = '';
@@ -1040,8 +1039,6 @@
                 });
 
                 document.getElementById('checkout-subtotal-display').innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`;
-                
-                // Recalculate logistical variables immediately to preserve updates uniformity parameters
                 runDynamicShippingCalculations();
             }
         }
@@ -1051,10 +1048,9 @@
             const globalGrossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
             const selectDropdownKey = document.getElementById('checkoutStateSelect').value;
 
-            const computedShippingRateCost = shippingRatesMatrix[selectDropdownKey];
-            const computedInstructionalText = shippingInstructionalTexts[selectDropdownKey];
+            const computedShippingRateCost = shippingRatesMatrix[selectDropdownKey] || 6500;
+            const computedInstructionalText = shippingInstructionalTexts[selectDropdownKey] || generalInterstateNoticeText;
 
-            // Update DOM parameters display blocks
             document.getElementById('checkout-shipping-fee-display').innerText = `₦${computedShippingRateCost.toLocaleString()}`;
             document.getElementById('checkoutShippingNotice').innerText = computedInstructionalText;
 
@@ -1069,29 +1065,20 @@
                 return;
             }
 
-            // Close all slider drawer windows components cleanly to clear screens estate parameters
             document.getElementById('cartDrawer').classList.remove('open');
             document.getElementById('cartOverlay').classList.remove('show');
-
-            // Isolate view visibility properties focus parameters
             document.getElementById('navbar-menu-links').style.display = 'none';
             document.getElementById('marketplace-view').style.display = 'none';
             document.getElementById('checkout-view').style.display = 'block';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // Fire initial summary calculation sequence loops immediately
             renderUnifiedCartStateInterfaces();
         }
 
         function navigateToMarketplace() {
-            // Restore navigation link systems nodes attributes
             document.getElementById('navbar-menu-links').style.display = 'flex';
-
-            // Swap visibility state variables
             document.getElementById('checkout-view').style.display = 'none';
             document.getElementById('marketplace-view').style.display = 'block';
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1101,34 +1088,28 @@
         function initiateSecurePaystackTransaction() {
             const grossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
             const selectedLocationKey = document.getElementById('checkoutStateSelect').value;
-            const computedDeliveryLogisticsCost = shippingRatesMatrix[selectedLocationKey];
-            
-            // Recombine full financial valuation balance metrics
+            const computedDeliveryLogisticsCost = shippingRatesMatrix[selectedLocationKey] || 6500;
             const grossFinalOrderValuePayable = grossSubtotalValue + computedDeliveryLogisticsCost;
 
-            // Extract string validation parameters data values securely from input forms controls nodes
             const clientEmailPayload = document.getElementById('checkoutEmailField').value.trim();
             const clientNamePayload = document.getElementById('checkoutNameField').value.trim();
             const clientWhatsappPayload = document.getElementById('checkoutWhatsappField').value.trim();
             const clientAddressPayload = document.getElementById('checkoutAddressField').value.trim();
             const clientCityPayload = document.getElementById('checkoutCityField').value.trim();
 
-            // Convert aggregate value parameters to raw Kobo metrics multipliers strictly for Paystack processing standards
             const paystackAbsoluteKoboAmountValue = grossFinalOrderValuePayable * 100;
 
-            // Build payload context object metrics tracking arrays mapping models
             const purchaseLogisticsMetadataPayload = {
                 buyer_full_name: clientNamePayload,
-                whatsapp_phone_number: clientWhatsappPayload,
+                phone_number: clientWhatsappPayload,
                 shipping_street_destination_address: clientAddressPayload,
                 destination_city: clientCityPayload,
                 destination_state_key: selectedLocationKey,
                 cart_items_breakdown_stream: cartState
             };
 
-            // Initialize Paystack configuration transaction inline sequence pipeline
             let handler = PaystackPop.setup({
-                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // Replace with active public live key string tokens variables parameters
+                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
                 email: clientEmailPayload,
                 amount: paystackAbsoluteKoboAmountValue,
                 currency: 'NGN',
@@ -1136,7 +1117,6 @@
                 metadata: purchaseLogisticsMetadataPayload,
                 callback: function(transactionResponseResultResponse) {
                     alert('Transaction Completed Successfully! Payment Reference Token Captured: ' + transactionResponseResultResponse.reference);
-                    // Purge state variables array arrays cleanly on verification closures
                     cartState = [];
                     renderUnifiedCartStateInterfaces();
                     navigateToMarketplace();
@@ -1149,7 +1129,6 @@
             handler.openIframe();
         }
 
-        // Interface Display Utilities UI Overlays Side Drawer Visibility Handlers
         function toggleCartDrawer() {
             document.getElementById('cartDrawer').classList.toggle('open');
             document.getElementById('cartOverlay').classList.toggle('show');
@@ -1165,12 +1144,8 @@
             document.getElementById('mobileStickyCart').classList.add('collapsed');
         }
 
-        // Core Window Initialization Initial Drivers Triggers Loops Lifecycle Hook
         window.onload = function() {
-            // Reconstruct grids elements layout matrices maps from data arrays configurations streams checks
             processCatalogFilters();
-
-            // Trigger discount prompt display workflows gracefully
             setTimeout(function() {
                 if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
                     document.getElementById('discountPopup').classList.add('show');
