@@ -108,6 +108,15 @@
         .btn-qty:hover { background-color: var(--border-color); }
         .qty-label { font-size: 0.95rem; font-weight: 700; min-width: 24px; text-align: center; }
         
+        /* Integrated Cross-selling Widget in Cart Box */
+        .cart-cross-sell-wrapper { background: var(--bg-color); border: 1px dashed var(--action-color); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+        .cross-sell-header { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; color: var(--action-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 4px; }
+        .cross-sell-body { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .cross-sell-body h5 { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; }
+        .cross-sell-body p { font-size: 0.8rem; color: var(--text-grey); font-weight: 700; margin-top: 2px; }
+        .btn-cross-add { background: none; border: 1px solid var(--action-color); color: var(--action-color); padding: 0.4rem 0.8rem; border-radius: 15px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
+        .btn-cross-add:hover { background: var(--action-color); color: #fff; }
+
         .cart-drawer-footer { border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
         .cart-grand-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-dark); }
 
@@ -481,7 +490,7 @@
                             </div>
                             <div class="checkout-form-group">
                                 <label>Phone number (For direct calls)</label>
-                                <input type="tel" id="checkoutWhatsappField" class="form-input" placeholder="e.g., 08030000000" pattern="^[0-9]{11}$" title="Please supply an exact 11-digit phone number configuration for accurate courier routing." required>
+                                <input type="tel" id="checkoutWhatsappField" class="form-input" placeholder="e.g. 08031234567" pattern="^[0-9]{11}$" title="Please supply an exact 11-digit phone number configuration for accurate courier routing." required>
                             </div>
                         </div>
 
@@ -989,31 +998,30 @@
 
             executeCartCrossSellingLogic(globalGrossSubtotalValue);
 
-            const checkoutEmbeddedListContainer = document.getElementById('checkout-active-items-list');
-            if (checkoutEmbeddedListContainer) {
-                checkoutEmbeddedListContainer.innerHTML = '';
-                cartState.forEach(item => {
-                    const embedRowNode = document.createElement('div');
-                    embedRowNode.className = 'embedded-review-row';
-                    embedRowNode.innerHTML = `
-                        <span>${item.name} <strong>× ${item.quantity}</strong></span>
-                        <span style="font-weight: 600;">₦${(item.price * item.quantity).toLocaleString()}</span>
-                    `;
-                    checkoutEmbeddedListContainer.appendChild(embedRowNode);
-                });
-                document.getElementById('checkout-subtotal-display').innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`;
+            // Re-render and calculate checkout sidebar when modifications occur
+            if (document.getElementById('checkout-active-items-list')) {
                 runDynamicShippingCalculations();
             }
         }
 
-        // =========================================================
-        //     DYNAMIC CURRENCY SWITCHER UPDATE LOGIC
-        // =========================================================
+        function runDynamicShippingCalculations() {
+            const selectDropdownKey = document.getElementById('checkoutStateSelect').value;
+            const computedInstructionalText = shippingInstructionalTexts[selectDropdownKey] || generalInterstateNoticeText;
+
+            document.getElementById('checkoutShippingNotice').innerHTML = computedInstructionalText;
+            
+            // Unconditionally pass execution to the unified calculation/rendering wrapper
+            updateCheckoutCurrency();
+        }
+
+        // =====================================================================
+        //   RE-ENGINEERED UNIFIED CURRENCY CALCULATOR AND ROW SWITCHER
+        // =====================================================================
         function updateCheckoutCurrency() {
             const grossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
-            
             const currencyNodes = document.querySelectorAll('input[name="currencySelector"]:checked');
             if(currencyNodes.length === 0) return;
+            
             const currency = currencyNodes[0].value;
             selectedCurrency = currency;
             
@@ -1021,42 +1029,60 @@
             const lblUSD = document.getElementById('lblCurrencyUSD');
             const totalBtnSpan = document.getElementById('checkoutTotalBtn');
             
-            // Recalculate totals including the shipping cost
             const selectDropdownKey = document.getElementById('checkoutStateSelect').value;
             const computedShippingRateCost = shippingRatesMatrix[selectDropdownKey] || 6500;
             const aggregateAbsoluteGrandTotalValue = grossSubtotalValue + computedShippingRateCost;
 
+            // 1. Completely update individual Item rows inside the Sidebar Detail Panel
+            const checkoutEmbeddedListContainer = document.getElementById('checkout-active-items-list');
+            if (checkoutEmbeddedListContainer) {
+                checkoutEmbeddedListContainer.innerHTML = '';
+                cartState.forEach(item => {
+                    const embedRowNode = document.createElement('div');
+                    embedRowNode.className = 'embedded-review-row';
+                    let itemDisplayPrice = '';
+                    
+                    if (currency === 'NGN') {
+                        itemDisplayPrice = `₦${(item.price * item.quantity).toLocaleString()}`;
+                    } else {
+                        const itemUSD = ((item.price * item.quantity) / EXCHANGE_RATE).toFixed(2);
+                        itemDisplayPrice = `$${Number(itemUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                    }
+                    
+                    embedRowNode.innerHTML = `
+                        <span>${item.name} <strong>× ${item.quantity}</strong></span>
+                        <span style="font-weight: 600;">${itemDisplayPrice}</span>
+                    `;
+                    checkoutEmbeddedListContainer.appendChild(embedRowNode);
+                });
+            }
+
+            // 2. Format subtotal, charges, and totals based on current selector currency values
             if (currency === 'NGN') {
                 lblNGN.style.backgroundColor = 'rgba(184, 92, 56, 0.05)';
                 lblNGN.style.borderColor = 'var(--action-color)';
                 lblUSD.style.backgroundColor = 'var(--card-bg)';
                 lblUSD.style.borderColor = 'var(--border-color)';
+                
+                document.getElementById('checkout-subtotal-display').innerText = `₦${grossSubtotalValue.toLocaleString()}`;
+                document.getElementById('checkout-shipping-fee-display').innerText = `₦${computedShippingRateCost.toLocaleString()}`;
+                document.getElementById('checkout-grand-total-display').innerText = `₦${aggregateAbsoluteGrandTotalValue.toLocaleString()}`;
                 if(totalBtnSpan) totalBtnSpan.innerText = `(₦${aggregateAbsoluteGrandTotalValue.toLocaleString()})`;
             } else {
                 lblUSD.style.backgroundColor = 'rgba(184, 92, 56, 0.05)';
                 lblUSD.style.borderColor = 'var(--action-color)';
                 lblNGN.style.backgroundColor = 'var(--card-bg)';
                 lblNGN.style.borderColor = 'var(--border-color)';
-                const usdValue = (aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE).toFixed(2);
-                if(totalBtnSpan) totalBtnSpan.innerText = `($${Number(usdValue).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
+                
+                const subtotalUSD = (grossSubtotalValue / EXCHANGE_RATE).toFixed(2);
+                const shippingUSD = (computedShippingRateCost / EXCHANGE_RATE).toFixed(2);
+                const grandTotalUSD = (aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE).toFixed(2);
+                
+                document.getElementById('checkout-subtotal-display').innerText = `$${Number(subtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                document.getElementById('checkout-shipping-fee-display').innerText = `$${Number(shippingUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                document.getElementById('checkout-grand-total-display').innerText = `$${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                if(totalBtnSpan) totalBtnSpan.innerText = `($${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
             }
-        }
-
-        function runDynamicShippingCalculations() {
-            const globalGrossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
-            const selectDropdownKey = document.getElementById('checkoutStateSelect').value;
-
-            const computedShippingRateCost = shippingRatesMatrix[selectDropdownKey] || 6500;
-            const computedInstructionalText = shippingInstructionalTexts[selectDropdownKey] || generalInterstateNoticeText;
-
-            document.getElementById('checkout-shipping-fee-display').innerText = `₦${computedShippingRateCost.toLocaleString()}`;
-            document.getElementById('checkoutShippingNotice').innerHTML = computedInstructionalText;
-
-            const aggregateAbsoluteGrandTotalValue = globalGrossSubtotalValue + computedShippingRateCost;
-            document.getElementById('checkout-grand-total-display').innerText = `₦${aggregateAbsoluteGrandTotalValue.toLocaleString()}`;
-            
-            // Trigger the currency auto-conversion UI update based on the new total
-            updateCheckoutCurrency();
         }
 
         function navigateToCheckoutView() {
@@ -1072,12 +1098,12 @@
             document.getElementById('checkout-view').style.display = 'block';
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderUnifiedCartStateInterfaces();
-
-            // Set default currency cleanly upon view initialization
+            
+            // Set radio currency option cleanly back to NGN on initialize
             const defaultRadio = document.querySelector('input[name="currencySelector"][value="NGN"]');
             if (defaultRadio) defaultRadio.checked = true;
-            updateCheckoutCurrency();
+            
+            renderUnifiedCartStateInterfaces();
         }
 
         function navigateToMarketplace() {
@@ -1087,11 +1113,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // =========================================================
-        //     PAYSTACK TRANSACTION & GUARD LOGIC
-        // =========================================================
         function initiateSecurePaystackTransaction() {
-            // 1. Paystack Script Guard (Enhancement 4)
             if (typeof PaystackPop === 'undefined') {
                 alert('The secure payment configuration could not be contacted. Please verify your internet/network settings or disable ad-blockers and refresh the page.');
                 return;
@@ -1108,19 +1130,17 @@
             const clientAddressPayload = document.getElementById('checkoutAddressField').value.trim();
             const clientCityPayload = document.getElementById('checkoutCityField').value.trim();
 
-            // 2. Double-Click Inversion Protection Engine (Enhancement 3)
             const submitBtn = document.getElementById('checkoutSubmitButton');
             const originalBtnHtml = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerText = 'Opening Secure Gateway...';
 
-            let paystackAbsoluteAmountValue = grossFinalOrderValuePayable * 100; // NGN uses Kobo
+            let paystackAbsoluteAmountValue = grossFinalOrderValuePayable * 100; 
             let finalCurrency = 'NGN';
 
-            // Auto-conversion implementation logic for SDK Payload
             if (selectedCurrency === 'USD') {
                 const usdValue = (grossFinalOrderValuePayable / EXCHANGE_RATE).toFixed(2);
-                paystackAbsoluteAmountValue = Math.round(parseFloat(usdValue) * 100); // USD uses Cents
+                paystackAbsoluteAmountValue = Math.round(parseFloat(usdValue) * 100); 
                 finalCurrency = 'USD';
             }
 
@@ -1134,7 +1154,7 @@
             };
 
             let handler = PaystackPop.setup({
-                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // Update with actual Paystack Public Key
+                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
                 email: clientEmailPayload,
                 amount: paystackAbsoluteAmountValue,
                 currency: finalCurrency,
