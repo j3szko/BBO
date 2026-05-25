@@ -126,7 +126,9 @@
 
         /* Dynamic Products & Bundles Grid Architecture Layout */
         .shop-layout { width: 100%; min-height: 400px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; width: 100%; }
+        /* FORCES 2 COLUMNS ON MOBILE */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
+
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; position: relative; }
         .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
 
@@ -134,8 +136,8 @@
         .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
         .product-card:hover .product-img { transform: scale(1.04); }
         
-        .card-source-tag { position: absolute; top: 12px; left: 12px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(4px); color: var(--text-dark); padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid var(--border-color); }
-        .card-status-flag { position: absolute; top: 12px; right: 12px; background: var(--action-color); color: #fff; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-source-tag { position: absolute; top: 12px; left: 12px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(4px); color: var(--text-dark); padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid var(--border-color); z-index: 2; }
+        .card-status-flag { position: absolute; top: 12px; right: 12px; background: var(--action-color); color: #fff; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; }
 
         .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
         .card-brand-label { font-size: 0.75rem; font-weight: 700; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
@@ -245,11 +247,14 @@
         .btn-close-sticky:hover { color: var(--text-dark); background: var(--border-color); }
         .mobile-sticky-bar .price { font-weight: 700; font-size: 1.35rem; color: var(--text-dark); }
 
-        .footer { border-top: 1px solid var(--border-color); padding: 5rem 5% 3rem; margin-top: 5rem; text-align: center; background-color: var(--card-bg); }
+        .footer { border-top: 1px solid var(--border-color); padding: 5rem 5% 3rem; text-align: center; background-color: var(--card-bg); }
         .footer-brand h2 { font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -1.5px; font-weight: 700; }
         .footer-brand p { color: var(--text-grey); font-size: 0.95rem; }
         .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; font-weight: 500; }
 
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+        }
         @media (max-width: 950px) {
             .form-row, .checkout-grid-container { grid-template-columns: 1fr; }
             .checkout-sidebar-summary-panel { position: static; margin-top: 2rem; }
@@ -263,6 +268,11 @@
             .timeline-box { padding: 2.5rem 1.5rem; }
             .timeline-item { gap: 1.2rem; }
             .request-card { padding: 2.5rem 1.5rem; }
+            .product-img-frame { height: 200px; }
+            .product-info { padding: 1rem; }
+            .product-info h3 { font-size: 0.95rem; min-height: 38px; }
+            .price-naira { font-size: 1.15rem; }
+            .btn-secondary { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
         }
         @media (max-width: 450px) {
             .cart-drawer { width: 100%; right: -100%; padding: 2rem 1.5rem; }
@@ -371,7 +381,7 @@
                     <div class="timeline-item">
                         <div class="timeline-icon">🏪</div>
                         <div class="timeline-content">
-                            <span class="day-badge">Day 1 - 3</span>
+                            <span class="day-badge">Day 1 - 5</span>
                             <h3>Direct Sourcing Phase</h3>
                             <p>We order your fresh batches directly from authorized brand retailers in the US or South Korea (like Sephora, Ulta, or Olive Young) bypassing dangerous local middlemen and knockoff markets entirely.</p>
                         </div>
@@ -379,7 +389,7 @@
                     <div class="timeline-item">
                         <div class="timeline-icon">📦</div>
                         <div class="timeline-content">
-                            <span class="day-badge">Day 4 - 7</span>
+                            <span class="day-badge">Day 6 - 12</span>
                             <h3>International Hub Quality Check</h3>
                             <p>Your products land at our dedicated overseas sorting facilities. Our team cross-checks batch identification codes, factory seals, and packaging integrity before air freight preparation.</p>
                         </div>
@@ -387,7 +397,7 @@
                     <div class="timeline-item">
                         <div class="timeline-icon">✈️</div>
                         <div class="timeline-content">
-                            <span class="day-badge">Day 8 - 14</span>
+                            <span class="day-badge">Day 13 - 21</span>
                             <h3>Global Air Freight & Clearing</h3>
                             <p>Items fly directly to Nigeria. We handle 100% of the customs documentation and clearing bottlenecks behind the scenes. The price you saw at checkout is your final total—BBO covers every single import fee.</p>
                         </div>
@@ -395,9 +405,9 @@
                     <div class="timeline-item">
                         <div class="timeline-icon">🛵</div>
                         <div class="timeline-content">
-                            <span class="day-badge">Day 15 - 21</span>
+                            <span class="day-badge">Day 22 - 28</span>
                             <h3>Sorting & Local Doorstep Delivery</h3>
-                            <p>Once cleared through our Lagos operations base, packages are carefully batched and sent via premium domestic dispatch partners straight to your address, fully tracked from coast to coast.</p>
+                            <p>Once cleared through our Lagos operations base, packages are carefully batched and sent via premium domestic dispatch partners straight to your address, fully tracked from coast to coast. Please note: All deliveries take 28 days from the source.</p>
                         </div>
                     </div>
                 </div>
@@ -427,15 +437,15 @@
                 
                 <details class="faq-item">
                     <summary>Are there any hidden customs or handling fees on arrival?</summary>
-                    <p>None at all. The price calculated inside our single-page secure checkout model covers every logistical link—including transatlantic air freight clearance fees and processing tariffs. There are absolutely no delivery surcharges requested at your doorstep.</p>
+                    <p>None at all. The price calculated inside our single-page secure checkout model covers every logistical link—including transatlantic air freight clearance fees and processing tariffs. There are absolutely no delivery surcharges requested at your doorstep. Please remember all deliveries take 28 days from the source.</p>
                 </details>
             </div>
         </section>
 
         <section id="request-product" class="section">
             <div class="request-card">
-                <h2>Can't find it?</h2>
-                <p>If your favorite skincare staple or specialized clinical product isn't listed in our active store catalog, don't worry. Fill our request form below, and our sourcing team will purchase it directly from official overseas retailers on your behalf.</p>
+                <h2>Can't find your holy grail?</h2>
+                <p>If your favorite skincare staple or specialized clinical product isn't listed in our active store catalog, don't worry. Fill out our custom procurement request form below, and our sourcing team will purchase it directly from official overseas retailers on your behalf.</p>
                 <form class="request-form" onsubmit="event.preventDefault(); alert('Your custom sourcing request has been safely filed with our tracking procurement team!'); this.reset();">
                     <div class="form-row">
                         <div class="field-stack">
@@ -557,6 +567,7 @@
                             <div id="checkoutShippingNotice" class="delivery-dynamic-notice">
                                 ℹ ...
                             </div>
+                            <p style="font-size: 0.85rem; color: var(--text-grey); margin-top: 15px; font-weight: 600;">Please note: All deliveries take 28 days from the source.</p>
                         </div>
 
                         <div class="checkout-form-section">
@@ -579,6 +590,12 @@
                     <div class="summary-panel-header">Review Order Details</div>
                     
                     <div id="checkout-active-items-list" class="checkout-embedded-items-review"></div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
+                        <input type="text" id="promoInput" class="form-input" placeholder="Discount Code (e.g. BBO10)" style="margin-bottom: 0; padding: 0.8rem;">
+                        <button type="button" onclick="applyDiscount()" class="btn-secondary" style="padding: 0.8rem 1.5rem; margin-top: 0; border-radius: 8px;">Apply</button>
+                    </div>
+                    <div id="discountMessage" style="color: #2e7d32; font-size: 0.85rem; font-weight: 700; margin-top: -10px; margin-bottom: 15px; display: none;">10% Discount Applied!</div>
 
                     <div class="summary-panel-row">
                         <span>Items Subtotal:</span>
@@ -675,6 +692,18 @@
     </div>
     <div id="cartOverlay" class="filter-overlay" onclick="toggleCartDrawer()"></div>
 
+    <section style="padding: 60px 20px; background-color: var(--card-bg); text-align: center; border-top: 1px solid var(--border-color);">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <h2 style="margin-bottom: 15px; font-size: 1.8rem; color: var(--text-dark);">Help Us Improve</h2>
+            <p style="color: var(--text-grey); margin-bottom: 25px;">We value your experience. Let us know how we can serve you better or what products you'd like to see next.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Thank you for your feedback! We appreciate you.'); this.reset();" style="display: flex; flex-direction: column; gap: 15px;">
+                <textarea placeholder="Tell us your thoughts..." rows="4" required style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                <button type="submit" style="padding: 15px; background-color: var(--text-dark); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s;">Submit Feedback</button>
+            </form>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-brand">
             <h2>BBO.</h2>
@@ -708,13 +737,11 @@
         // Currency Config
         const EXCHANGE_RATE = 1373; 
         let selectedCurrency = 'NGN';
+        let isDiscountApplied = false;
 
         // Regional Shipping Rates Pricing Config Cost Maps Matrix
         const shippingRatesMatrix = {
-            lagos_mainland: 2500,
-            lagos_island: 3500,
-            abuja: 4500,
-            rivers: 5000,
+            lagos_mainland: 2500, lagos_island: 3500, abuja: 4500, rivers: 5000,
             abia: 6500, adamawa: 6500, akwa_ibom: 6500, anambra: 6500, bauchi: 6500, bayelsa: 6500, benue: 6500, borno: 6500,
             cross_river: 6500, delta: 6500, ebonyi: 6500, edo: 6500, ekiti: 6500, enugu: 6500, gombe: 6500, imo: 6500,
             jigawa: 6500, kaduna: 6500, kano: 6500, katsina: 6500, kebbi: 6500, kogi: 6500, kwara: 6500, nasarawa: 6500,
@@ -727,17 +754,20 @@
             lagos_mainland: "ℹ️ Standard base hub logistics delivery rate applied for Lagos Mainland locations.",
             lagos_island: "💡 Island transit routing routing parameters applied safely (+₦1,000 regional adjustment fee).",
             abuja: "💡 Interstate Air Delivery Hub: Shipped securely via domestic sorting hub straight to Abuja (+₦2,000 regional adjustment fee).",
-            rivers: "💡 Interstate Terminal Route: Dispatched securely via regional logistics terminal to Port Harcourt (+₦2,500 regional adjustment fee).",
-            abia: generalInterstateNoticeText, adamawa: generalInterstateNoticeText, akwa_ibom: generalInterstateNoticeText, anambra: generalInterstateNoticeText, 
-            bauchi: generalInterstateNoticeText, bayelsa: generalInterstateNoticeText, benue: generalInterstateNoticeText, borno: generalInterstateNoticeText, 
-            cross_river: generalInterstateNoticeText, delta: generalInterstateNoticeText, ebonyi: generalInterstateNoticeText, edo: generalInterstateNoticeText, 
-            ekiti: generalInterstateNoticeText, enugu: generalInterstateNoticeText, gombe: generalInterstateNoticeText, imo: generalInterstateNoticeText, 
-            jigawa: generalInterstateNoticeText, kaduna: generalInterstateNoticeText, kano: generalInterstateNoticeText, katsina: generalInterstateNoticeText, 
-            kebbi: generalInterstateNoticeText, kogi: generalInterstateNoticeText, kwara: generalInterstateNoticeText, nasarawa: generalInterstateNoticeText, 
-            niger: generalInterstateNoticeText, ogun: generalInterstateNoticeText, ondo: generalInterstateNoticeText, osun: generalInterstateNoticeText, 
-            oyo: generalInterstateNoticeText, plateau: generalInterstateNoticeText, sokoto: generalInterstateNoticeText, taraba: generalInterstateNoticeText, 
-            yobe: generalInterstateNoticeText, zamfara: generalInterstateNoticeText
+            rivers: "💡 Interstate Terminal Route: Dispatched securely via regional logistics terminal to Port Harcourt (+₦2,500 regional adjustment fee)."
         };
+
+        function applyDiscount() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (code === 'BBO10') { 
+                isDiscountApplied = true;
+                document.getElementById('discountMessage').style.display = 'block';
+                document.getElementById('promoInput').disabled = true;
+                updateCheckoutCurrency(); 
+            } else {
+                alert('Invalid discount code. Try BBO10.');
+            }
+        }
 
         function processCatalogFilters() {
             if (typeof catalogItems === 'undefined') {
@@ -998,7 +1028,6 @@
 
             executeCartCrossSellingLogic(globalGrossSubtotalValue);
 
-            // Re-render and calculate checkout sidebar when modifications occur
             if (document.getElementById('checkout-active-items-list')) {
                 runDynamicShippingCalculations();
             }
@@ -1009,8 +1038,6 @@
             const computedInstructionalText = shippingInstructionalTexts[selectDropdownKey] || generalInterstateNoticeText;
 
             document.getElementById('checkoutShippingNotice').innerHTML = computedInstructionalText;
-            
-            // Unconditionally pass execution to the unified calculation/rendering wrapper
             updateCheckoutCurrency();
         }
 
@@ -1018,7 +1045,9 @@
         //   RE-ENGINEERED UNIFIED CURRENCY CALCULATOR AND ROW SWITCHER
         // =====================================================================
         function updateCheckoutCurrency() {
-            const grossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let baseSubtotal = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let grossSubtotalValue = isDiscountApplied ? baseSubtotal * 0.90 : baseSubtotal;
+
             const currencyNodes = document.querySelectorAll('input[name="currencySelector"]:checked');
             if(currencyNodes.length === 0) return;
             
@@ -1033,7 +1062,6 @@
             const computedShippingRateCost = shippingRatesMatrix[selectDropdownKey] || 6500;
             const aggregateAbsoluteGrandTotalValue = grossSubtotalValue + computedShippingRateCost;
 
-            // 1. Completely update individual Item rows inside the Sidebar Detail Panel
             const checkoutEmbeddedListContainer = document.getElementById('checkout-active-items-list');
             if (checkoutEmbeddedListContainer) {
                 checkoutEmbeddedListContainer.innerHTML = '';
@@ -1057,14 +1085,18 @@
                 });
             }
 
-            // 2. Format subtotal, charges, and totals based on current selector currency values
             if (currency === 'NGN') {
                 lblNGN.style.backgroundColor = 'rgba(184, 92, 56, 0.05)';
                 lblNGN.style.borderColor = 'var(--action-color)';
                 lblUSD.style.backgroundColor = 'var(--card-bg)';
                 lblUSD.style.borderColor = 'var(--border-color)';
                 
-                document.getElementById('checkout-subtotal-display').innerText = `₦${grossSubtotalValue.toLocaleString()}`;
+                if (isDiscountApplied) {
+                    document.getElementById('checkout-subtotal-display').innerHTML = `<span style="text-decoration:line-through; font-size: 0.85rem; color:var(--text-grey); margin-right: 5px;">₦${baseSubtotal.toLocaleString()}</span> ₦${grossSubtotalValue.toLocaleString()}`;
+                } else {
+                    document.getElementById('checkout-subtotal-display').innerText = `₦${grossSubtotalValue.toLocaleString()}`;
+                }
+
                 document.getElementById('checkout-shipping-fee-display').innerText = `₦${computedShippingRateCost.toLocaleString()}`;
                 document.getElementById('checkout-grand-total-display').innerText = `₦${aggregateAbsoluteGrandTotalValue.toLocaleString()}`;
                 if(totalBtnSpan) totalBtnSpan.innerText = `(₦${aggregateAbsoluteGrandTotalValue.toLocaleString()})`;
@@ -1075,10 +1107,16 @@
                 lblNGN.style.borderColor = 'var(--border-color)';
                 
                 const subtotalUSD = (grossSubtotalValue / EXCHANGE_RATE).toFixed(2);
+                const baseSubtotalUSD = (baseSubtotal / EXCHANGE_RATE).toFixed(2);
                 const shippingUSD = (computedShippingRateCost / EXCHANGE_RATE).toFixed(2);
                 const grandTotalUSD = (aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE).toFixed(2);
                 
-                document.getElementById('checkout-subtotal-display').innerText = `$${Number(subtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                if (isDiscountApplied) {
+                    document.getElementById('checkout-subtotal-display').innerHTML = `<span style="text-decoration:line-through; font-size: 0.85rem; color:var(--text-grey); margin-right: 5px;">$${Number(baseSubtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD</span> $${Number(subtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                } else {
+                    document.getElementById('checkout-subtotal-display').innerText = `$${Number(subtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                }
+
                 document.getElementById('checkout-shipping-fee-display').innerText = `$${Number(shippingUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
                 document.getElementById('checkout-grand-total-display').innerText = `$${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
                 if(totalBtnSpan) totalBtnSpan.innerText = `($${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
@@ -1099,7 +1137,6 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // Set radio currency option cleanly back to NGN on initialize
             const defaultRadio = document.querySelector('input[name="currencySelector"][value="NGN"]');
             if (defaultRadio) defaultRadio.checked = true;
             
@@ -1119,7 +1156,9 @@
                 return;
             }
 
-            const grossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let baseSubtotal = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let grossSubtotalValue = isDiscountApplied ? baseSubtotal * 0.90 : baseSubtotal;
+
             const selectedLocationKey = document.getElementById('checkoutStateSelect').value;
             const computedDeliveryLogisticsCost = shippingRatesMatrix[selectedLocationKey] || 6500;
             const grossFinalOrderValuePayable = grossSubtotalValue + computedDeliveryLogisticsCost;
