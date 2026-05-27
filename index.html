@@ -1,3 +1,4 @@
+Save point 5
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,777 +28,1194 @@
         a { text-decoration: none; color: inherit; }
         .w-100 { width: 100%; }
 
-        /* Typography */
-        h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
-        p { color: var(--text-grey); }
+        /* General Layout Architecture */
+        .section { padding: 5rem 5%; max-width: 1200px; margin: 0 auto; }
+        .bg-light { background-color: #EFECE7; max-width: 100%; }
+        .section-header { text-align: center; margin-bottom: 3rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+        .section-header p { color: var(--text-grey); font-size: 1.05rem; }
 
-        /* Buttons */
-        .btn-primary {
-            background-color: var(--action-color);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+        /* Announcement & Navigation Bars */
+        .top-banner { background-color: var(--action-color); color: #fff; padding: 12px 0; overflow: hidden; white-space: nowrap; }
+        .marquee { display: flex; }
+        .marquee span { display: inline-block; font-size: 0.85rem; font-weight: 700; letter-spacing: 2px; animation: marquee 25s linear infinite; padding-left: 50px; text-transform: uppercase; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .navbar { padding: 1.2rem 5%; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background-color: rgba(248, 246, 243, 0.95); backdrop-filter: blur(8px); z-index: 100; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
+        .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: -1.5px; cursor: pointer; color: var(--text-dark); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dark); transition: color 0.2s ease; }
+        .nav-links a:hover { color: var(--action-color); }
+
+        #nav-cart-counter { cursor: pointer; font-weight: 600; transition: all 0.2s ease; padding: 0.6rem 1.2rem; border-radius: 20px; background-color: #EFECE7; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        #nav-cart-counter:hover { color: #fff; background-color: var(--action-color); }
+
+        .payment-notice-bar { background-color: #EFECE7; border-bottom: 1px solid var(--border-color); text-align: center; padding: 0.6rem 5%; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dark); display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+
+        /* Universal Action Form Buttons & Inputs */
+        .btn-primary, .btn-secondary { padding: 1rem 2rem; font-weight: 700; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; border: none; display: inline-block; text-align: center; }
+        .btn-primary { background-color: var(--action-color); color: #fff; }
         .btn-primary:hover { background-color: var(--action-hover); }
-        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-secondary { background-color: transparent; border: 1px solid var(--text-dark); color: var(--text-dark); }
+        .btn-secondary:hover { background-color: var(--text-dark); color: #fff; }
 
-        /* Announcement Bar */
-        .announcement-bar {
-            background-color: var(--text-dark);
-            color: #fff;
-            text-align: center;
-            padding: 0.6rem 1rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+        .form-input, select { padding: 1rem; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--bg-color); font-family: inherit; font-size: 0.95rem; color: var(--text-dark); transition: border 0.3s ease; width: 100%; }
+        .form-input:focus, select:focus { outline: none; border-color: var(--action-color); background-color: #fff; }
+        textarea.form-input { min-height: 120px; resize: vertical; }
 
-        /* Header Navigation */
-        header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: -1px; }
-        nav { display: flex; gap: 2rem; align-items: center; }
-        nav a { font-size: 0.9rem; font-weight: 600; color: var(--text-grey); transition: color 0.2s; }
-        nav a:hover { color: var(--text-dark); }
-        .cart-icon { cursor: pointer; position: relative; display: flex; align-items: center; gap: 0.5rem; font-weight: 600; font-size: 0.9rem; }
-        .cart-badge { background-color: var(--action-color); color: #fff; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px; }
+        /* Hero Frame Setup */
+        .hero { text-align: center; padding: 7rem 5% 6rem; display: flex; flex-direction: column; align-items: center; max-width: 850px; margin: 0 auto; }
+        .badge { background-color: var(--text-dark); color: var(--card-bg); padding: 0.4rem 1.2rem; border-radius: 20px; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 1px; }
+        .hero h1 { font-size: 3.2rem; line-height: 1.15; margin-bottom: 1.5rem; font-weight: 700; letter-spacing: -1.5px; color: var(--text-dark); }
+        .hero p { color: var(--text-grey); font-size: 1.2rem; margin-bottom: 2.5rem; max-width: 650px; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; }
 
-        /* Container */
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 5%; }
-
-        /* Hero Section */
-        .hero { display: flex; align-items: center; justify-content: space-between; gap: 4rem; padding: 6rem 5%; background-color: var(--card-bg); border-bottom: 1px solid var(--border-color); }
-        .hero-content { max-width: 550px; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1.5rem; color: var(--text-dark); }
-        .hero p { font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.7; }
-        .hero-actions { display: flex; gap: 1rem; }
-        .hero-image { flex: 1; height: 450px; background-color: #E2DED8; background-image: url('https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 8px; }
-
-        /* Value Props */
-        .props-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 2rem; }
-        .prop-card { background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 6px; }
-        .prop-card h3 { margin-bottom: 1rem; font-size: 1.25rem; }
-        .prop-card p { font-size: 0.95rem; }
-
-        /* Sourcing Timeline Section */
-        .timeline-section { background-color: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 5rem 5%; }
-        .timeline-container { position: relative; max-width: 800px; margin: 3rem auto 0 auto; padding-left: 2rem; }
-        .timeline-container::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background-color: var(--timeline-line); }
-        .timeline-item { position: relative; margin-bottom: 3rem; }
-        .timeline-item::before { content: ''; position: absolute; left: -2.4rem; top: 0.2rem; width: 12px; height: 12px; border-radius: 50%; background-color: var(--action-color); border: 2px solid var(--card-bg); }
-        .timeline-date { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--action-color); letter-spacing: 1px; margin-bottom: 0.25rem; }
-        .timeline-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .timeline-desc { font-size: 0.95rem; }
-
-        /* Catalog Layout */
-        .catalog-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem; }
-        .filters-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .filter-btn { background: none; border: 1px solid var(--border-color); padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600; cursor: pointer; background-color: var(--card-bg); transition: all 0.2s; }
-        .filter-btn.active { background-color: var(--text-dark); color: #fff; border-color: var(--text-dark); }
+        /* Shop Controls, Layout Search Bar Filter Elements */
+        .shop-controls { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; margin-bottom: 2.5rem; align-items: center; }
+        .btn-filter { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--card-bg); border: 1px solid var(--border-color); padding: 0.9rem 1.8rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; color: var(--text-dark); text-transform: uppercase; letter-spacing: 1px; }
+        .btn-filter:hover { background: #EFECE7; border-color: var(--text-dark); }
         
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+        .search-input-wrapper { width: 100%; position: relative; }
+        .search-input-wrapper input { padding-left: 2.8rem; }
+        .search-input-wrapper svg { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-grey); }
+
+        /* Sidebar Filter Drawers Structural Settings */
+        .filter-drawer { position: fixed; top: 0; left: -340px; width: 340px; height: 100%; background: var(--card-bg); box-shadow: 5px 0 25px rgba(0,0,0,0.08); z-index: 1000; transition: left 0.3s ease-in-out; padding: 2.5rem 2rem; overflow-y: auto; }
+        .filter-drawer.open { left: 0; }
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+        .drawer-header h3 { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* Product Card Styles */
-        .product-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
-        .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.04); }
+        .sidebar-block { margin-bottom: 2.5rem; }
+        .sidebar-block h4 { font-size: 0.85rem; text-transform: uppercase; margin-bottom: 1.2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.4rem; color: var(--text-dark); letter-spacing: 1px; }
+        .sidebar-block ul { list-style: none; }
+        .sidebar-block ul li { margin-bottom: 0.9rem; }
+        .sidebar-block label { cursor: pointer; display: flex; align-items: center; width: 100%; font-size: 0.95rem; font-weight: 500; color: #4A4A4A; transition: color 0.2s; }
+        .sidebar-block label:hover { color: var(--text-dark); }
+        .sidebar-block input[type="checkbox"] { margin-right: 12px; width: 18px; height: 18px; accent-color: var(--action-color); cursor: pointer; }
+
+        /* Integrated Shopping Cart Layout System Drawer Configuration */
+        .cart-drawer { position: fixed; top: 0; right: -420px; width: 420px; height: 100%; background: var(--card-bg); box-shadow: -5px 0 25px rgba(0,0,0,0.08); z-index: 1500; transition: right 0.3s ease-in-out; padding: 2.5rem 2rem; display: flex; flex-direction: column; }
+        .cart-drawer.open { right: 0; }
+        .cart-drawer-items { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 1.5rem; padding-right: 5px; }
         
-        /* BUG FIX: Image container clipped horizontally to prevent boundary overflow */
-        .product-image-placeholder { 
-            width: 100%; 
-            padding-top: 100%; 
-            background-color: #E2DED8; 
-            position: relative; 
-            overflow: hidden; 
-        }
-        .product-image-placeholder img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .cart-item { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); gap: 1rem; }
+        .cart-item-info { flex-grow: 1; }
+        .cart-item-info h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); line-height: 1.4; margin-bottom: 0.25rem; }
+        .cart-item-info p { font-size: 0.9rem; color: var(--text-grey); font-weight: 500; }
+        .cart-item-controls { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.75rem; }
         
+        .btn-qty { width: 28px; height: 28px; background-color: var(--bg-color); border: 1px solid var(--border-color); font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 6px; transition: all 0.2s; }
+        .btn-qty:hover { background-color: var(--border-color); }
+        .qty-label { font-size: 0.95rem; font-weight: 700; min-width: 24px; text-align: center; }
+        
+        /* Integrated Cross-selling Widget in Cart Box */
+        .cart-cross-sell-wrapper { background: var(--bg-color); border: 1px dashed var(--action-color); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+        .cross-sell-header { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; color: var(--action-color); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 4px; }
+        .cross-sell-body { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .cross-sell-body h5 { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); line-height: 1.3; }
+        .cross-sell-body p { font-size: 0.8rem; color: var(--text-grey); font-weight: 700; margin-top: 2px; }
+        .btn-cross-add { background: none; border: 1px solid var(--action-color); color: var(--action-color); padding: 0.4rem 0.8rem; border-radius: 15px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
+        .btn-cross-add:hover { background: var(--action-color); color: #fff; }
+
+        .cart-drawer-footer { border-top: 1px solid var(--border-color); padding-top: 1.5rem; }
+        .cart-grand-total { display: flex; justify-content: space-between; font-weight: 700; font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--text-dark); }
+
+        .filter-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px); z-index: 999; display: none; }
+        .filter-overlay.show { display: block; }
+        #cartOverlay { z-index: 1400; }
+
+        /* Dynamic Products & Bundles Grid Architecture Layout */
+        .shop-layout { width: 100%; min-height: 400px; }
+        /* FORCES 2 COLUMNS ON MOBILE */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
+
+        .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; position: relative; }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.06); }
+
+        .product-img-frame { width: 100%; height: 300px; overflow: hidden; background-color: var(--border-color); position: relative; }
+        .product-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-img { transform: scale(1.04); }
+        
+        .card-source-tag { position: absolute; top: 12px; left: 12px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(4px); color: var(--text-dark); padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid var(--border-color); z-index: 2; }
+        .card-status-flag { position: absolute; top: 12px; right: 12px; background: var(--action-color); color: #fff; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; }
+
         .product-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
-        .product-category { font-size: 0.75rem; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .product-title { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-dark); min-height: 2.6rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .card-brand-label { font-size: 0.75rem; font-weight: 700; color: var(--text-grey); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.25rem; }
+        .product-info h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.5rem; color: var(--text-dark); min-height: 44px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .concern-tag { font-size: 0.75rem; color: var(--action-color); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1.2rem; }
         
-        /* BUG FIX: Price layout flex-wrapping applied to structural box safety */
-        .product-meta { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-end; 
-            margin-bottom: 1.5rem; 
-            flex-wrap: wrap; 
-            gap: 0.25rem; 
+        .pricing { margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 1.2rem; margin-bottom: 1.2rem; }
+        .naira-group { display: flex; align-items: baseline; gap: 8px; }
+        .price-naira { font-size: 1.45rem; font-weight: 700; color: var(--text-dark); }
+        .price-naira-scratched { font-size: 1.05rem; text-decoration: line-through; color: var(--text-grey); font-weight: 400; }
+        .price-usd { font-size: 0.85rem; color: var(--text-grey); margin-top: 0.25rem; font-weight: 500; }
+        .price-usd-scratched { text-decoration: line-through; margin-right: 4px; }
+
+        .no-match-box { text-align: center; padding: 4rem 2rem; background: var(--card-bg); border: 1px dashed var(--border-color); border-radius: 12px; width: 100%; grid-column: 1 / -1; }
+        .no-match-box h4 { font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--text-dark); }
+        .no-match-box p { color: var(--text-grey); font-size: 0.95rem; margin-bottom: 2rem; }
+        .quick-suggest-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .chip-btn { background: var(--bg-color); border: 1px solid var(--border-color); padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .chip-btn:hover { border-color: var(--action-color); color: var(--action-color); background: #fff; }
+
+        .pagination-container { display: flex; justify-content: center; margin-top: 4rem; width: 100%; }
+
+        /* Timeline Component */
+        .timeline-wrapper { max-width: 850px; margin: 0 auto; }
+        .timeline-header { text-align: center; font-size: 2.2rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3.5rem; color: var(--text-dark); }
+        .timeline-box { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3.5rem 3rem; }
+        .timeline-item { display: flex; gap: 2rem; margin-bottom: 3rem; position: relative; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item:not(:last-child)::after { content: ''; position: absolute; left: 22px; top: 48px; bottom: -36px; width: 2px; background-color: var(--timeline-line); }
+        .timeline-icon { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background-color: var(--bg-color); font-size: 1.2rem; z-index: 2; flex-shrink: 0; font-weight: bold; color: var(--action-color); }
+        .day-badge { display: block; font-size: 0.75rem; color: var(--action-color); font-weight: 700; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 1.5px; }
+        .timeline-content h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-dark); letter-spacing: -0.3px; }
+        .timeline-content p { color: var(--text-grey); font-size: 0.95rem; line-height: 1.6; }
+
+        /* Accordions */
+        .faq-container { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.2rem; }
+        .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 1.5rem; cursor: pointer; transition: border-color 0.2s; }
+        .faq-item:hover { border-color: #C8C2BA; }
+        .faq-item summary { font-weight: 700; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; align-items: center; outline: none; color: var(--text-dark); }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after { content: '+'; font-size: 1.5rem; color: var(--action-color); font-weight: 400; transition: transform 0.2s; }
+        .faq-item[open] summary::after { content: '-'; }
+        .faq-item p { margin-top: 1.2rem; color: var(--text-grey); font-size: 0.95rem; border-top: 1px solid var(--border-color); padding-top: 1.2rem; line-height: 1.6; }
+
+        /* Form Card */
+        .request-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3.5rem 3rem; max-width: 850px; margin: 0 auto; text-align: left; }
+        .request-card h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; text-transform: uppercase; color: var(--text-dark); letter-spacing: -0.5px; }
+        .request-card p { color: var(--text-grey); margin-bottom: 2rem; font-size: 1.05rem; }
+        .request-form { display: flex; flex-direction: column; gap: 1.5rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+        .field-stack { display: flex; flex-direction: column; gap: 6px; }
+        .field-stack label { font-size: 0.85rem; font-weight: 700; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Dynamic Popups Structures Layout Framework */
+        .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
+        .popup-overlay.show { opacity: 1; visibility: visible; }
+        .popup-content { background: var(--card-bg); width: 90%; max-width: 460px; border-radius: 14px; padding: 3.5rem 2.5rem; position: relative; text-align: center; transform: translateY(25px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 25px 50px rgba(0,0,0,0.22); }
+        .popup-overlay.show .popup-content { transform: translateY(0); }
+        .popup-close { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 2.2rem; color: var(--text-grey); cursor: pointer; line-height: 1; transition: color 0.2s ease; }
+        .popup-close:hover { color: var(--text-dark); }
+        .popup-header h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: -1px; color: var(--text-dark); line-height: 1.1; }
+        .popup-header p { color: var(--text-grey); font-size: 1rem; margin-bottom: 2rem; line-height: 1.5; }
+        .popup-dismiss { background: none; border: none; color: var(--text-grey); text-decoration: underline; font-size: 0.8rem; margin-top: 1.5rem; cursor: pointer; transition: color 0.2s; font-weight: 500; }
+        .popup-dismiss:hover { color: var(--text-dark); }
+
+        /* ----------------------------------------------------------------- */
+        /* --- SINGLE-PAGE INTEGRATED CHECKOUT VIEWS STRUCTURAL DESIGN --- */
+        /* ----------------------------------------------------------------- */
+        .checkout-view-wrapper { max-width: 1200px; margin: 0 auto; padding: 4rem 5% 6rem; }
+        .btn-back-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--action-color); margin-bottom: 2.5rem; cursor: pointer; background: none; border: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; }
+        .btn-back-link:hover { color: var(--action-hover); text-decoration: underline; }
+
+        .checkout-grid-container { display: grid; grid-template-columns: 1fr 440px; gap: 3rem; align-items: start; }
+        .checkout-main-form-panel { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 3rem 2.5rem; }
+        
+        .checkout-form-section { margin-bottom: 3rem; }
+        .checkout-form-section:last-of-type { margin-bottom: 0; }
+        .checkout-form-section h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-dark); font-weight: 700; }
+        .checkout-form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 6px; }
+        .checkout-form-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .delivery-dynamic-notice { background-color: #EFECE7; border-left: 4px solid var(--action-color); padding: 1rem 1.2rem; border-radius: 6px; font-size: 0.9rem; color: #4A4A4A; margin-top: 1rem; font-weight: 600; line-height: 1.4; }
+
+        /* Currency Selector Cards for Checkout */
+        .currency-select-card { border: 2px solid var(--border-color); border-radius: 8px; padding: 1.2rem; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s ease; background-color: var(--card-bg); }
+        .currency-select-card:hover { border-color: #C8C2BA; background-color: var(--bg-color); }
+        .currency-select-card.active { border-color: var(--action-color); background-color: rgba(184, 92, 56, 0.05); }
+        .currency-select-card input[type="radio"] { width: 20px; height: 20px; accent-color: var(--action-color); cursor: pointer; flex-shrink: 0; }
+        .payment-text h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.15rem; }
+        .payment-text p { font-size: 0.85rem; color: var(--text-grey); font-weight: 500; }
+
+        .checkout-sidebar-summary-panel { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem 2rem; position: sticky; top: 7.5rem; height: fit-content; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .summary-panel-header { font-size: 1.15rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 1px; color: var(--text-dark); }
+        
+        .checkout-embedded-items-review { max-height: 220px; overflow-y: auto; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.2rem; display: flex; flex-direction: column; gap: 1rem; padding-right: 5px; }
+        .embedded-review-row { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-dark); font-weight: 500; gap: 12px; line-height: 1.4; }
+        .embedded-review-row span strong { color: var(--action-color); }
+
+        .summary-panel-row { display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.9rem; color: var(--text-grey); font-weight: 500; }
+        .summary-panel-row.grand-total-row { border-top: 1px solid var(--border-color); padding-top: 1.2rem; margin-top: 1.2rem; font-weight: 700; font-size: 1.35rem; color: var(--text-dark); }
+        
+        .mobile-sticky-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border-color); padding: 1.2rem 5%; box-shadow: 0 -6px 20px rgba(0,0,0,0.06); z-index: 1000; display: flex; justify-content: space-between; align-items: center; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .mobile-sticky-bar.visible { transform: translateY(0); }
+        .mobile-sticky-bar.collapsed { transform: translateY(100%) !important; }
+        .sticky-left-wrapper { display: flex; align-items: center; gap: 14px; }
+        .btn-close-sticky { background: #EFECE7; border: none; font-size: 1.2rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-grey); transition: background 0.2s; }
+        .btn-close-sticky:hover { color: var(--text-dark); background: var(--border-color); }
+        .mobile-sticky-bar .price { font-weight: 700; font-size: 1.35rem; color: var(--text-dark); }
+
+        .footer { border-top: 1px solid var(--border-color); padding: 5rem 5% 3rem; text-align: center; background-color: var(--card-bg); }
+        .footer-brand h2 { font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -1.5px; font-weight: 700; }
+        .footer-brand p { color: var(--text-grey); font-size: 0.95rem; }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; font-weight: 500; }
+
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
         }
-        .product-price { font-weight: 600; color: var(--text-dark); font-size: 0.95rem; }
-        .product-weight { font-size: 0.8rem; color: var(--text-grey); font-weight: 600; }
-
-        /* Callout Box */
-        .callout-box { background-color: var(--text-dark); color: #fff; padding: 4rem; border-radius: 8px; margin-top: 4rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
-        .callout-content { max-width: 600px; }
-        .callout-box h3 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-        .callout-box p { color: #A3A19E; }
-
-        /* FAQ Section */
-        .faq-section { background-color: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 5rem 5%; }
-        .faq-container { max-width: 800px; margin: 3rem auto 0 auto; }
-        .faq-item { border-bottom: 1px solid var(--border-color); padding: 1.5rem 0; cursor: pointer; }
-        .faq-question { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--text-grey); font-size: 0.95rem; }
-        .faq-item.active .faq-answer { max-height: 200px; margin-top: 1rem; }
-        .faq-icon { transition: transform 0.3s; font-size: 1.2rem; }
-        .faq-item.active .faq-icon { transform: rotate(45deg); }
-
-        /* Contact Section */
-        .contact-layout { display: flex; gap: 4rem; margin-top: 3rem; flex-wrap: wrap; }
-        .contact-form-container { flex: 1 1 500px; background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 3rem; border-radius: 8px; }
-        .contact-info-container { flex: 1 1 300px; display: flex; flex-direction: column; gap: 2rem; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-control { width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); background-color: var(--bg-color); border-radius: 4px; font-family: inherit; font-size: 0.95rem; transition: border-color 0.2s; }
-        .form-control:focus { outline: none; border-color: var(--text-dark); }
-
-        /* Footer */
-        footer { background-color: var(--text-dark); color: #A3A19E; padding: 4rem 5% 2rem 5%; border-top: 1px solid var(--border-color); font-size: 0.9rem; }
-        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 4rem; }
-        .footer-logo { color: #fff; font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: -1px; }
-        .footer-col h4 { color: #fff; margin-bottom: 1.25rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 0.75rem; }
-        .footer-col ul li a:hover { color: #fff; }
-        .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid #3E3C3A; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.8rem; }
-
-        /* Drawers & Slide-outs */
-        .drawer { position: fixed; top: 0; right: -450px; width: 100%; max-width: 450px; height: 100vh; background-color: var(--card-bg); box-shadow: -10px 0 30px rgba(0,0,0,0.05); transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1000; display: flex; flex-direction: column; }
-        .drawer.open { right: 0; }
-        .drawer-header { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .drawer-close { cursor: pointer; font-size: 1.75rem; line-height: 1; color: var(--text-grey); transition: color 0.2s; }
-        .drawer-close:hover { color: var(--text-dark); }
-        .drawer-content { padding: 2rem; flex-grow: 1; overflow-y: auto; }
-        .drawer-footer { padding: 2rem; border-top: 1px solid var(--border-color); background-color: var(--bg-color); }
-        
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 42, 41, 0.3); opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 999; backdrop-filter: blur(2px); }
-        .overlay.show { opacity: 1; visibility: visible; }
-
-        /* Checkout Layer UI */
-        .checkout-container { display: none; margin-top: 2rem; background: var(--card-bg); padding: 3rem; border-radius: 8px; border: 1px solid var(--border-color); }
-        
-        /* Interactive Promo Dialog */
-        .popup { position: fixed; bottom: 24px; left: 24px; background: var(--card-bg); border: 1px solid var(--border-color); padding: 2rem; border-radius: 8px; box-shadow: 0 16px 36px rgba(0,0,0,0.08); z-index: 1001; max-width: 320px; transform: translateY(180%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .popup.show { transform: translateY(0); }
-
-        /* Mobile Layout Optimizations & Sticky Interface */
-        .mobile-sticky-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--text-dark); color: #fff; padding: 1rem 1.5rem; display: none; justify-content: space-between; align-items: center; z-index: 998; box-shadow: 0 -4px 12px rgba(0,0,0,0.1); transition: transform 0.2s ease; }
-        .mobile-sticky-bar.collapsed { transform: translateY(100%); }
-
+        @media (max-width: 950px) {
+            .form-row, .checkout-grid-container { grid-template-columns: 1fr; }
+            .checkout-sidebar-summary-panel { position: static; margin-top: 2rem; }
+            .shop-controls { grid-template-columns: 1fr; }
+            .btn-filter { justify-content: center; }
+        }
         @media (max-width: 768px) {
-            .hero { flex-direction: column; padding: 4rem 5%; text-align: center; gap: 2.5rem; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-image { display: none; }
-            .hero-actions { justify-content: center; }
-            header { padding: 1rem 5%; }
-            nav { display: none; }
-            .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .callout-box { padding: 2.5rem; text-align: center; justify-content: center; }
-            .contact-layout { gap: 2.5rem; }
-            .contact-form-container { padding: 2rem; }
-
-            /* BUG FIX: Forced compact columns wrapping metrics configuration */
-            .product-meta { flex-direction: column; align-items: flex-start; gap: 2px; margin-bottom: 1rem; }
-            .product-price { font-size: 0.85rem; white-space: normal; word-break: break-word; }
-            .product-card .add-to-cart-btn { padding: 0.6rem 0.5rem !important; font-size: 0.75rem !important; white-space: normal !important; line-height: 1.2; }
-
-            .mobile-sticky-bar { display: flex; }
-            body { padding-bottom: 4rem; } 
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.4rem; }
+            .section { padding: 4rem 5%; }
+            .timeline-box { padding: 2.5rem 1.5rem; }
+            .timeline-item { gap: 1.2rem; }
+            .request-card { padding: 2.5rem 1.5rem; }
+            .product-img-frame { height: 200px; }
+            .product-info { padding: 1rem; }
+            .product-info h3 { font-size: 0.95rem; min-height: 38px; }
+            .price-naira { font-size: 1.15rem; }
+            .btn-secondary { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
+        }
+        @media (max-width: 450px) {
+            .cart-drawer { width: 100%; right: -100%; padding: 2rem 1.5rem; }
+            .hero-buttons { flex-direction: column; width: 100%; gap: 0.75rem; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; margin-left: 0 !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="announcement-bar">
-        ✨ Global Shipping Enabled — Straight from Nigerian soil to your warehouse. Bulk discount applied automatically. ✨
+    <div id="discountPopup" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+            <div class="popup-header">
+                <h2>UNLOCK 10% OFF</h2>
+                <p>Get 10% off your first order. Sourced directly from US and KR authorized retailers, securely shipped to your door.</p>
+            </div>
+            <form onsubmit="event.preventDefault(); submitPopup();">
+                <input type="email" placeholder="Enter your email address" class="form-input" style="border-radius: 8px;" required>
+                <button type="submit" class="btn-primary w-100" style="margin-top: 1.2rem; border-radius: 8px; padding: 1.1rem;">Claim My Discount</button>
+            </form>
+            <button class="popup-dismiss" onclick="closePopup()">No thanks, I prefer paying full price</button>
+        </div>
     </div>
 
-    <header>
-        <div class="logo">BBO.</div>
-        <nav>
-            <a href="#catalogViewSection">Catalog</a>
-            <a href="#supplyChainSection">Supply Chain</a>
-            <a href="#faqSection">Sourcing FAQ</a>
-            <a href="#contactSection">Logistics Contact</a>
-        </nav>
-        <div class="cart-icon" onclick="toggleCartDrawer()">
-            Cart &nbsp;[<span class="cart-count">0</span>]
+    <div class="top-banner">
+        <div class="marquee">
+            <span>NO CUSTOMS OR HANDLING FEES • NAIRA PAYMENT AND DOLLAR PAYMENT ACCEPTED!!! • 100% AUTHENTICITY GUARANTEED • SHIPPED SECURELY TO YOUR DOOR</span>
+            <span>NO CUSTOMS OR HANDLING FEES • NAIRA PAYMENT AND DOLLAR PAYMENT ACCEPTED!!! • 100% AUTHENTICITY GUARANTEED • SHIPPED SECURELY TO YOUR DOOR</span>
         </div>
-    </header>
+    </div>
 
-    <div class="container" id="mainStoreView">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="navigateToMarketplace()">BBO.</div>
+            <ul class="nav-links" id="navbar-menu-links">
+                <li><a href="#shop">Shop Products</a></li>
+                <li><a href="#journey">The Journey</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#request-product">Custom Request</a></li>
+            </ul>
+            <div class="nav-icons">
+                <span id="nav-cart-counter" onclick="toggleCartDrawer()">Cart (0)</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="payment-notice-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+        Naira payment and Dollar Payment accepted!!!
+    </div>
+
+
+    <div id="marketplace-view">
         
-        <section class="hero" style="padding: 0; margin-bottom: 4rem; border: none;">
+        <header id="home" class="hero">
             <div class="hero-content">
-                <h1>BBO. Straight From The Source.</h1>
-                <p>We bridge the structural gap between pristine West African raw materials and global supply chains. Fully audited, laboratory tested, and packaged for high-yield processing execution.</p>
-                <div class="hero-actions">
-                    <button class="btn-primary" onclick="document.getElementById('catalogViewSection').scrollIntoView({behavior: 'smooth'})">Explore Catalog</button>
-                    <button class="btn-primary" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-dark);" onclick="document.getElementById('contactSection').scrollIntoView({behavior: 'smooth'})">Bulk Inquiry</button>
+                <span class="badge">No Minimum Order · Zero Customs Fees</span>
+                <h1>Authentic Skincare, Straight from the Source.</h1>
+                <p>Sourced directly from authorized US and Korean retailers. Unboxed at your doorstep in Nigeria. Zero fakes, with absolutely no custom or handling fees.</p>
+                <div class="hero-buttons">
+                    <a href="#shop" class="btn-primary">Explore All Products</a>
+                    <a href="#request-product" class="btn-secondary">Custom Request Procurement</a>
                 </div>
             </div>
-            <div class="hero-image"></div>
-        </section>
+        </header>
 
-        <section style="margin-bottom: 5rem;">
-            <h2 style="text-align: center; margin-bottom: 1rem;">Architected for Global Procurement</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem auto;">Eliminate trading middlemen. BBO orchestrates directly from smallholder clusters to international drop-off hubs.</p>
-            <div class="props-grid">
-                <div class="prop-card">
-                    <h3>100% Verified Origin</h3>
-                    <p>Every dynamic batch contains geo-location logs maps tracking down to the cooperative cluster block, guaranteeing compliance with global ethical labor thresholds.</p>
-                </div>
-                <div class="prop-card">
-                    <h3>Laboratory Standard</h3>
-                    <p>Moisture profiles, foreign matter percentages, and oil yield densities are tested prior to shipping container scaling. Certified reports attach to every manifest.</p>
-                </div>
-                <div class="prop-card">
-                    <h3>FOB/CIF Execution</h3>
-                    <p>Flexible freight options operating through Apapa and Tin Can Island ports. Integrated handling coordinates customs documentation clearances.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="timeline-section" id="supplyChainSection" style="margin-left: -5%; margin-right: -5%;">
-            <h2 style="text-align: center;">Our Sourcing & Verification Pipeline</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto;">How your materials transition from harvest fields to final container loading.</p>
-            
-            <div class="timeline-container">
-                <div class="timeline-item">
-                    <div class="timeline-date">Phase 01</div>
-                    <div class="timeline-title">Aggregation & Field Sortation</div>
-                    <div class="timeline-desc">Crops are consolidated at localized dry stations where automated screening arrays eliminate debris and sub-standard density fragments.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Phase 02</div>
-                    <div class="timeline-title">Dehydration & Moisture Normalization</div>
-                    <div class="timeline-desc">Materials pass through controlled drying setups to align moisture parameters precisely with parameters verified for long-duration ocean carriage stability.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Phase 03</div>
-                    <div class="timeline-title">Quality Assay Testing</div>
-                    <div class="timeline-desc">Representative baseline samplings undergo laboratory analysis for chemical profiles, volatile oils, and aflatoxin screening assays.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Phase 04</div>
-                    <div class="timeline-title">Sealed Packaging & Forwarding</div>
-                    <div class="timeline-desc">Goods are packed into heavy-gauge woven polypropylene sacks, weighed on calibrated scales, and container-loaded for export shipping.</div>
-                </div>
-            </div>
-        </section>
-
-        <section id="catalogViewSection" style="padding-top: 5rem;">
-            <div class="catalog-controls">
-                <div>
-                    <h2>Material Index</h2>
-                    <p>Select a category filter to isolate active inventory listings.</p>
-                </div>
-                <div class="filters-group">
-                    <button class="filter-btn active" onclick="filterCatalogCategory('all', this)">All Materials</button>
-                    <button class="filter-btn" onclick="filterCatalogCategory('Raw Materials', this)">Raw Materials</button>
-                    <button class="filter-btn" onclick="filterCatalogCategory('Semi-Processed', this)">Semi-Processed</button>
-                    <button class="filter-btn" onclick="filterCatalogCategory('Finished Goods', this)">Finished Goods</button>
-                    <button class="filter-btn" onclick="filterCatalogCategory('Bulk / Wholesale Orders', this)">Bulk / Wholesale</button>
-                </div>
+        <section id="shop" class="section">
+            <div class="section-header">
+                <h2>GLOBAL BEAUTY, NIGERIA DELIVERED</h2>
+                <p>Build your routine with verified, authentic formulas.</p>
             </div>
 
-            <div class="catalog-grid" id="catalogGrid">
-                </div>
-
-            <div id="loadMoreWrapper" style="text-align: center; margin-top: 4rem; display: none;">
-                <button class="btn-primary" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-dark);" onclick="loadMoreCatalogItems()">Load More Inventory</button>
-            </div>
-        </section>
-
-        <section class="callout-box">
-            <div class="callout-content">
-                <h3>Custom Industrial Volume Specifying?</h3>
-                <p>We engineer programmatic contract agreements adjusting parameters for localized manufacturing configurations. Request standard custom assay options matching precise requirements.</p>
-            </div>
-            <button class="btn-primary" style="background-color: #fff; color: var(--text-dark);" onclick="document.getElementById('contactSection').scrollIntoView({behavior: 'smooth'})">Initiate Protocol</button>
-        </section>
-
-        <section class="faq-section" id="faqSection" style="margin-left: -5%; margin-right: -5%;">
-            <h2 style="text-align: center;">Frequently Asked Questions</h2>
-            <div class="faq-container">
-                <div class="faq-item" onclick="toggleAccordionItem(this)">
-                    <div class="faq-question">
-                        <span>What are standard payment terms for wholesale freight?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Standard contract execution accepts Irrevocable Letters of Credit (L/C at sight) or Bank Wire Transfers (T/T). Typically, shipments operate on a 30% down-payment configuration, with the remaining 70% balance settled against presentation of the bill of lading documentation pack.
-                    </div>
-                </div>
-                <div class="faq-item" onclick="toggleAccordionItem(this)">
-                    <div class="faq-question">
-                        <span>How are quality assays guaranteed across container balances?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        BBO works beside recognized independent testing providers (SGS, Bureau Veritas) to run comprehensive audits. Customers can specify additional pre-shipment extraction criteria to fulfill processing conditions.
-                    </div>
-                </div>
-                <div class="faq-item" onclick="toggleAccordionItem(this)">
-                    <div class="faq-question">
-                        <span>What is typical transit fulfillment timing to European / US ports?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Ocean transit timelines from the Port of Apapa average 18 to 25 days for North European ports, and 28 to 35 days for US Atlantic ports. Custom clearance hand-offs require around 5-7 business working days at departure.
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contactSection" style="padding-top: 5rem;">
-            <h2 style="text-align: center;">Logistics Engagement Form</h2>
-            <p style="text-align: center; max-width: 600px; margin: 0 auto 3rem auto;">Enter material demands and freight conditions below. A specialized trade manager will build a custom analysis matrix profile.</p>
-            
-            <div class="contact-layout">
-                <div class="contact-form-container">
-                    <form onsubmit="handleFormSubmission(event)">
-                        <div class="form-group">
-                            <label>Corporate Entity Name</label>
-                            <input type="text" class="form-control" required placeholder="e.g. Global Processing Corp">
-                        </div>
-                        <div class="form-group">
-                            <label>Procurement Officer Email</label>
-                            <input type="email" class="form-control" required placeholder="officer@company.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Target Material Category</label>
-                            <select class="form-control">
-                                <option>Premium White Charcoal (Binchotan)</option>
-                                <option>Raw Cashew Nuts (Export Grade)</option>
-                                <option>Dried Split Ginger</option>
-                                <option>Natural Sesame Seeds</option>
-                                <option>Other Specialized Raw Inventory</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Targeted Volume Metric Allocation</label>
-                            <input type="text" class="form-control" required placeholder="e.g. 50 Metric Tons">
-                        </div>
-                        <div class="form-group">
-                            <label>Special Assay Matrix / Custom Parameters</label>
-                            <textarea class="form-control" rows="4" placeholder="Specify maximum moisture tolerances, foreign material percentage limits, or dynamic packing dimensions requirements..."></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary w-100">Transmit Secure Inquiry Dossier</button>
-                    </form>
-                </div>
-                
-                <div class="contact-info-container">
-                    <div>
-                        <h4 style="margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;">Operational Head Office</h4>
-                        <p style="font-size: 0.95rem;">Alfred Rewane Road, Ikoyi<br>Lagos, Nigeria</p>
-                    </div>
-                    <div>
-                        <h4 style="margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;">Direct Logistics Hub</h4>
-                        <p style="font-size: 0.95rem;">Apapa Port Complex, Yard Block B<br>Apapa, Lagos</p>
-                    </div>
-                    <div>
-                        <h4 style="margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px;">Electronic Communications</h4>
-                        <p style="font-size: 0.95rem;">procurement@bbo-source.com<br>logistics@bbo-source.com</p>
-                    </div>
-                    <div style="background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 6px; margin-top: auto;">
-                        <h4 style="margin-bottom: 0.5rem; color: var(--action-color); font-size: 0.9rem;">Urgent Spot Market Notice</h4>
-                        <p style="font-size: 0.85rem; line-height: 1.5;">Spot market raw cashew prices fluctuate due to variable seasonal supply pools. Contracts lock explicitly upon payment confirmation gateway authorization.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-
-    <div class="container checkout-container" id="checkoutView">
-        <h2 style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">Secure Enterprise Checkout</h2>
-        
-        <div style="display: flex; gap: 3rem; flex-wrap: wrap; margin-top: 2rem;">
-            
-            <div style="flex: 1 1 550px;">
-                <form id="bbo-secure-checkout-form" onsubmit="initiateSecurePaystackTransaction(event)">
-                    <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">1. Transaction Parameters</h3>
-                    
-                    <div class="form-group">
-                        <label>Settlement Currency Selection</label>
-                        <select class="form-control" id="checkoutCurrency" onchange="updateCheckoutCurrency()">
-                            <option value="NGN">Nigerian Naira (₦)</option>
-                            <option value="USD">United States Dollar ($)</option>
-                        </select>
-                    </div>
-
-                    <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem; font-size: 1.2rem;">2. Consignee Delivery Manifest</h3>
-                    
-                    <div class="form-group">
-                        <label>Legal Entity / Representative Name</label>
-                        <input type="text" class="form-control" id="custName" required placeholder="John Doe">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Secure Communications Email</label>
-                        <input type="email" class="form-control" id="custEmail" required placeholder="j.doe@enterprise.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Direct Telephone Line (With Country Code)</label>
-                        <input type="tel" class="form-control" id="custPhone" required placeholder="+234...">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Consignee Destination Port / Delivery Location Address</label>
-                        <textarea class="form-control" id="custAddress" rows="3" required placeholder="Enter full destination address or targeted warehouse coordinates..."></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-primary checkout-submit-btn w-100" style="padding: 1.2rem; font-size: 0.9rem; margin-top: 1.5rem;">
-                        Authorize Settlement Gateway <span class="checkout-total-btn-val"></span>
-                    </button>
-                </form>
-                
-                <button onclick="backToMainCatalogStore()" style="margin-top: 1.5rem; background: none; border: none; text-decoration: underline; cursor: pointer; color: var(--text-grey); font-weight: 600; font-size: 0.9rem;">← Return to Material Catalog</button>
-            </div>
-
-            <div style="flex: 1 1 350px; background: var(--bg-color); padding: 2.5rem; border-radius: 8px; border: 1px solid var(--border-color); height: fit-content;">
-                <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem;">Order Manifest</h3>
-                
-                <div id="checkoutSummaryItems" style="margin-bottom: 1.5rem; max-height: 240px; overflow-y: auto; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
-                    </div>
-                
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.95rem;">
-                    <span>Gross Value Subtotal</span>
-                    <span id="checkoutSubtotal" style="font-weight: 600;">₦0</span>
-                </div>
-                
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.95rem; color: #2E7D32;">
-                    <span>Contract Incentive Waiver</span>
-                    <span id="checkoutDiscount" style="font-weight: 600;">-₦0</span>
-                </div>
-                
-                <div style="display: flex; justify-content: space-between; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 1.3rem; font-weight: 700; color: var(--text-dark);">
-                    <span>Net Invoice Total</span>
-                    <span id="checkoutFinalTotal">₦0</span>
-                </div>
-
-                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
-                    <label style="display:block; font-size:0.8rem; font-weight:600; text-transform:uppercase; margin-bottom:0.5rem; color:var(--text-grey);">Apply Incentive Token</label>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <input type="text" id="promoCode" class="form-control" placeholder="Token Code" style="margin-bottom: 0; background-color: #fff;">
-                        <button type="button" class="btn-primary" style="background-color: var(--text-dark);" onclick="processPromoIncentiveCode()">Apply</button>
-                    </div>
-                    <div id="promoMessage" style="margin-top: 0.5rem; font-size: 0.85rem; font-weight: 600;"></div>
-                </div>
-
-                <button type="submit" form="bbo-secure-checkout-form" class="btn-primary checkout-submit-btn w-100" style="border-radius: 30px; margin-top: 2rem; background-color: var(--action-color); padding: 1.2rem; font-size: 0.9rem;">
-                    Place Secure Order <span class="checkout-total-btn-val"></span>
+            <div class="shop-controls">
+                <button class="btn-filter" onclick="toggleFilter()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                    Filter Catalogue
                 </button>
-                
-                <div style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: var(--text-grey);">
-                    🔒 256-Bit Bank Grade Cryptographic Verification Layer.
+                <div class="search-input-wrapper">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="catalogSearchField" oninput="triggerSearchQueryFilter()" placeholder="Search your favorite skincare brands, products, concerns or formulas..." class="form-input">
                 </div>
             </div>
 
+            <div class="shop-layout">
+                <div class="product-grid" id="primary-catalog-products-container"></div>
+                
+                <div class="pagination-container" id="loadMoreWrapper" style="display: none;">
+                    <button class="btn-secondary" style="padding: 1rem 3rem;" onclick="loadNextPageBatch()">Load More Products</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="section">
+            <div class="timeline-wrapper">
+                <h2 class="timeline-header">The "Worth The Wait" Journey</h2>
+                <div class="timeline-box">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">✓</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">Day 0</span>
+                            <h3>Order Placed & Secured</h3>
+                            <p>No minimum order quantity required. You pay securely in Naira or USD, locking in your transparent pricing with absolutely zero tracking or handling surcharges.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🏪</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">Day 1 - 5</span>
+                            <h3>Direct Sourcing Phase</h3>
+                            <p>We order your fresh batches directly from authorized brand retailers in the US or South Korea (like Sephora, Ulta, or Olive Young) bypassing dangerous local middlemen and knockoff markets entirely.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">📦</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">Day 6 - 12</span>
+                            <h3>International Hub Quality Check</h3>
+                            <p>Your products land at our dedicated overseas sorting facilities. Our team cross-checks batch identification codes, factory seals, and packaging integrity before air freight preparation.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">✈️</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">Day 13 - 21</span>
+                            <h3>Global Air Freight & Clearing</h3>
+                            <p>Items fly directly to Nigeria. We handle 100% of the customs documentation and clearing bottlenecks behind the scenes. The price you saw at checkout is your final total—BBO covers every single import fee.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🛵</div>
+                        <div class="timeline-content">
+                            <span class="day-badge">Day 22 - 28</span>
+                            <h3>Sorting & Local Doorstep Delivery</h3>
+                            <p>Once cleared through our Lagos operations base, packages are carefully batched and sent via premium domestic dispatch partners straight to your address, fully tracked from coast to coast. Please note: All deliveries take 28 days from the source.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section bg-light">
+            <div class="section-header">
+                <h2>Authenticity & Logistics FAQ</h2>
+                <p>Everything you need to know about our direct sourcing pipeline and quality verification metrics.</p>
+            </div>
+            <div class="faq-container">
+                <details class="faq-item">
+                    <summary>How do you verify product texture and consistency?</summary>
+                    <p>Counterfeits often have a watered-down, separated, or unusually greasy consistency. Because we completely bypass local open-air markets and middlemen, your products are guaranteed to arrive exactly as the manufacturer originally formulated them, stored in climate-controlled hubs to protect active ingredients.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Do products arrive with intact factory seals and batch codes?</summary>
+                    <p>Yes, absolutely. Every single item arrives with completely intact original factory seals and fully verifiable batch tracking codes stamped directly onto the primary packaging. You can trace these numbers using independent manufacturer verification databases to confirm authenticity.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>How do I know this isn't fake skincare?</summary>
+                    <p>We maintain full structural accountability by purchasing items directly from authorized global retailers in the US and South Korea only after your order is safely generated. We bypass unauthorized liquidators and middle distributors entirely, guaranteeing 100% genuine formulations.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Are there any hidden customs or handling fees on arrival?</summary>
+                    <p>None at all. The price calculated inside our single-page secure checkout model covers every logistical link—including transatlantic air freight clearance fees and processing tariffs. There are absolutely no delivery surcharges requested at your doorstep. Please remember all deliveries take 28 days from the source.</p>
+                </details>
+            </div>
+        </section>
+
+        <section id="request-product" class="section">
+            <div class="request-card">
+                <h2>Can't find it?</h2>
+                <p>If your favorite skincare staple or specialized clinical product isn't listed in our active store catalog, don't worry. Fill out our request form below, and our sourcing team will purchase it directly from official overseas retailers on your behalf.</p>
+                <form class="request-form" onsubmit="event.preventDefault(); alert('Your custom sourcing request has been safely filed with our tracking procurement team!'); this.reset();">
+                    <div class="form-row">
+                        <div class="field-stack">
+                            <label>Your Full Name</label>
+                            <input type="text" placeholder="e.g. Chioma Adebayo" class="form-input" required>
+                        </div>
+                        <div class="field-stack">
+                            <label>WhatsApp Phone Number</label>
+                            <input type="tel" placeholder="e.g. +234 803 000 0000" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-stack">
+                            <label>Product Complete Name</label>
+                            <input type="text" placeholder="e.g. Liquid Gold Moisturizer" class="form-input" required>
+                        </div>
+                        <div class="field-stack">
+                            <label>Brand Name</label>
+                            <input type="text" placeholder="e.g. Stratia Skincare" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="field-stack">
+                        <label>Optional Reference Link or Specific Volume/Sizing Details</label>
+                        <textarea placeholder="Paste item URL or specify ounce/milliliter sizes, product variations, skin type context, or alternative options here..." class="form-input"></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary" style="align-self: flex-start; padding: 1.1rem 2.5rem;">Submit Custom Sourcing Request</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+
+    <div id="checkout-view" style="display: none;">
+        <div class="checkout-view-wrapper">
+            
+            <button class="btn-back-link" onclick="navigateToMarketplace()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Continue Browsing Marketplace Catalog
+            </button>
+            
+            <div class="checkout-grid-container">
+                <main class="checkout-main-form-panel">
+                    <h2 style="margin-bottom: 2rem; font-size: 1.8rem; letter-spacing: -0.5px;">Secure Checkout Processing</h2>
+                    
+                    <form id="bbo-secure-checkout-form" onsubmit="event.preventDefault(); initiateSecurePaystackTransaction();">
+                        
+                        <div class="checkout-form-section">
+                            <h3>1. Contact Details.</h3>
+                            <div class="checkout-form-group">
+                                <label>Email Address (For transaction & shipping tracking updates)</label>
+                                <input type="email" id="checkoutEmailField" class="form-input" placeholder="buyer@domain.com" required>
+                            </div>
+                            <div class="checkout-form-group">
+                                <label>Phone number (For direct calls)</label>
+                                <input type="tel" id="checkoutWhatsappField" class="form-input" placeholder="e.g. 08031234567" pattern="^[0-9]{11}$" title="Please supply an exact 11-digit phone number configuration for accurate courier routing." required>
+                            </div>
+                        </div>
+
+                        <div class="checkout-form-section">
+                            <h3>2. Address</h3>
+                            <div class="checkout-form-group">
+                                <label>Receiver Full Name</label>
+                                <input type="text" id="checkoutNameField" class="form-input" placeholder="Enter recipient complete name" required>
+                            </div>
+                            <div class="checkout-form-group">
+                                <label>Street Delivery Address & Critical Landmarks</label>
+                                <input type="text" id="checkoutAddressField" class="form-input" placeholder="House/Apartment number, Street, Near prominent landmark points" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="checkout-form-group">
+                                    <label>State</label>
+                                    <select id="checkoutStateSelect" onchange="runDynamicShippingCalculations()">
+                                        <option value="abuja">Abuja (FCT)</option>
+                                        <option value="abia">Abia</option>
+                                        <option value="adamawa">Adamawa</option>
+                                        <option value="akwa_ibom">Akwa Ibom</option>
+                                        <option value="anambra">Anambra</option>
+                                        <option value="bauchi">Bauchi</option>
+                                        <option value="bayelsa">Bayelsa</option>
+                                        <option value="benue">Benue</option>
+                                        <option value="borno">Borno</option>
+                                        <option value="cross_river">Cross River</option>
+                                        <option value="delta">Delta</option>
+                                        <option value="ebonyi">Ebonyi</option>
+                                        <option value="edo">Edo</option>
+                                        <option value="ekiti">Ekiti</option>
+                                        <option value="enugu">Enugu</option>
+                                        <option value="gombe">Gombe</option>
+                                        <option value="imo">Imo</option>
+                                        <option value="jigawa">Jigawa</option>
+                                        <option value="kaduna">Kaduna</option>
+                                        <option value="kano">Kano</option>
+                                        <option value="katsina">Katsina</option>
+                                        <option value="kebbi">Kebbi</option>
+                                        <option value="kogi">Kogi</option>
+                                        <option value="kwara">Kwara</option>
+                                        <option value="lagos_mainland">Lagos (Mainland)</option>
+                                        <option value="lagos_island">Lagos (Island)</option>
+                                        <option value="nasarawa">Nasarawa</option>
+                                        <option value="niger">Niger</option>
+                                        <option value="ogun">Ogun</option>
+                                        <option value="ondo">Ondo</option>
+                                        <option value="osun">Osun</option>
+                                        <option value="oyo">Oyo</option>
+                                        <option value="plateau">Plateau</option>
+                                        <option value="rivers">Rivers</option>
+                                        <option value="sokoto">Sokoto</option>
+                                        <option value="taraba">Taraba</option>
+                                        <option value="yobe">Yobe</option>
+                                        <option value="zamfara">Zamfara</option>
+                                    </select>
+                                </div>
+                                <div class="checkout-form-group">
+                                    <label>City</label>
+                                    <input type="text" id="checkoutCityField" class="form-input" placeholder="e.g. Surulere" required>
+                                </div>
+                            </div>
+
+                            <div id="checkoutShippingNotice" class="delivery-dynamic-notice">
+                                ℹ ...
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-grey); margin-top: 15px; font-weight: 600;">Please note: All deliveries take 28 days from the source.</p>
+                        </div>
+
+                        <div class="checkout-form-section">
+                            <h3>3. Secure Funding Channels</h3>
+                            
+                            <div style="margin-bottom: 1.2rem; display: flex; gap: 10px;">
+                                <label id="lblCurrencyNGN" class="currency-select-card active" style="flex: 1; border: 2px solid var(--action-color); padding: 0.8rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; font-weight: 600; background-color: rgba(184, 92, 56, 0.05);">
+                                    <input type="radio" name="currencySelector" value="NGN" checked onchange="updateCheckoutCurrency()" style="accent-color: var(--action-color); cursor: pointer;"> ₦ Naira (NGN)
+                                </label>
+                                <label id="lblCurrencyUSD" class="currency-select-card" style="flex: 1; border: 2px solid var(--border-color); padding: 0.8rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; font-weight: 600; background-color: var(--card-bg);">
+                                    <input type="radio" name="currencySelector" value="USD" onchange="updateCheckoutCurrency()" style="accent-color: var(--action-color); cursor: pointer;"> $ Dollar (USD)
+                                </label>
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-grey);">International cards are processed securely in USD (1 USD = ₦1,373).</p>
+                        </div>
+                    </form>
+                </main>
+
+                <aside class="checkout-sidebar-summary-panel">
+                    <div class="summary-panel-header">Review Order Details</div>
+                    
+                    <div id="checkout-active-items-list" class="checkout-embedded-items-review"></div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color);">
+                        <input type="text" id="promoInput" class="form-input" placeholder="Discount Code (e.g. BBO10)" style="margin-bottom: 0; padding: 0.8rem;">
+                        <button type="button" onclick="applyDiscount()" class="btn-secondary" style="padding: 0.8rem 1.5rem; margin-top: 0; border-radius: 8px;">Apply</button>
+                    </div>
+                    <div id="discountMessage" style="color: #2e7d32; font-size: 0.85rem; font-weight: 700; margin-top: -10px; margin-bottom: 15px; display: none;">10% Discount Applied!</div>
+
+                    <div class="summary-panel-row">
+                        <span>Items Subtotal:</span>
+                        <span id="checkout-subtotal-display" style="font-weight: 700; color: var(--text-dark);">₦0</span>
+                    </div>
+                    <div class="summary-panel-row">
+                        <span>Global Customs & Clearing:</span>
+                        <span style="color: var(--action-color); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.5px;">FREE OVERSEAS COVERAGE</span>
+                    </div>
+                    <div class="summary-panel-row">
+                        <span>Local Logistics Delivery:</span>
+                        <span id="checkout-shipping-fee-display" style="font-weight: 700; color: var(--text-dark);">₦0</span>
+                    </div>
+
+                    <div class="summary-panel-row grand-total-row">
+                        <span>Total Payable:</span>
+                        <span id="checkout-grand-total-display">₦0</span>
+                    </div>
+
+                    <button type="submit" form="bbo-secure-checkout-form" id="checkoutSubmitButton" class="btn-primary w-100" style="border-radius: 30px; margin-top: 1.5rem; padding: 1.2rem; font-size: 0.9rem;">
+                        place secure order <span id="checkoutTotalBtn"></span>
+                    </button>
+                </aside>
+            </div>
         </div>
     </div>
 
-    <div class="overlay" id="cartOverlay" onclick="toggleCartDrawer()"></div>
 
-    <div class="drawer" id="cartDrawer">
+    <div id="filterDrawer" class="filter-drawer">
         <div class="drawer-header">
-            <h3 style="font-size: 1.25rem;">Procurement Basket (<span class="cart-count">0</span>)</h3>
-            <span class="drawer-close" onclick="toggleCartDrawer()">&times;</span>
-        </div>
-        <div class="drawer-content" id="cartItemsList">
-            <p style="color: var(--text-grey);">Your basket is currently empty.</p>
-        </div>
-        <div class="drawer-footer">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; font-weight: 700; font-size: 1.25rem; color: var(--text-dark);">
-                <span>Subtotal Baseline</span>
-                <span class="cart-drawer-total">₦0</span>
-            </div>
-            <button class="btn-primary w-100" style="padding: 1rem; font-size: 0.85rem;" onclick="goToCheckout()">Compile Manifest Checkout</button>
-        </div>
-    </div>
-
-    <div class="mobile-sticky-bar" id="mobileStickyCart" onclick="toggleCartDrawer()">
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="position: relative; background: rgba(255,255,255,0.1); padding: 0.5rem 0.7rem; border-radius: 4px; font-weight: bold; font-size: 0.85rem;">
-                📦 <span class="cart-count" style="background: var(--action-color); color: #fff; font-size: 0.65rem; padding: 1px 5px; border-radius: 50%; position: absolute; top: -5px; right: -5px;">0</span>
-            </div>
-            <div>
-                <div style="font-size: 0.75rem; color: #A3A19E; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Active Manifest Subtotal</div>
-                <div class="cart-drawer-total" style="font-size: 1.1rem; font-weight: 700;">₦0</div>
-            </div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px dashed #fff; padding-bottom: 2px;">Review Basket →</span>
-            <span style="font-size: 1.2rem; color: #A3A19E; cursor: pointer; padding: 0.2rem 0.5rem;" onclick="dismissStickyBar(event)">×</span>
-        </div>
-    </div>
-
-    <div class="popup" id="discountPopup">
-        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.75rem;">
-            <h4 style="font-size: 1.15rem; color: var(--text-dark);">Unlock Contract Allocations</h4>
-            <span style="cursor: pointer; font-size: 1.25rem; color: var(--text-grey); line-height: 1;" onclick="closePopup()">&times;</span>
-        </div>
-        <p style="font-size: 0.85rem; color: var(--text-grey); margin-bottom: 1.25rem; line-height: 1.5;">Register your institutional endpoint domain to activate entry incentives. Enter token code <strong>BBO10</strong> inside the order summary sidebar for 10% invoice credit waivers.</p>
-        <input type="email" id="popupEmailField" class="form-control" placeholder="corporate@endpoint.com" style="margin-bottom: 0.75rem; background-color: var(--card-bg);">
-        <button class="btn-primary w-100" onclick="submitPopup()">Register Infrastructure Endpoint</button>
-    </div>
-
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col" style="flex: 2 1 300px;">
-                <div class="footer-logo">BBO.</div>
-                <p style="color: #A3A19E; margin-bottom: 1.5rem; max-width: 320px; line-height: 1.6;">Direct network trading execution layers deploying West African agricultural and industrial base elements cleanly into planetary industrial structures.</p>
-                <p style="font-size: 0.8rem; color: #666462;">Calibration Logs: v4.26.10-Live</p>
-            </div>
-            <div class="footer-col">
-                <h4>Material Index</h4>
-                <ul>
-                    <li><a href="#catalogViewSection">Raw Components</a></li>
-                    <li><a href="#catalogViewSection">Semi-Processed Oils</a></li>
-                    <li><a href="#catalogViewSection">Carbon Energy Assets</a></li>
-                    <li><a href="#catalogViewSection">Bulk Freight Lots</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Compliance Layers</h4>
-                <ul>
-                    <li><a href="#">SGS Assays Protocols</a></li>
-                    <li><a href="#">Traceability Matrices</a></li>
-                    <li><a href="#">Apapa Port Manifests</a></li>
-                    <li><a href="#">Labor Standards Registry</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Corporate Matrix</h4>
-                <ul>
-                    <li><a href="#">Procurement Node Desk</a></li>
-                    <li><a href="#">Hedging Protection Plans</a></li>
-                    <li><a href="#">Media Assets Documentation</a></li>
-                    <li><a href="#">System Integrity Status</a></li>
-                </ul>
-            </div>
+            <h3>Filter Products</h3>
+            <button class="popup-close" style="position: static;" onclick="toggleFilter()">&times;</button>
         </div>
         
-        <div class="footer-bottom">
-            <div>&copy; 2026 BBO Sourcing Networks Inc. All industrial rights reserved for system nodes.</div>
-            <div style="display: flex; gap: 1.5rem;">
-                <a href="#" style="hover:color:#fff;">Cryptographic Protection Acts</a>
-                <a href="#" style="hover:color:#fff;">Sovereign Freight Boundaries</a>
+        <div class="sidebar-block">
+            <h4>Filter By Routine Type</h4>
+            <ul>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="type" data-filter-val="product" onchange="resetPaginationAndReconstructGrid()"> Single Formula Staples</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="type" data-filter-val="bundle" onchange="resetPaginationAndReconstructGrid()"> Curated Targeted Systems</label></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-block">
+            <h4>Filter By Skin Profile</h4>
+            <ul>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="skinType" data-filter-val="all" onchange="resetPaginationAndReconstructGrid()"> All Skin Profiles</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="skinType" data-filter-val="sensitive" onchange="resetPaginationAndReconstructGrid()"> Sensitive Barrier Protocols</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="skinType" data-filter-val="oily" onchange="resetPaginationAndReconstructGrid()"> Oily / Acne Prone</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="skinType" data-filter-val="dry" onchange="resetPaginationAndReconstructGrid()"> Dry / Dehydrated Complexes</label></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-block">
+            <h4>Target By Concern</h4>
+            <ul>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="concern" data-filter-val="hyperpigmentation" onchange="resetPaginationAndReconstructGrid()"> Hyperpigmentation / Dark Spots</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="concern" data-filter-val="acne" onchange="resetPaginationAndReconstructGrid()"> Acne & Congestion</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="concern" data-filter-val="barrier" onchange="resetPaginationAndReconstructGrid()"> Barrier Damage / Redness</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="concern" data-filter-val="anti-aging" onchange="resetPaginationAndReconstructGrid()"> Texture / Anti-Aging</label></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-block">
+            <h4>Brand Sourcing Lines</h4>
+            <ul>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="brand" data-filter-val="cosrx" onchange="resetPaginationAndReconstructGrid()"> COSRX Korea</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="brand" data-filter-val="good molecules" onchange="resetPaginationAndReconstructGrid()"> Good Molecules US</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="brand" data-filter-val="cerave" onchange="resetPaginationAndReconstructGrid()"> CeraVe Dermatology US</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="brand" data-filter-val="the ordinary" onchange="resetPaginationAndReconstructGrid()"> The Ordinary US/KR</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="brand" data-filter-val="beauty of joseon" onchange="resetPaginationAndReconstructGrid()"> Beauty of Joseon Seoul</label></li>
+                <li><label><input type="checkbox" class="filter-checkbox-node" data-filter-group="brand" data-filter-val="anua" onchange="resetPaginationAndReconstructGrid()"> Anua Heartleaf Korea</label></li>
+            </ul>
+        </div>
+    </div>
+    <div id="filterOverlay" class="filter-overlay" onclick="toggleFilter()"></div>
+
+    <div id="cartDrawer" class="cart-drawer">
+        <div class="drawer-header">
+            <h3>Your Cart Items</h3>
+            <button class="popup-close" style="position: static;" onclick="toggleCartDrawer()">&times;</button>
+        </div>
+        
+        <div id="cart-drawer-items" class="cart-drawer-items"></div>
+        
+        <div id="cart-cross-sell-injection-point"></div>
+
+        <div class="cart-drawer-footer">
+            <div class="cart-grand-total">
+                <span>Grand Total:</span>
+                <span id="cart-drawer-total">₦0</span>
             </div>
+            <button class="btn-primary w-100" style="border-radius: 8px; padding: 1.2rem; font-size: 0.9rem;" onclick="navigateToCheckoutView()">Proceed To Secure Checkout</button>
+        </div>
+    </div>
+    <div id="cartOverlay" class="filter-overlay" onclick="toggleCartDrawer()"></div>
+
+    <section style="padding: 60px 20px; background-color: var(--card-bg); text-align: center; border-top: 1px solid var(--border-color);">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <h2 style="margin-bottom: 15px; font-size: 1.8rem; color: var(--text-dark);">Help Us Improve</h2>
+            <p style="color: var(--text-grey); margin-bottom: 25px;">We value your experience. Let us know how we can serve you better or what products you'd like to see next.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Thank you for your feedback! We appreciate you.'); this.reset();" style="display: flex; flex-direction: column; gap: 15px;">
+                <textarea placeholder="Tell us your thoughts..." rows="4" required style="width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                <button type="submit" style="padding: 15px; background-color: var(--text-dark); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.3s;">Submit Feedback</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <h2>BBO.</h2>
+            <p>Direct Procurement Skincare Pipeline. Sourced authentically, delivered safely to Nigeria.</p>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 BBO Skincare Operations. Under rigorous authenticity validation protocols. All rights reserved.
         </div>
     </footer>
 
-    <script>
-        // Production Grade Inventory Manifest Database Array
-        const catalogItems = [
-            { id: 1, name: 'Premium White Charcoal (Binchotan)', price: 450000, category: 'Raw Materials', weight: 'Per Metric Ton (Sample Base)', image: 'https://images.unsplash.com/photo-1605647540924-852290f6b0d5?auto=format&fit=crop&w=600&q=80', tags: ['energy', 'industrial'] },
-            { id: 2, name: 'Raw Cashew Nuts (Export Grade)', price: 1200000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1536531419269-eecbdf9226cf?auto=format&fit=crop&w=600&q=80', tags: ['agriculture', 'raw'] },
-            { id: 3, name: 'Dried Split Ginger (High-Oleoresin)', price: 850000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80', tags: ['spice', 'raw'] },
-            { id: 4, name: 'Natural Sesame Seeds (Unhulled White)', price: 1100000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80', tags: ['oilseed', 'raw'] },
-            { id: 5, name: 'Pure Cocoa Beans (Fermented/Sun-Dried)', price: 1600000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=600&q=80', tags: ['confectionery', 'raw'] },
-            { id: 6, name: 'Organic Shea Butter (Unrefined Ivory)', price: 750000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80', tags: ['cosmetic', 'raw'] },
-            { id: 7, name: 'Hardwood Charcoal (Restaurant Grade)', price: 280000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&w=600&q=80', tags: ['energy', 'fuel'] },
-            { id: 8, name: 'Cassava Chips (High-Starch Industrial)', price: 420000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=600&q=80', tags: ['starch', 'industrial'] },
-            { id: 9, name: 'Premium Hibiscus Flowers (Sorrel Calyx)', price: 950000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1594732832278-abd644401426?auto=format&fit=crop&w=600&q=80', tags: ['botanical', 'export'] },
-            { id: 10, name: 'Gum Arabic (Grade 1 - Hashab)', price: 1350000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80', tags: ['emulsifier', 'industrial'] },
-            { id: 11, name: 'Palm Kernel Oil (Crude Expeller)', price: 800000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1622484211148-7162984486d3?auto=format&fit=crop&w=600&q=80', tags: ['oil', 'industrial'] },
-            { id: 12, name: 'Chili Pepper (Bird\'s Eye - Dried Red)', price: 1050000, category: 'Raw Materials', weight: 'Per Metric Ton', image: 'https://images.unsplash.com/photo-1588252303782-cb80119cb665?auto=format&fit=crop&w=600&q=80', tags: ['spice', 'raw'] },
-            { id: 13, name: 'Processed Cashew Kernels (W240 Whole)', price: 6500, category: 'Semi-Processed', weight: '1kg Carton Unit', image: 'https://images.unsplash.com/photo-1600189020840-e9918c25269d?auto=format&fit=crop&w=600&q=80', tags: ['food', 'processed'] },
-            { id: 14, name: 'Cocoa Powder (Natural Alkalized Pure)', price: 7200, category: 'Semi-Processed', weight: '1kg Bulk Bag', image: 'https://images.unsplash.com/photo-1600431521340-491eca880813?auto=format&fit=crop&w=600&q=80', tags: ['confectionery', 'processed'] },
-            { id: 15, name: 'Refined Shea Butter (Cosmetic Filtered)', price: 4800, category: 'Semi-Processed', weight: '1kg Container', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80', tags: ['cosmetic', 'processed'] },
-            { id: 16, name: 'Ginger Powder (Pure Organic Dehydrated)', price: 3500, category: 'Semi-Processed', weight: '1kg Vacuum Pack', image: 'https://images.unsplash.com/photo-1599940794561-12503250b73c?auto=format&fit=crop&w=600&q=80', tags: ['spice', 'processed'] },
-            { id: 17, name: 'Hibiscus Extract Powder (Water-Soluble)', price: 8000, category: 'Semi-Processed', weight: '1kg Foil Pack', image: 'https://images.unsplash.com/photo-1513530534585-c7b1394c6d51?auto=format&fit=crop&w=600&q=80', tags: ['botanical', 'processed'] },
-            { id: 18, name: 'Cold-Pressed Coconut Oil (Virgin)', price: 5500, category: 'Semi-Processed', weight: '1 Liter Bottle', image: 'https://images.unsplash.com/photo-1614735241165-6756e1df61ab?auto=format&fit=crop&w=600&q=80', tags: ['oil', 'processed'] },
-            { id: 19, name: 'Cashew Butter (Creamy Institutional Base)', price: 4200, category: 'Semi-Processed', weight: '1kg Tub', image: 'https://images.unsplash.com/photo-1590080875727-b52b36e8b0fb?auto=format&fit=crop&w=600&q=80', tags: ['food', 'processed'] },
-            { id: 20, name: 'Dark Chocolate Couverture (70% Drops)', price: 9000, category: 'Finished Goods', weight: '1kg Pack', image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=600&q=80', tags: ['retail', 'finished'] },
-            { id: 21, name: 'Scented Shea Body Cream (Export Line)', price: 3800, category: 'Finished Goods', weight: '250g Luxury Jar', image: 'https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&w=600&q=80', tags: ['retail', 'cosmetic'] },
-            { id: 22, name: 'Premium Cocoa Butter Lip Balm Multi-Pack', price: 1500, category: 'Finished Goods', weight: 'Pack of 3 Units', image: 'https://images.unsplash.com/photo-1617897903246-719242758050?auto=format&fit=crop&w=600&q=80', tags: ['retail', 'cosmetic'] },
-            { id: 23, name: 'Roasted Cashew Snacks (Honey Salted)', price: 2500, category: 'Finished Goods', weight: '400g Pouch', image: 'https://images.unsplash.com/photo-1536531419269-eecbdf9226cf?auto=format&fit=crop&w=600&q=80', tags: ['retail', 'snack'] },
-            { id: 24, name: 'Ginger-Infused Wild Honey (Pure)', price: 4500, category: 'Finished Goods', weight: '500ml Jar', image: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80', tags: ['retail', 'honey'] },
-            { id: 25, name: 'Bulk Cocoa Beans (1 Full Container Load)', price: 3200000, category: 'Bulk / Wholesale Orders', weight: '18 Metric Ton FCL', image: 'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=600&q=80', tags: ['wholesale', 'fcl'] },
-            { id: 26, name: 'Bulk Raw Cashew Nuts (1 Full Container Load)', price: 2400000, category: 'Bulk / Wholesale Orders', weight: '17 Metric Ton FCL', image: 'https://images.unsplash.com/photo-1536531419269-eecbdf9226cf?auto=format&fit=crop&w=600&q=80', tags: ['wholesale', 'fcl'] },
-            { id: 27, name: 'Bulk Sesame Seeds (1 Full Container Load)', price: 2200000, category: 'Bulk / Wholesale Orders', weight: '19 Metric Ton FCL', image: 'https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=600&q=80', tags: ['wholesale', 'fcl'] },
-            { id: 28, name: 'Bulk Dried Ginger (1 Full Container Load)', price: 1700000, category: 'Bulk / Wholesale Orders', weight: '15 Metric Ton FCL', image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80', tags: ['wholesale', 'fcl'] }
-        ];
+    <div id="mobileStickyCart" class="mobile-sticky-bar">
+        <div class="sticky-left-wrapper">
+            <button class="btn-close-sticky" onclick="dismissStickyBar(event)" title="Dismiss Tray Monitor Bar">&times;</button>
+            <div>
+                <span style="font-size: 0.75rem; color: var(--text-grey); text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Current Order Value:</span>
+                <div id="mobile-cart-price" class="price">₦0</div>
+            </div>
+        </div>
+        <button class="btn-primary" style="padding: 0.8rem 1.6rem; font-size: 0.8rem;" onclick="toggleCartDrawer()">View Cart Drawer</button>
+    </div>
 
-        // Architectural System Core States
+
+    <script src="catalog.js"></script>
+    <script>
+        // Reactive Core App State Arrays Mappings
         let cartState = [];
-        let isDiscountApplied = false;
-        let aggregateAbsoluteGrandTotalValue = 0;
-        const EXCHANGE_RATE = 1200; 
-        
+        let currentFilteredItems = [];
         let currentPage = 1;
         const itemsPerPage = 8;
-        let currentActiveCategoryFilter = 'all';
-        let currentFilteredItems = catalogItems;
+        
+        // Currency Config
+        const EXCHANGE_RATE = 1373; 
+        let selectedCurrency = 'NGN';
+        let isDiscountApplied = false;
+
+        // Regional Shipping Rates Pricing Config Cost Maps Matrix
+        const shippingRatesMatrix = {
+            lagos_mainland: 2500, lagos_island: 3500, abuja: 4500, rivers: 5000,
+            abia: 6500, adamawa: 6500, akwa_ibom: 6500, anambra: 6500, bauchi: 6500, bayelsa: 6500, benue: 6500, borno: 6500,
+            cross_river: 6500, delta: 6500, ebonyi: 6500, edo: 6500, ekiti: 6500, enugu: 6500, gombe: 6500, imo: 6500,
+            jigawa: 6500, kaduna: 6500, kano: 6500, katsina: 6500, kebbi: 6500, kogi: 6500, kwara: 6500, nasarawa: 6500,
+            niger: 6500, ogun: 6500, ondo: 6500, osun: 6500, oyo: 6500, plateau: 6500, sokoto: 6500, taraba: 6500, yobe: 6500, zamfara: 6500
+        };
+
+        const generalInterstateNoticeText = "<b>PLEASE NOTE: IF THERE IS A CHANGE OF ADDRESS, THERE COULD BE EXTRA FEE IF APPLICABLE.</b>";
+
+        const shippingInstructionalTexts = {
+            lagos_mainland: "ℹ️ Standard base hub logistics delivery rate applied for Lagos Mainland locations.",
+            lagos_island: "💡 Island transit routing routing parameters applied safely (+₦1,000 regional adjustment fee).",
+            abuja: "💡 Interstate Air Delivery Hub: Shipped securely via domestic sorting hub straight to Abuja (+₦2,000 regional adjustment fee).",
+            rivers: "💡 Interstate Terminal Route: Dispatched securely via regional logistics terminal to Port Harcourt (+₦2,500 regional adjustment fee)."
+        };
+
+        function applyDiscount() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (code === 'BBO10') { 
+                isDiscountApplied = true;
+                document.getElementById('discountMessage').style.display = 'block';
+                document.getElementById('promoInput').disabled = true;
+                updateCheckoutCurrency(); 
+            } else {
+                alert('Invalid discount code. Try BBO10.');
+            }
+        }
 
         function processCatalogFilters() {
-            if (currentActiveCategoryFilter === 'all') {
-                currentFilteredItems = catalogItems;
-            } else {
-                currentFilteredItems = catalogItems.filter(item => item.category === currentActiveCategoryFilter);
-            }
-            currentPage = 1;
-            renderResponsiveCatalogInterface();
-        }
-
-        function filterCatalogCategory(categorySelection, elementPointer) {
-            currentActiveCategoryFilter = categorySelection;
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            elementPointer.classList.add('active');
-            processCatalogFilters();
-        }
-
-        function renderResponsiveCatalogInterface() {
-            const targetContainer = document.getElementById('catalogGrid');
-            targetContainer.innerHTML = '';
-            
-            const totalSlicesRenderLimit = currentPage * itemsPerPage;
-            const operationalBatchArray = currentFilteredItems.slice(0, totalSlicesRenderLimit);
-
-            if (operationalBatchArray.length === 0) {
-                targetContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 4rem; color: var(--text-grey);">No contract assets found inside this tracking segment.</div>`;
-                document.getElementById('loadMoreWrapper').style.display = 'none';
+            if (typeof catalogItems === 'undefined') {
+                console.error("External dataset catalog array catalogItems is missing.");
                 return;
             }
 
-            operationalBatchArray.forEach(item => {
+            const searchStringVal = document.getElementById('catalogSearchField').value.trim().toLowerCase();
+            const checkedBoxes = Array.from(document.querySelectorAll('.filter-checkbox-node:checked'));
+            
+            const groupFilters = {};
+            checkedBoxes.forEach(box => {
+                const group = box.getAttribute('data-filter-group');
+                const value = box.getAttribute('data-filter-val').toLowerCase();
+                if (!groupFilters[group]) groupFilters[group] = [];
+                groupFilters[group].push(value);
+            });
+
+            currentFilteredItems = catalogItems.filter(item => {
+                if (searchStringVal) {
+                    const matchName = item.name.toLowerCase().includes(searchStringVal);
+                    const matchBrand = item.brand.toLowerCase().includes(searchStringVal);
+                    const matchConcern = item.concern.toLowerCase().includes(searchStringVal);
+                    if (!matchName && !matchBrand && !matchConcern) return false;
+                }
+
+                for (const groupKey in groupFilters) {
+                    const activeAllowedVals = groupFilters[groupKey];
+                    if (groupKey === 'type') {
+                        if (!activeAllowedVals.includes(item.type.toLowerCase())) return false;
+                    }
+                    if (groupKey === 'skinType') {
+                        if (!activeAllowedVals.includes('all') && item.skinType.toLowerCase() !== 'all') {
+                            if (!activeAllowedVals.includes(item.skinType.toLowerCase())) return false;
+                        }
+                    }
+                    if (groupKey === 'concern') {
+                        if (!activeAllowedVals.includes(item.concern.toLowerCase())) return false;
+                    }
+                    if (groupKey === 'brand') {
+                        if (!activeAllowedVals.includes(item.brand.toLowerCase())) return false;
+                    }
+                }
+                return true;
+            });
+            renderGridUI();
+        }
+
+        function resetPaginationAndReconstructGrid() {
+            currentPage = 1;
+            processCatalogFilters();
+        }
+
+        function triggerSearchQueryFilter() {
+            resetPaginationAndReconstructGrid();
+        }
+
+        function injectQuickChipFilterValue(brandValueString) {
+            const targetedCheckbox = Array.from(document.querySelectorAll('.filter-checkbox-node')).find(box => {
+                return box.getAttribute('data-filter-group') === 'brand' && box.getAttribute('data-filter-val') === brandValueString.toLowerCase();
+            });
+
+            if (targetedCheckbox) {
+                targetedCheckbox.checked = true;
+                document.getElementById('catalogSearchField').value = '';
+                resetPaginationAndReconstructGrid();
+            }
+        }
+
+        function loadNextPageBatch() {
+            currentPage++;
+            renderGridUI();
+        }
+
+        function renderGridUI() {
+            const targetContainer = document.getElementById('primary-catalog-products-container');
+            if (currentPage === 1) {
+                targetContainer.innerHTML = '';
+            }
+
+            if (currentFilteredItems.length === 0) {
+                document.getElementById('loadMoreWrapper').style.display = 'none';
+                const fallbackMatchCard = document.createElement('div');
+                fallbackMatchCard.className = 'no-match-box';
+                fallbackMatchCard.innerHTML = `
+                    <h4>No exact product formulation matches found</h4>
+                    <p>We don't currently stock this exact formula in our standard listing grid, but we can source it for you directly. Try searching alternative key lines or click quick procurement trends:</p>
+                    <div class="quick-suggest-row">
+                        <button class="chip-btn" onclick="injectQuickChipFilterValue('CeraVe')">CeraVe US</button>
+                        <button class="chip-btn" onclick="injectQuickChipFilterValue('COSRX')">COSRX Korea</button>
+                        <button class="chip-btn" onclick="injectQuickChipFilterValue('Good Molecules')">Good Molecules</button>
+                        <button class="chip-btn" onclick="injectQuickChipFilterValue('The Ordinary')">The Ordinary</button>
+                    </div>
+                    <a href="#request-product" class="btn-primary" style="margin-top: 2rem; font-size: 0.8rem; padding: 0.8rem 1.6rem;" onclick="toggleFilter()">Open Sourcing Request Form</a>
+                `;
+                targetContainer.appendChild(fallbackMatchCard);
+                return;
+            }
+
+            const totalItemsToOutputCount = currentPage * itemsPerPage;
+            const targetSliceSet = currentFilteredItems.slice(0, totalItemsToOutputCount);
+
+            targetSliceSet.forEach((item, index) => {
+                if (currentPage > 1 && index < (currentPage - 1) * itemsPerPage) {
+                    return;
+                }
                 const nodeCard = document.createElement('div');
                 nodeCard.className = 'product-card';
-                
-                const imgHTML = item.image 
-                    ? `<img src="${item.image}" alt="${item.name}" loading="lazy">` 
-                    : `<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 0.8rem; color: var(--text-grey); font-weight: 600; text-transform: uppercase;">No Manifest Image</div>`;
-
-                const pricingConversionUSD = (item.price / EXCHANGE_RATE).toFixed(2);
-                
-                const isItemInCart = cartState.some(cartItem => cartItem.name === item.name);
-                const actionButtonText = isItemInCart ? 'Added To Manifest' : 'Allocate To Cart';
-                const actionButtonClass = isItemInCart ? 'btn-primary w-100' : 'btn-primary w-100';
+                const sourceLabelMarkup = item.source ? `<div class="card-source-tag">${item.source}</div>` : '';
+                const flagLabelMarkup = item.flag ? `<div class="card-status-flag">${item.flag}</div>` : '';
+                const scratchedNairaMarkup = item.scratchedPrice ? `<span class="price-naira-scratched">₦${item.scratchedPrice.toLocaleString()}</span>` : '';
+                const scratchedUsdMarkup = item.usdScratched ? `<span class="price-usd-scratched">$${item.usdScratched} USD</span>` : '';
+                const actionButtonText = item.type === 'bundle' ? 'Secure System Pack' : 'Add To Cart';
+                const actionButtonClass = item.type === 'bundle' ? 'btn-primary' : 'btn-secondary';
 
                 nodeCard.innerHTML = `
-                    <div class="product-image-placeholder">${imgHTML}</div>
+                    <div class="product-img-frame">
+                        ${sourceLabelMarkup}
+                        ${flagLabelMarkup}
+                        <img src="${item.img}" alt="${item.name}" class="product-img" loading="lazy">
+                    </div>
                     <div class="product-info">
                         <div>
-                            <div class="product-category">${item.category}</div>
-                            <div class="product-title">${item.name}</div>
-                            <div class="product-meta">
-                                <span class="product-weight">${item.weight}</span>
-                                <span class="product-price">₦${item.price.toLocaleString()} / $${pricingConversionUSD}</span>
-                            </div>
+                            <div class="card-brand-label">${item.brand}</div>
+                            <h3>${item.name}</h3>
+                            <div class="concern-tag">Target: ${item.concern}</div>
                         </div>
-                        <button class="${actionButtonClass} add-to-cart-btn">${actionButtonText}</button>
+                        <div>
+                            <div class="pricing">
+                                <div class="naira-group">
+                                    ${scratchedNairaMarkup}
+                                    <span class="price-naira">₦${item.price.toLocaleString()}</span>
+                                </div>
+                                <div class="price-usd">
+                                    ${scratchedUsdMarkup} · $${item.usdPrice} USD
+                                </div>
+                            </div>
+                            <button class="${actionButtonClass} add-to-cart-btn" style="width: 100%; border-radius: 6px; padding: 0.8rem 1rem;">${actionButtonText}</button>
+                        </div>
                     </div>
                 `;
-                
                 nodeCard.querySelector('.add-to-cart-btn').onclick = () => addItemToCart(item.name, item.price);
                 targetContainer.appendChild(nodeCard);
             });
 
-            if (totalSlicesRenderLimit < currentFilteredItems.length) {
-                document.getElementById('loadMoreWrapper').style.display = 'block';
+            if (totalItemsToOutputCount < currentFilteredItems.length) {
+                document.getElementById('loadMoreWrapper').style.display = 'flex';
             } else {
                 document.getElementById('loadMoreWrapper').style.display = 'none';
             }
         }
 
-        function loadMoreCatalogItems() {
-            currentPage++;
-            renderResponsiveCatalogInterface();
-        }
-
-        function addItemToCart(name, price) {
-            const trackingNode = cartState.find(item => item.name === name);
-            if (trackingNode) {
-                trackingNode.quantity++;
+        function addItemToCart(itemName, priceNaira) {
+            const matchedIndex = cartState.findIndex(entry => entry.name === itemName);
+            if (matchedIndex > -1) {
+                cartState[matchedIndex].quantity += 1;
             } else {
-                cartState.push({ name, price, quantity: 1 });
+                cartState.push({ name: itemName, price: priceNaira, quantity: 1 });
             }
             renderUnifiedCartStateInterfaces();
-            renderResponsiveCatalogInterface(); 
-            document.getElementById('cartDrawer').classList.add('open');
-            document.getElementById('cartOverlay').classList.add('show');
+            const barNode = document.getElementById('mobileStickyCart');
+            barNode.classList.remove('collapsed');
+            barNode.classList.add('visible');
+        }
+
+        function changeItemQuantity(itemName, deltaNumericValue) {
+            const targetEntry = cartState.find(entry => entry.name === itemName);
+            if (targetEntry) {
+                targetEntry.quantity += deltaNumericValue;
+                if (targetEntry.quantity <= 0) {
+                    cartState = cartState.filter(entry => entry.name !== itemName);
+                }
+            }
+            renderUnifiedCartStateInterfaces();
+        }
+
+        function executeCartCrossSellingLogic(grossSubtotalValue) {
+            const insertionPoint = document.getElementById('cart-cross-sell-injection-point');
+            insertionPoint.innerHTML = '';
+            if (cartState.length === 0) return;
+
+            const alternativeCandidateItem = catalogItems.find(item => {
+                if (item.type !== 'product') return false;
+                const matchesCartStateCheck = cartState.some(cartItem => cartItem.name === item.name);
+                return !matchesCartStateCheck;
+            });
+
+            if (alternativeCandidateItem) {
+                const crossSellBlockNode = document.createElement('div');
+                crossSellBlockNode.className = 'cart-cross-sell-wrapper';
+                crossSellBlockNode.innerHTML = `
+                    <div class="cross-sell-header">
+                        <span>✨ Complete Your Routine Sourcing Pack</span>
+                    </div>
+                    <div class="cross-sell-body">
+                        <div>
+                            <h5>${alternativeCandidateItem.name}</h5>
+                            <p>₦${alternativeCandidateItem.price.toLocaleString()}</p>
+                        </div>
+                        <button class="btn-cross-add" id="execute-cross-add-trigger-btn">Add Asset</button>
+                    </div>
+                `;
+                crossSellBlockNode.querySelector('#execute-cross-add-trigger-btn').onclick = () => {
+                    addItemToCart(alternativeCandidateItem.name, alternativeCandidateItem.price);
+                };
+                insertionPoint.appendChild(crossSellBlockNode);
+            }
         }
 
         function renderUnifiedCartStateInterfaces() {
-            const drawerList = document.getElementById('cartItemsList');
-            drawerList.innerHTML = '';
+            const globalGrossCountValue = cartState.reduce((sum, entry) => sum + entry.quantity, 0);
+            const globalGrossSubtotalValue = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+
+            document.getElementById('nav-cart-counter').innerText = `Cart (${globalGrossCountValue})`;
+            document.getElementById('mobile-cart-price').innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`;
+            if (globalGrossCountValue === 0) {
+                document.getElementById('mobileStickyCart').classList.remove('visible');
+                if (document.getElementById('checkout-view').style.display === 'block') {
+                    navigateToMarketplace();
+                }
+            }
+
+            const drawerItemsContainer = document.getElementById('cart-drawer-items');
+            drawerItemsContainer.innerHTML = '';
 
             if (cartState.length === 0) {
-                drawerList.innerHTML = '<p style="color: var(--text-grey); text-align: center; padding: 2rem 0;">Your procurement basket is empty.</p>';
+                drawerItemsContainer.innerHTML = `
+                    <div style="text-align: center; color: var(--text-grey); margin-top: 5rem; padding: 0 1rem;">
+                        <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-dark);">Your cart is empty</p>
+                        <p style="font-size: 0.85rem;">Select authentic product lines to assemble your skin system.</p>
+                    </div>
+                `;
+                document.getElementById('cart-drawer-total').innerText = '₦0';
             } else {
                 cartState.forEach(item => {
-                    drawerList.innerHTML += `
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); font-size: 0.95rem;">
-                            <div style="max-width: 70%;">
-                                <div style="font-weight: 600; color: var(--text-dark); margin-bottom: 0.25rem;">${item.name}</div>
-                                <div style="font-size: 0.8rem; color: var(--text-grey); display: flex; align-items: center; gap: 0.7rem;">
-                                    <span>Allocated: ${item.quantity}</span>
-                                    <span style="cursor:pointer; color:var(--action-color); font-weight:bold; font-size:1.1rem; padding:0 4px;" onclick="adjustQuantity('${item.name}', 1)">+</span>
-                                    <span style="cursor:pointer; color:var(--text-grey); font-weight:bold; font-size:1.1rem; padding:0 4px;" onclick="adjustQuantity('${item.name}', -1)">-</span>
-                                </div>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-weight: 600; color: var(--text-dark);">₦${(item.price * item.quantity).toLocaleString()}</div>
-                                <span style="font-size: 0.75rem; color: var(--text-grey); cursor: pointer; text-decoration: underline;" onclick="purgeItemFromCart('${item.name}')">Purge Node</span>
+                    const rowNode = document.createElement('div');
+                    rowNode.className = 'cart-item';
+                    rowNode.innerHTML = `
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>₦${item.price.toLocaleString()} unit baseline</p>
+                            <div class="cart-item-controls">
+                                <button class="btn-qty" id="qty-decrement-node-btn">-</button>
+                                <span class="qty-label">${item.quantity}</span>
+                                <button class="btn-qty" id="qty-increment-node-btn">+</button>
                             </div>
                         </div>
+                        <div style="font-weight: 700; color: var(--text-dark); font-size: 1rem; white-space: nowrap; padding-top: 2px;">
+                            ₦${(item.price * item.quantity).toLocaleString()}
+                        </div>
                     `;
+                    rowNode.querySelector('#qty-decrement-node-btn').onclick = () => changeItemQuantity(item.name, -1);
+                    rowNode.querySelector('#qty-increment-node-btn').onclick = () => changeItemQuantity(item.name, 1);
+                    drawerItemsContainer.appendChild(rowNode);
+                });
+                document.getElementById('cart-drawer-total').innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`;
+            }
+
+            executeCartCrossSellingLogic(globalGrossSubtotalValue);
+
+            if (document.getElementById('checkout-active-items-list')) {
+                runDynamicShippingCalculations();
+            }
+        }
+
+        function runDynamicShippingCalculations() {
+            const selectDropdownKey = document.getElementById('checkoutStateSelect').value;
+            const computedInstructionalText = shippingInstructionalTexts[selectDropdownKey] || generalInterstateNoticeText;
+
+            document.getElementById('checkoutShippingNotice').innerHTML = computedInstructionalText;
+            updateCheckoutCurrency();
+        }
+
+        // =====================================================================
+        //   RE-ENGINEERED UNIFIED CURRENCY CALCULATOR AND ROW SWITCHER
+        // =====================================================================
+        function updateCheckoutCurrency() {
+            let baseSubtotal = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let grossSubtotalValue = isDiscountApplied ? baseSubtotal * 0.90 : baseSubtotal;
+
+            const currencyNodes = document.querySelectorAll('input[name="currencySelector"]:checked');
+            if(currencyNodes.length === 0) return;
+            
+            const currency = currencyNodes[0].value;
+            selectedCurrency = currency;
+            
+            const lblNGN = document.getElementById('lblCurrencyNGN');
+            const lblUSD = document.getElementById('lblCurrencyUSD');
+            const totalBtnSpan = document.getElementById('checkoutTotalBtn');
+            
+            const selectDropdownKey = document.getElementById('checkoutStateSelect').value;
+            const computedShippingRateCost = shippingRatesMatrix[selectDropdownKey] || 6500;
+            const aggregateAbsoluteGrandTotalValue = grossSubtotalValue + computedShippingRateCost;
+
+            const checkoutEmbeddedListContainer = document.getElementById('checkout-active-items-list');
+            if (checkoutEmbeddedListContainer) {
+                checkoutEmbeddedListContainer.innerHTML = '';
+                cartState.forEach(item => {
+                    const embedRowNode = document.createElement('div');
+                    embedRowNode.className = 'embedded-review-row';
+                    let itemDisplayPrice = '';
+                    
+                    if (currency === 'NGN') {
+                        itemDisplayPrice = `₦${(item.price * item.quantity).toLocaleString()}`;
+                    } else {
+                        const itemUSD = ((item.price * item.quantity) / EXCHANGE_RATE).toFixed(2);
+                        itemDisplayPrice = `$${Number(itemUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                    }
+                    
+                    embedRowNode.innerHTML = `
+                        <span>${item.name} <strong>× ${item.quantity}</strong></span>
+                        <span style="font-weight: 600;">${itemDisplayPrice}</span>
+                    `;
+                    checkoutEmbeddedListContainer.appendChild(embedRowNode);
                 });
             }
 
-            const globalGrossCountValue = cartState.reduce((sum, entry) => sum + entry.quantity, 0);
-            
-            // BUG FIX: Inject dynamic discount checks to drawer subtotals to align calculations globally
-            let baseSubtotal = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
-            let globalGrossSubtotalValue = isDiscountApplied ? baseSubtotal * 0.90 : baseSubtotal;
-            
-            aggregateAbsoluteGrandTotalValue = globalGrossSubtotalValue;
-
-            document.querySelectorAll('.cart-count').forEach(el => el.innerText = globalGrossCountValue);
-            document.querySelectorAll('.cart-drawer-total').forEach(el => el.innerText = `₦${globalGrossSubtotalValue.toLocaleString()}`);
-
-            if (document.getElementById('checkoutView').style.display === 'block') {
-                updateCheckoutTotalsDisplay();
-                updateCheckoutCurrency();
-            }
-        }
-
-        function adjustQuantity(name, stepDelta) {
-            const match = cartState.find(item => item.name === name);
-            if (match) {
-                match.quantity += stepDelta;
-                if (match.quantity <= 0) {
-                    cartState = cartState.filter(item => item.name !== name);
+            if (currency === 'NGN') {
+                lblNGN.style.backgroundColor = 'rgba(184, 92, 56, 0.05)';
+                lblNGN.style.borderColor = 'var(--action-color)';
+                lblUSD.style.backgroundColor = 'var(--card-bg)';
+                lblUSD.style.borderColor = 'var(--border-color)';
+                
+                if (isDiscountApplied) {
+                    document.getElementById('checkout-subtotal-display').innerHTML = `<span style="text-decoration:line-through; font-size: 0.85rem; color:var(--text-grey); margin-right: 5px;">₦${baseSubtotal.toLocaleString()}</span> ₦${grossSubtotalValue.toLocaleString()}`;
+                } else {
+                    document.getElementById('checkout-subtotal-display').innerText = `₦${grossSubtotalValue.toLocaleString()}`;
                 }
-                renderUnifiedCartStateInterfaces();
-                renderResponsiveCatalogInterface();
+
+                document.getElementById('checkout-shipping-fee-display').innerText = `₦${computedShippingRateCost.toLocaleString()}`;
+                document.getElementById('checkout-grand-total-display').innerText = `₦${aggregateAbsoluteGrandTotalValue.toLocaleString()}`;
+                if(totalBtnSpan) totalBtnSpan.innerText = `(₦${aggregateAbsoluteGrandTotalValue.toLocaleString()})`;
+            } else {
+                lblUSD.style.backgroundColor = 'rgba(184, 92, 56, 0.05)';
+                lblUSD.style.borderColor = 'var(--action-color)';
+                lblNGN.style.backgroundColor = 'var(--card-bg)';
+                lblNGN.style.borderColor = 'var(--border-color)';
+                
+                const subtotalUSD = (grossSubtotalValue / EXCHANGE_RATE).toFixed(2);
+                const baseSubtotalUSD = (baseSubtotal / EXCHANGE_RATE).toFixed(2);
+                const shippingUSD = (computedShippingRateCost / EXCHANGE_RATE).toFixed(2);
+                const grandTotalUSD = (aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE).toFixed(2);
+                
+                if (isDiscountApplied) {
+                    document.getElementById('checkout-subtotal-display').innerHTML = `<span style="text-decoration:line-through; font-size: 0.85rem; color:var(--text-grey); margin-right: 5px;">$${Number(baseSubtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD</span> $${Number(subtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                } else {
+                    document.getElementById('checkout-subtotal-display').innerText = `$${Number(subtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                }
+
+                document.getElementById('checkout-shipping-fee-display').innerText = `$${Number(shippingUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                document.getElementById('checkout-grand-total-display').innerText = `$${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+                if(totalBtnSpan) totalBtnSpan.innerText = `($${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
             }
         }
 
-        function purgeItemFromCart(name) {
-            cartState = cartState.filter(item => item.name !== name);
+        function navigateToCheckoutView() {
+            if (cartState.length === 0) {
+                alert('Your shopping cart is currently empty. Please select authentic skin formulas to continue.');
+                return;
+            }
+
+            document.getElementById('cartDrawer').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+            document.getElementById('navbar-menu-links').style.display = 'none';
+            document.getElementById('marketplace-view').style.display = 'none';
+            document.getElementById('checkout-view').style.display = 'block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            const defaultRadio = document.querySelector('input[name="currencySelector"][value="NGN"]');
+            if (defaultRadio) defaultRadio.checked = true;
+            
             renderUnifiedCartStateInterfaces();
-            renderResponsiveCatalogInterface();
+        }
+
+        function navigateToMarketplace() {
+            document.getElementById('navbar-menu-links').style.display = 'flex';
+            document.getElementById('checkout-view').style.display = 'none';
+            document.getElementById('marketplace-view').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function initiateSecurePaystackTransaction() {
+            if (typeof PaystackPop === 'undefined') {
+                alert('The secure payment configuration could not be contacted. Please verify your internet/network settings or disable ad-blockers and refresh the page.');
+                return;
+            }
+
+            let baseSubtotal = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let grossSubtotalValue = isDiscountApplied ? baseSubtotal * 0.90 : baseSubtotal;
+
+            const selectedLocationKey = document.getElementById('checkoutStateSelect').value;
+            const computedDeliveryLogisticsCost = shippingRatesMatrix[selectedLocationKey] || 6500;
+            const grossFinalOrderValuePayable = grossSubtotalValue + computedDeliveryLogisticsCost;
+
+            const clientEmailPayload = document.getElementById('checkoutEmailField').value.trim();
+            const clientNamePayload = document.getElementById('checkoutNameField').value.trim();
+            const clientPhonePayload = document.getElementById('checkoutWhatsappField').value.trim();
+            const clientAddressPayload = document.getElementById('checkoutAddressField').value.trim();
+            const clientCityPayload = document.getElementById('checkoutCityField').value.trim();
+
+            const submitBtn = document.getElementById('checkoutSubmitButton');
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Opening Secure Gateway...';
+
+            let paystackAbsoluteAmountValue = grossFinalOrderValuePayable * 100; 
+            let finalCurrency = 'NGN';
+
+            if (selectedCurrency === 'USD') {
+                const usdValue = (grossFinalOrderValuePayable / EXCHANGE_RATE).toFixed(2);
+                paystackAbsoluteAmountValue = Math.round(parseFloat(usdValue) * 100); 
+                finalCurrency = 'USD';
+            }
+
+            const purchaseLogisticsMetadataPayload = {
+                buyer_full_name: clientNamePayload,
+                phone_number: clientPhonePayload,
+                shipping_street_destination_address: clientAddressPayload,
+                destination_city: clientCityPayload,
+                destination_state_key: selectedLocationKey,
+                cart_items_breakdown_stream: cartState
+            };
+
+            let handler = PaystackPop.setup({
+                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
+                email: clientEmailPayload,
+                amount: paystackAbsoluteAmountValue,
+                currency: finalCurrency,
+                ref: 'BBO_REF_' + Math.floor((Math.random() * 1000000000) + 1), 
+                metadata: purchaseLogisticsMetadataPayload,
+                callback: function(transactionResponseResultResponse) {
+                    alert('Transaction Completed Successfully! Payment Reference Token Captured: ' + transactionResponseResultResponse.reference);
+                    cartState = [];
+                    renderUnifiedCartStateInterfaces();
+                    navigateToMarketplace();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                },
+                onClose: function() {
+                    alert('Secure payment authorization session tracking window cleared manually. Transaction paused.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                }
+            });
+
+            handler.openIframe();
         }
 
         function toggleCartDrawer() {
@@ -805,155 +1223,18 @@
             document.getElementById('cartOverlay').classList.toggle('show');
         }
 
+        function toggleFilter() {
+            document.getElementById('filterDrawer').classList.toggle('open');
+            document.getElementById('filterOverlay').classList.toggle('show');
+        }
+
         function dismissStickyBar(eventObj) {
             eventObj.stopPropagation();
             document.getElementById('mobileStickyCart').classList.add('collapsed');
         }
 
-        function goToCheckout() {
-            if (cartState.length === 0) {
-                alert('Procurement basket must have allocations loaded before gateway hand-off.');
-                return;
-            }
-            if (document.getElementById('cartDrawer').classList.contains('open')) {
-                toggleCartDrawer();
-            }
-            document.getElementById('mainStoreView').style.display = 'none';
-            document.getElementById('checkoutView').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            updateCheckoutTotalsDisplay();
-            updateCheckoutCurrency();
-        }
-
-        function backToMainCatalogStore() {
-            document.getElementById('checkoutView').style.display = 'none';
-            document.getElementById('mainStoreView').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            renderResponsiveCatalogInterface();
-        }
-
-        function updateCheckoutTotalsDisplay() {
-            const summaryContainer = document.getElementById('checkoutSummaryItems');
-            summaryContainer.innerHTML = '';
-            cartState.forEach(item => {
-                summaryContainer.innerHTML += `
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--text-grey);">
-                        <span style="font-weight: 600; color: var(--text-dark);">${item.name} <span style="font-weight:400;">(x${item.quantity})</span></span>
-                        <span style="font-weight: 600; color: var(--text-dark);">₦${(item.price * item.quantity).toLocaleString()}</span>
-                    </div>
-                `;
-            });
-        }
-
-        function processPromoIncentiveCode() {
-            const verificationTarget = document.getElementById('promoCode').value.trim().toUpperCase();
-            if (verificationTarget === 'BBO10') {
-                isDiscountApplied = true;
-                document.getElementById('promoMessage').innerHTML = '<span style="color: #2E7D32;">✓ Allocation Authorization Code Activated (10% Waiver Locked)</span>';
-                renderUnifiedCartStateInterfaces(); 
-            } else {
-                document.getElementById('promoMessage').innerHTML = '<span style="color: #C62828;">✗ Security Token Invalid / Expired Parameters</span>';
-            }
-        }
-
-        function updateCheckoutCurrency() {
-            const selectedCurrencyString = document.getElementById('checkoutCurrency').value;
-            let rawSubtotalMetric = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
-
-            if (selectedCurrencyString === 'NGN') {
-                document.getElementById('checkoutSubtotal').innerText = `₦${rawSubtotalMetric.toLocaleString()}`;
-                document.getElementById('checkoutDiscount').innerText = isDiscountApplied ? `-₦${(rawSubtotalMetric * 0.10).toLocaleString()}` : `-₦0`;
-                document.getElementById('checkoutFinalTotal').innerText = `₦${aggregateAbsoluteGrandTotalValue.toLocaleString()}`;
-            } else {
-                let conversionSubtotalUSD = (rawSubtotalMetric / EXCHANGE_RATE).toFixed(2);
-                let conversionDiscountUSD = isDiscountApplied ? ((rawSubtotalMetric * 0.10) / EXCHANGE_RATE).toFixed(2) : '0.00';
-                let conversionFinalUSD = (aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE).toFixed(2);
-
-                document.getElementById('checkoutSubtotal').innerText = `$${Number(conversionSubtotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                document.getElementById('checkoutDiscount').innerText = `-$${Number(conversionDiscountUSD).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-                document.getElementById('checkoutFinalTotal').innerText = `$${Number(conversionFinalUSD).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-            }
-
-            // BUG FIX: Updates all checkout submit buttons in parallel via dynamic class matching array loops
-            document.querySelectorAll('.checkout-total-btn-val').forEach(span => {
-                if (selectedCurrencyString === 'NGN') {
-                    span.innerText = `(₦${aggregateAbsoluteGrandTotalValue.toLocaleString()})`;
-                } else {
-                    const grandTotalUSD = (aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE).toFixed(2);
-                    span.innerText = `($${Number(grandTotalUSD).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})})`;
-                }
-            });
-        }
-
-        function initiateSecurePaystackTransaction(e) {
-            e.preventDefault();
-            
-            // BUG FIX: Unified button locking routine via node array maps to secure parallel transactions
-            const operationalSubmitButtons = document.querySelectorAll('.checkout-submit-btn');
-            let storedOriginalInnerHTML = "";
-            if (operationalSubmitButtons.length > 0) storedOriginalInnerHTML = operationalSubmitButtons[0].innerHTML;
-
-            operationalSubmitButtons.forEach(btn => {
-                btn.disabled = true;
-                btn.innerText = 'Connecting Secure Gateway Security Layer...';
-            });
-
-            let finalCalculatedKoboAmount = aggregateAbsoluteGrandTotalValue * 100; 
-            const transactionCurrencyContext = document.getElementById('checkoutCurrency').value;
-            
-            if (transactionCurrencyContext === 'USD') {
-                finalCalculatedKoboAmount = Math.round((aggregateAbsoluteGrandTotalValue / EXCHANGE_RATE) * 100); 
-            }
-
-            let handler = PaystackPop.setup({
-                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxx', 
-                email: document.getElementById('custEmail').value,
-                amount: finalCalculatedKoboAmount,
-                currency: transactionCurrencyContext,
-                ref: 'BBO_MANIFEST_' + Math.floor((Math.random() * 1000000000) + 1),
-                callback: function(serverSuccessReceipt) {
-                    alert('Cryptographic Payment Verified. Reference Manifest Logged: ' + serverSuccessReceipt.reference);
-                    cartState = [];
-                    isDiscountApplied = false;
-                    document.getElementById('promoCode').value = '';
-                    document.getElementById('promoMessage').innerHTML = '';
-                    renderUnifiedCartStateInterfaces();
-                    backToMainCatalogStore();
-                    
-                    operationalSubmitButtons.forEach(btn => {
-                        btn.disabled = false;
-                        btn.innerHTML = storedOriginalInnerHTML || 'Authorize Settlement Gateway';
-                    });
-                },
-                onClose: function() {
-                    alert('Gateway window closed manually. Transaction paused.');
-                    operationalSubmitButtons.forEach(btn => {
-                        btn.disabled = false;
-                        btn.innerHTML = storedOriginalInnerHTML || 'Authorize Settlement Gateway';
-                    });
-                }
-            });
-
-            handler.openIframe();
-        }
-
-        function toggleAccordionItem(elementNodeWrapper) {
-            const isAlreadyActive = elementNodeWrapper.classList.contains('active');
-            document.querySelectorAll('.faq-item').forEach(item => item.classList.remove('active'));
-            if (!isAlreadyActive) {
-                elementNodeWrapper.classList.add('active');
-            }
-        }
-
-        function handleFormSubmission(eventObject) {
-            eventObject.preventDefault();
-            alert('Dossier payload safely buffered. An automated supply channel manager will reach out via secure channels.');
-            eventObject.target.reset();
-        }
-
         window.onload = function() {
             processCatalogFilters();
-
             setTimeout(function() {
                 if(!sessionStorage.getItem('bboDiscountPopupSeen')) {
                     document.getElementById('discountPopup').classList.add('show');
@@ -967,14 +1248,8 @@
         }
 
         function submitPopup() {
-            const enteredMail = document.getElementById('popupEmailField').value;
-            if(enteredMail.includes('@')) {
-                alert('Domain authentication registered. Incentive token BBO10 is now authorized.');
-                closePopup();
-            } else {
-                alert('Please check domain address endpoint properties.');
-            }
+            alert('Awesome! Check your email for your 10% off code.');
+            closePopup();
         }
     </script>
 </body>
-</html>
