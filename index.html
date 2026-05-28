@@ -10,7 +10,7 @@
     <script src="https://js.paystack.co/v1/inline.js"></script>
 
     <style>
-    /* --- The Clinical Earth Palette --- */
+        /* --- The Clinical Earth Palette --- */
         :root {
             --bg-color: #F8F6F3;      
             --card-bg: #FFFFFF;       
@@ -127,6 +127,7 @@
 
         /* Dynamic Products & Bundles Grid Architecture Layout */
         .shop-layout { width: 100%; min-height: 400px; }
+        /* FORCES 2 COLUMNS ON MOBILE */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
 
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; position: relative; }
@@ -243,92 +244,41 @@
         .mobile-sticky-bar.visible { transform: translateY(0); }
         .mobile-sticky-bar.collapsed { transform: translateY(100%) !important; }
         .sticky-left-wrapper { display: flex; align-items: center; gap: 14px; }
-        .btn-close-sticky { background: #EFECE7; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; font-weight: 700; cursor: pointer; color: var(--text-grey); transition: all 0.2s; }
+        .btn-close-sticky { background: #EFECE7; border: none; font-size: 1.2rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-grey); transition: background 0.2s; }
         .btn-close-sticky:hover { color: var(--text-dark); background: var(--border-color); }
         .mobile-sticky-bar .price { font-weight: 700; font-size: 1.35rem; color: var(--text-dark); }
-        
+
         .footer { border-top: 1px solid var(--border-color); padding: 5rem 5% 3rem; text-align: center; background-color: var(--card-bg); }
         .footer-brand h2 { font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -1.5px; font-weight: 700; }
         .footer-brand p { color: var(--text-grey); font-size: 0.95rem; }
-        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; font-weight: 500; }
 
-        /* ------------------------------------------------ */
-        /* --- Mobile Responsive Fixes (Bulletproof) --- */
-        /* ------------------------------------------------ */
-
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
+        }
+        @media (max-width: 950px) {
+            .form-row, .checkout-grid-container { grid-template-columns: 1fr; }
+            .checkout-sidebar-summary-panel { position: static; margin-top: 2rem; }
+            .shop-controls { grid-template-columns: 1fr; }
+            .btn-filter { justify-content: center; }
+        }
         @media (max-width: 768px) {
-            /* 1. Fix the Cart Drawer */
-            #cartDrawer ul li, .cart-item {
-                display: flex !important;
-                flex-direction: row !important; 
-                align-items: center !important;
-                gap: 12px !important;
-                padding: 10px 0 !important;
-                width: 100% !important;
-            }
-
-            #cartDrawer ul li img, .cart-item img {
-                width: 60px !important;
-                height: 60px !important;
-                object-fit: cover !important;
-                border-radius: 6px !important;
-                flex-shrink: 0 !important; 
-            }
-
-            #cartDrawer ul li div, .cart-item div {
-                flex: 1 !important; 
-                min-width: 0 !important; 
-            }
-
-            #cartDrawer h3, .cart-item-name, .product-title {
-                font-size: 13px !important;
-                white-space: normal !important;
-                word-break: break-word !important;
-                margin: 0 0 4px 0 !important;
-                line-height: 1.2 !important;
-            }
-
-            /* 2. Main Product Grid (Portrait & Landscape Adaptation) */
-            #productGrid, .product-grid {
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important; 
-                gap: 10px !important;
-                padding: 10px !important;
-            }
-
-            .product-card {
-                padding: 10px !important;
-                display: flex !important;
-                flex-direction: column !important;
-                width: 100% !important;
-                overflow: hidden !important; 
-            }
-
-            .product-card img, .product-img {
-                width: 100% !important;
-                height: auto !important;
-                aspect-ratio: 1 / 1 !important; 
-                object-fit: cover !important;
-            }
-
-            /* 3. Price Overflow Protection */
-            .pricing {
-                padding-top: 0.8rem !important;
-            }
-            .naira-group {
-                flex-wrap: wrap !important; 
-                gap: 4px !important;
-            }
-            .price-naira {
-                font-size: 1.1rem !important; 
-                word-break: break-word !important;
-            }
-            .price-naira-scratched {
-                font-size: 0.85rem !important;
-            }
-            .price-usd {
-                font-size: 0.75rem !important;
-            }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.4rem; }
+            .section { padding: 4rem 5%; }
+            .timeline-box { padding: 2.5rem 1.5rem; }
+            .timeline-item { gap: 1.2rem; }
+            .request-card { padding: 2.5rem 1.5rem; }
+            .product-img-frame { height: 200px; }
+            .product-info { padding: 1rem; }
+            .product-info h3 { font-size: 0.95rem; min-height: 38px; }
+            .price-naira { font-size: 1.15rem; }
+            .btn-secondary { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
+        }
+        @media (max-width: 450px) {
+            .cart-drawer { width: 100%; right: -100%; padding: 2rem 1.5rem; }
+            .hero-buttons { flex-direction: column; width: 100%; gap: 0.75rem; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; margin-left: 0 !important; }
         }
     </style>
 </head>
