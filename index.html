@@ -295,41 +295,62 @@
         white-space: normal !important;
         max-width: 100% !important;
     }
-    /* --- Mobile Responsive Fixes --- */
+/* --- Mobile Responsive Fixes (Corrected) --- */
+
+/* 1. Fix the Cart Drawer (Keep side-by-side, stop text overflow) */
 @media (max-width: 768px) {
-    /* Force product items to stack elements vertically instead of squishing rows */
-    .cart-item, .product-card, #cartDrawer ul li {
+    #cartDrawer ul li, .cart-item {
         display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
+        flex-direction: row !important; /* Keeps image and text side-by-side */
+        align-items: center !important;
         gap: 12px !important;
-        padding: 15px !important;
+        padding: 10px 0 !important;
+        width: 100% !important;
     }
 
-    /* Keep product images contained and perfectly sized on mobile layout screens */
-    .cart-item img, .product-card img, #cartDrawer ul li img {
-        width: 80px !important;
-        height: 80px !important;
+    #cartDrawer ul li img, .cart-item img {
+        width: 60px !important;
+        height: 60px !important;
         object-fit: cover !important;
         border-radius: 6px !important;
+        flex-shrink: 0 !important; /* Prevents the image from squishing */
     }
 
-    /* Prevent long names from stretching past the screen edge */
-    .product-title, .cart-item-name, #cartDrawer h3 {
+    /* Target the text container inside the cart */
+    #cartDrawer ul li div, .cart-item div {
+        flex: 1 !important; /* Takes up remaining space */
+        min-width: 0 !important; /* Crucial: allows text to wrap instead of pushing off screen */
+    }
+
+    #cartDrawer h3, .cart-item-name, .product-title {
         font-size: 14px !important;
-        word-break: break-word !important;
         white-space: normal !important;
-        max-width: 100% !important;
+        word-break: break-word !important;
+        margin: 0 0 4px 0 !important;
+        line-height: 1.2 !important;
     }
 }
-    @media (max-width: 480px) {
+
+/* 2. Fix the Main Product Grid (Clean 2-column layout) */
+@media (max-width: 480px) {
     #productGrid, .product-grid {
         display: grid !important;
-        grid-template-columns: 1fr 1fr !important; /* Makes a gorgeous modern 2-column mobile layout */
-        gap: 10px !important;
+        grid-template-columns: repeat(2, 1fr) !important; /* Two equal columns */
+        gap: 12px !important;
         padding: 10px !important;
     }
-}
+
+    .product-card {
+        padding: 10px !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+
+    .product-card img {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important; /* Keeps images perfectly square */
+    }
 }
     </style>
 </head>
