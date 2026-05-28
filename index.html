@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,7 @@
     <script src="https://js.paystack.co/v1/inline.js"></script>
 
     <style>
-       /* --- The Clinical Earth Palette --- */
+        /* --- The Clinical Earth Palette --- */
         :root {
             --bg-color: #F8F6F3;      
             --card-bg: #FFFFFF;       
@@ -126,6 +127,7 @@
 
         /* Dynamic Products & Bundles Grid Architecture Layout */
         .shop-layout { width: 100%; min-height: 400px; }
+        /* FORCES 2 COLUMNS ON MOBILE */
         .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; }
 
         .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease; display: flex; flex-direction: column; height: 100%; position: relative; }
@@ -242,74 +244,41 @@
         .mobile-sticky-bar.visible { transform: translateY(0); }
         .mobile-sticky-bar.collapsed { transform: translateY(100%) !important; }
         .sticky-left-wrapper { display: flex; align-items: center; gap: 14px; }
-        .btn-close-sticky { background: #EFECE7; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; font-weight: 700; cursor: pointer; color: var(--text-grey); transition: all 0.2s; }
+        .btn-close-sticky { background: #EFECE7; border: none; font-size: 1.2rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-grey); transition: background 0.2s; }
         .btn-close-sticky:hover { color: var(--text-dark); background: var(--border-color); }
         .mobile-sticky-bar .price { font-weight: 700; font-size: 1.35rem; color: var(--text-dark); }
-        
+
         .footer { border-top: 1px solid var(--border-color); padding: 5rem 5% 3rem; text-align: center; background-color: var(--card-bg); }
         .footer-brand h2 { font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -1.5px; font-weight: 700; }
         .footer-brand p { color: var(--text-grey); font-size: 0.95rem; }
-        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+        .footer-bottom { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-grey); font-size: 0.85rem; font-weight: 500; }
 
-        /* ------------------------------------------------ */
-        /* --- Mobile Responsive Fixes (Perfect Layout) --- */
-        /* ------------------------------------------------ */
-
-        /* 1. Fix the Cart Drawer (Keep side-by-side, stop text overflow) */
-        @media (max-width: 768px) {
-            #cartDrawer ul li, .cart-item {
-                display: flex !important;
-                flex-direction: row !important; /* Keeps image and text side-by-side */
-                align-items: center !important;
-                gap: 12px !important;
-                padding: 10px 0 !important;
-                width: 100% !important;
-            }
-
-            #cartDrawer ul li img, .cart-item img {
-                width: 60px !important;
-                height: 60px !important;
-                object-fit: cover !important;
-                border-radius: 6px !important;
-                flex-shrink: 0 !important; /* Prevents the image from squishing */
-            }
-
-            /* Target the text container inside the cart */
-            #cartDrawer ul li div, .cart-item div {
-                flex: 1 !important; /* Takes up remaining space */
-                min-width: 0 !important; /* Crucial: allows text to wrap instead of pushing off screen */
-            }
-
-            #cartDrawer h3, .cart-item-name, .product-title {
-                font-size: 14px !important;
-                white-space: normal !important;
-                word-break: break-word !important;
-                margin: 0 0 4px 0 !important;
-                line-height: 1.2 !important;
-            }
+        @media (min-width: 768px) {
+            .product-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2.5rem; }
         }
-
-        /* 2. Fix the Main Product Grid (Clean 2-column layout) */
-        @media (max-width: 480px) {
-            #productGrid, .product-grid {
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important; /* Two equal columns */
-                gap: 12px !important;
-                padding: 10px !important;
-            }
-
-            .product-card {
-                padding: 10px !important;
-                display: flex !important;
-                flex-direction: column !important;
-            }
-
-            .product-card img, .product-img {
-                width: 100% !important;
-                height: auto !important;
-                aspect-ratio: 1 / 1 !important; /* Keeps images perfectly square */
-                object-fit: cover !important;
-            }
+        @media (max-width: 950px) {
+            .form-row, .checkout-grid-container { grid-template-columns: 1fr; }
+            .checkout-sidebar-summary-panel { position: static; margin-top: 2rem; }
+            .shop-controls { grid-template-columns: 1fr; }
+            .btn-filter { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.4rem; }
+            .section { padding: 4rem 5%; }
+            .timeline-box { padding: 2.5rem 1.5rem; }
+            .timeline-item { gap: 1.2rem; }
+            .request-card { padding: 2.5rem 1.5rem; }
+            .product-img-frame { height: 200px; }
+            .product-info { padding: 1rem; }
+            .product-info h3 { font-size: 0.95rem; min-height: 38px; }
+            .price-naira { font-size: 1.15rem; }
+            .btn-secondary { padding: 0.6rem 0.8rem; font-size: 0.75rem; }
+        }
+        @media (max-width: 450px) {
+            .cart-drawer { width: 100%; right: -100%; padding: 2rem 1.5rem; }
+            .hero-buttons { flex-direction: column; width: 100%; gap: 0.75rem; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; margin-left: 0 !important; }
         }
     </style>
 </head>
@@ -1181,53 +1150,73 @@
             document.getElementById('marketplace-view').style.display = 'block';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-function initiateSecurePaystackTransaction() {
-    if (cartState.length === 0) {
-        alert('Your cart is empty.');
-        return;
-    }
 
-    const userEmail = document.getElementById('checkoutEmail').value.trim();
-    if (!userEmail) {
-        alert('Please enter a valid email address to proceed.');
-        return;
-    }
+        function initiateSecurePaystackTransaction() {
+            if (typeof PaystackPop === 'undefined') {
+                alert('The secure payment configuration could not be contacted. Please verify your internet/network settings or disable ad-blockers and refresh the page.');
+                return;
+            }
 
-    const submitBtn = document.getElementById('paystackSubmitBtn');
-    const originalBtnHtml = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner"></span>Processing...';
+            let baseSubtotal = cartState.reduce((sum, entry) => sum + (entry.price * entry.quantity), 0);
+            let grossSubtotalValue = isDiscountApplied ? baseSubtotal * 0.90 : baseSubtotal;
 
-    // Calculate total explicitly
-    let cartTotal = 0;
-    cartState.forEach(item => {
-        cartTotal += item.price * item.quantity;
-    });
+            const selectedLocationKey = document.getElementById('checkoutStateSelect').value;
+            const computedDeliveryLogisticsCost = shippingRatesMatrix[selectedLocationKey] || 6500;
+            const grossFinalOrderValuePayable = grossSubtotalValue + computedDeliveryLogisticsCost;
 
-    let handler = PaystackPop.setup({
-        key: 'pk_live_xxxxxxxxxxxxxxxxxxxxxxxx', // Put your actual live or test key here
-        email: userEmail,
-        amount: cartTotal * 100, // FIXED: Multiplied by 100 for correct subunit conversion
-        currency: "NGN",
-        ref: 'BBO_' + Math.floor((Math.random() * 1000000000) + 1),
-        callback: function(response) {
-            alert('Transaction successful! Reference: ' + response.reference);
-            cartState = [];
-            localStorage.removeItem('bbo_user_cart'); // Clear storage on success
-            renderUnifiedCartStateInterfaces();
-            toggleCartDrawer();
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnHtml;
-        },
-        onClose: function() {
-            alert('Transaction window cleared manually. Transaction paused.');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnHtml;
+            const clientEmailPayload = document.getElementById('checkoutEmailField').value.trim();
+            const clientNamePayload = document.getElementById('checkoutNameField').value.trim();
+            const clientPhonePayload = document.getElementById('checkoutWhatsappField').value.trim();
+            const clientAddressPayload = document.getElementById('checkoutAddressField').value.trim();
+            const clientCityPayload = document.getElementById('checkoutCityField').value.trim();
+
+            const submitBtn = document.getElementById('checkoutSubmitButton');
+            const originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Opening Secure Gateway...';
+
+            let paystackAbsoluteAmountValue = grossFinalOrderValuePayable * 100; 
+            let finalCurrency = 'NGN';
+
+            if (selectedCurrency === 'USD') {
+                const usdValue = (grossFinalOrderValuePayable / EXCHANGE_RATE).toFixed(2);
+                paystackAbsoluteAmountValue = Math.round(parseFloat(usdValue) * 100); 
+                finalCurrency = 'USD';
+            }
+
+            const purchaseLogisticsMetadataPayload = {
+                buyer_full_name: clientNamePayload,
+                phone_number: clientPhonePayload,
+                shipping_street_destination_address: clientAddressPayload,
+                destination_city: clientCityPayload,
+                destination_state_key: selectedLocationKey,
+                cart_items_breakdown_stream: cartState
+            };
+
+            let handler = PaystackPop.setup({
+                key: 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 
+                email: clientEmailPayload,
+                amount: paystackAbsoluteAmountValue,
+                currency: finalCurrency,
+                ref: 'BBO_REF_' + Math.floor((Math.random() * 1000000000) + 1), 
+                metadata: purchaseLogisticsMetadataPayload,
+                callback: function(transactionResponseResultResponse) {
+                    alert('Transaction Completed Successfully! Payment Reference Token Captured: ' + transactionResponseResultResponse.reference);
+                    cartState = [];
+                    renderUnifiedCartStateInterfaces();
+                    navigateToMarketplace();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                },
+                onClose: function() {
+                    alert('Secure payment authorization session tracking window cleared manually. Transaction paused.');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalBtnHtml;
+                }
+            });
+
+            handler.openIframe();
         }
-    });
-
-    handler.openIframe();
-}
 
         function toggleCartDrawer() {
             document.getElementById('cartDrawer').classList.toggle('open');
